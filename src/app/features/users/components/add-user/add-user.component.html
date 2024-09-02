@@ -1,0 +1,101 @@
+<app-breadcrumb
+  [title]="'ADD_USER' | translate"
+  [items]="['USERS' | translate]"
+  [active_item]="'ADD_USER' | translate"
+></app-breadcrumb>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+        <div widget class="card border-0 box-shadow">
+            <div class="card-body widget-body">
+                <!-- <div class="p-2 flex-grow-1 bd-highlight">
+                    <a class="btn btn-info add-new" (click)="Backtolist()">
+                        <i class="fa fa-arrow-left mr-2"></i>
+                    </a>
+                </div> -->
+                <form [formGroup]="userroleForm">
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="username">{{"USER_NAME" |translate}}</label>
+                                <input type="text" class="form-control" [placeholder]="'USER_NAME' |translate" formControlName="username" id="username"
+                                    >
+                                <div *ngIf="f['username'].touched && f['username'].invalid" class="alert alert-danger">
+                                    <div *ngIf="f['username'].errors && f['username'].errors['required']">username is
+                                        required.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="password">{{"PASSWORD" |translate}}  </label>
+                                <input type="text" class="form-control" [placeholder]="'PASSWORD' |translate" formControlName="password" id="password"
+                                   >
+                                <div *ngIf="f['password'].touched && f['password'].invalid" class="alert alert-danger">
+                                    <div *ngIf="f['password'].errors && f['password'].errors['required']">password is
+                                        required.</div>
+                                </div>
+                            </div>
+                        </div>
+                          <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                              <label for="confirmpassword">{{ "CONFIRM_PASS" | translate }}</label>
+                              <input type="text" class="form-control" [placeholder]="'CONFIRM_PASS' | translate" formControlName="confirmPassword" id="confirmpassword">
+
+                              <div *ngIf="f['confirmPassword'].touched && !passwordsMatch" class="mt-2" >
+                                <span class="error">{{"PASSWORD_MATCH" |translate}}</span>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                    <div  class="row mt-5">
+                        <div class="col-12">
+                            <div class="table-responsive bg-white box-shadow">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>{{"NAME" |translate}}</th>
+                                            <th> <input  (change)="checkAllCheckBox('New',$event)" type="checkbox" class="mr-2"  style="margin: 0 5px;"  id="selectallNew" >{{"NEW" |translate}}</th>
+                                            <th><input (change)="checkAllCheckBox('edit',$event)" type="checkbox" class="mr-2"  style="margin: 0 5px;" id="selectalledit">{{"EDIT" |translate}}</th>
+                                            <th> <input (change)="checkAllCheckBox('delete',$event)" type="checkbox" class="mr-2"  style="margin: 0 5px;" id="selectalldelete">{{"DELETE" |translate}}</th>
+                                            <th> <input (change)="checkAllCheckBox('login',$event)" type="checkbox" class="mr-2"  style="margin: 0 5px;" id="selectalllogin">{{"VIEW" |translate}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let userpageq of userpagesQuary; let i= index ">
+                                            <td class="align-middle text-truncate">{{userpageq.title}}</td>
+
+                                            <td class="align-middle text-truncate">
+                                                <input type="checkbox"  [checked]="userpageq.New"  (change)="onChecklistChange($event, i, 0)" />
+                                            </td>
+                                            <td class="align-middle text-truncate">
+                                                <input type="checkbox"  [checked]="userpageq.edit"  (change)="onChecklistChange($event, i, 1)" />
+                                            </td>
+                                            <td class="align-middle text-truncate">
+                                                <input type="checkbox"  [checked]="userpageq.delete"  (change)="onChecklistChange($event, i, 2)" />
+
+                                            </td>
+                                            <td class="align-middle text-truncate">
+                                                <input type="checkbox"  [checked]="userpageq.login"  (change)="onChecklistChange($event, i, 3)" />
+                                            </td>
+
+                                       </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row  mt-5">
+                        <div class="d-flex justify-content-center gap-3">
+                        <button type="submit" class="btn btn-success mr-3" [disabled]="!userroleForm.valid"
+                            (click)="SubmitAddoredit()">{{"SAVE" |translate}}</button>
+                        <button class="btn btn-danger" (click)="clear()">{{"CLEAR" |translate}}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>

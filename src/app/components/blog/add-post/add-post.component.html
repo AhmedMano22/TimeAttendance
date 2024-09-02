@@ -1,0 +1,92 @@
+<app-breadcrumb [title]="'Add Post'" [items]="['Blog']" [active_item]="'Add Post'"></app-breadcrumb>
+<div class="container-fluid">
+   <div class="row">
+     <div class="col-sm-12">
+       <div class="card">
+         <div class="card-header pb-0">
+           <h5>Post Edit</h5>
+         </div>
+         <div class="card-body add-post">
+           <form class="row needs-validation" novalidate="">
+             <div class="col-sm-12">
+               <div class="mb-3">
+                 <label for="validationCustom01">Title:</label>
+                 <input class="form-control" id="validationCustom01" type="text" name="validationCustom01" placeholder="Post Title" required="">
+                 <div class="valid-feedback">Looks good!</div>
+               </div>
+               <div class="mb-3">
+                 <label>Type:</label>
+                 <div class="m-checkbox-inline">
+                   <label for="edo-ani">
+                     <input class="radio_animated" id="edo-ani" type="radio" name="rdo-ani" checked="">Text
+                   </label>
+                   <label for="edo-ani1">
+                     <input class="radio_animated" id="edo-ani1" type="radio" name="rdo-ani">Image
+                   </label>
+                   <label for="edo-ani2">
+                     <input class="radio_animated" id="edo-ani2" type="radio" name="rdo-ani" checked="">Audio
+                   </label>
+                   <label for="edo-ani3">
+                     <input class="radio_animated" id="edo-ani3" type="radio" name="rdo-ani">Video
+                   </label>
+                 </div>
+               </div>
+               <div class="mb-3">
+                 <div class="col-form-label"> 
+                   <label>Category:</label>
+                   <div class="js-example-placeholder-multiple col-sm-12">
+                    <ng-select [items]="cities2"
+                    bindLabel="name"
+                    bindValue="id"
+                    [multiple]="true" 
+                    placeholder="Select cities"
+                    [(ngModel)]="selectedCityIds"
+                    name = "name"
+                    >
+                    </ng-select>
+                   </div>
+                 </div>
+               </div>
+               <div class="email-wrapper">
+                 <div class="theme-form">
+                   <div class="mb-3">
+                     <label>Content:</label>
+                     <ckeditor [editor]="ClassicEditor" [config]="config"></ckeditor>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </form>
+           <form class="dropzone" id="singleFileUpload" action="/upload.php">
+            <div class="row">
+               <div class="col">
+                 <div class="mb-2">
+                   <label>Upload project file</label>
+                     <div  class="dropzone dz-clickable" >
+                        <ngx-dropzone (change)="onSelect($event)" [multiple]="true">
+                         <ngx-dropzone-label>
+                            <div>
+                               <div class="dz-message needsclick ">
+                                  <i class="icon-cloud-up"></i>
+                                  <h6>Drop files here or click to upload.</h6><span class="dz-message needsclick">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
+                                 </div>
+                              </div>
+                           </ngx-dropzone-label>
+                           <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                              <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                           </ngx-dropzone-preview>
+                        </ngx-dropzone>
+                     </div>
+                 </div>
+               </div>
+             </div>
+           </form>
+           <div class="btn-showcase text-end">
+             <button class="btn btn-primary" type="submit">Post</button>
+             <input class="btn btn-light" type="reset" value="Discard">
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>

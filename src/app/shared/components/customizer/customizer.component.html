@@ -1,0 +1,22 @@
+<div class="customizer-links" [ngClass]="{'open': customizer != '' }">
+   <div class="nav flex-column nac-pills" id="c-pills-tab" role="tablist" aria-orientation="vertical">
+      <a class="nav-link" [ngClass]="{'active show': customizer == 'layout' }" (click)="Customizer('layout')">
+         <div class="settings"><i class="icon-paint-bucket"></i></div> 
+         <span>Check layouts</span>
+      </a>
+   </div>
+</div>
+
+<div class="customizer-contain" [ngClass]="{'open' : customizer != '' }">
+   <div class="tab-content" id="c-pills-tabContent">
+      <div class="text-center p-3">
+         <i class="icofont-close icon-close text-center hover-custom" (click)="Customizer('')"
+         style="font-weight: bold; cursor: pointer;"></i>
+      </div>
+      <div class="customizer-body custom-scrollbar">
+         <div class="tab-pane fade" [ngClass]="{'active show': customizer == 'layout' }" id="c-pills-home" role="tabpanel"
+         aria-labelledby="c-pills-home-tab">
+            <app-color></app-color>
+         </div>
+   </div>
+</div>

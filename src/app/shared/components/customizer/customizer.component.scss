@@ -1,0 +1,9 @@
+.hover-custom {
+    padding: 5px;
+    border-radius: 4px;
+    transition: 0.3s ease-in-out;
+}
+.hover-custom:hover {
+    background: rgba(131, 131, 131, 0.35);
+    font-weight: bolder;
+}

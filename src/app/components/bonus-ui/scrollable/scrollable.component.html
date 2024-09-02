@@ -1,0 +1,71 @@
+<app-breadcrumb [title]="'Scrollable'" [items]="['Bonus Ui']" [active_item]="'Scrollable'"></app-breadcrumb>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header pb-0 ">
+          <h5>Click and Drag</h5>
+        </div>
+        <div class="card-body">
+          <div class="scroll-bar-wrap">
+            <div class="click-drag-handler scroll-demo p-0" [perfectScrollbar]="config">
+              <img src="assets/images/banner/2.jpg" alt=""  width="800" height="600"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header pb-0">
+          <h5>Small Size Scroll</h5>
+        </div>
+        <div class="card-body">
+          <div class="scroll-bar-wrap">
+            <div class="scrollbar-margins large-margin scroll-demo p-0" [perfectScrollbar]="config"><img
+                src="assets/images/banner/3.jpg" alt="girl" width="1200" height="800"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header pb-0">
+          <h5>Both Side Scroll</h5>
+        </div>
+        <div class="card-body">
+          <div class="scroll-bar-wrap">
+            <div class="visible-scroll always-visible scroll-demo" [perfectScrollbar]="configBothSideScroll">
+              <div class="horz-scroll-content">
+                <img src="assets/images/banner/1.jpg" alt="girl" width="800" height="600px">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header pb-0">
+          <h5>Horizontal Scroll</h5>
+        </div>
+        <app-horizontal-scroll></app-horizontal-scroll>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header pb-0">
+          <h5>Always Visible Scroll</h5>
+        </div>
+        <app-always-visible-scroll></app-always-visible-scroll>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header pb-0">
+          <h5>Vertical Scroll</h5>
+        </div>
+        <app-vertical-scroll></app-vertical-scroll>
+      </div>
+    </div>
+  </div>
+</div>

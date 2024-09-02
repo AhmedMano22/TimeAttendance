@@ -1,0 +1,282 @@
+<app-breadcrumb [title]="'ADMIN_DASHBOARD' | translate" [items]="['DASHBOARD' | translate]" [active_item]="'ADMIN_DASHBOARD' | translate"></app-breadcrumb>
+<div class="container-fluid list-products" >
+  <ng-container  *ngIf="AuthUser.login == true">
+  <div class="row d-flex justify-content-center">
+    <!-- owners -->
+    <div class="card o-hidden col-md-2 col-10 mx-2 " style="cursor: pointer;" routerLink="/users/Owners">
+        <div class="card-header">
+          <p style="font-size: 0.9rem; font-weight: 600">{{ "OWNERS_COUNT" | translate }}</p>
+        </div>
+          <div class="card-body p-y-10px" >
+            <div class="media static-widget flex-column-reverse gap-1 align-items-center">
+                <div class="media-body">
+                  <p class="font-roboto text-center" style="font-size: 0.7rem;">{{ "OWNERS_COUNT" | translate }}</p>
+                  <h4
+                      class="mb-0 counter text-center"
+                      [CountTo]="dashboard.Owner"
+                      [from]="0"
+                      [duration]="1"
+                  ></h4>
+                </div>
+                <svg-icon src="assets/svgIcon/newUser.svg"></svg-icon>
+            </div>
+            <div class="progress-widget">
+                <div class="progress sm-progress-bar progress-animate">
+                  <div
+                      class="progress-gradient-primary"
+                      role="progressbar"
+                      [ngStyle]="{ width: item.laval}"
+                      aria-valuenow="75"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                  >
+                      <span class="animate-circle"></span>
+                  </div>
+                </div>
+            </div>
+          </div>
+    </div>
+        <!-- units -->
+    <div class="card o-hidden col-md-2 col-10 mx-2" style="cursor: pointer;" routerLink="/units/units">
+      <div class="card-header">
+        <p style="font-size: 0.9rem; font-weight: 600">{{ "UNITS_COUNT" | translate }}</p>
+      </div>
+        <div class="card-body p-y-10px">
+          <div class="media static-widget flex-column-reverse gap-1 align-items-center">
+              <div class="media-body">
+                <p class="font-roboto text-center" style="font-size: 0.7rem;">{{ "UNITS_COUNT" | translate }}</p>
+                <h4
+                    class="mb-0 counter text-center"
+                    [CountTo]="dashboard.Unit"
+                    [from]="0"
+                    [duration]="1"
+                ></h4>
+              </div>
+              <svg-icon src="assets/svgIcon/newUser.svg"></svg-icon>
+          </div>
+          <div class="progress-widget">
+              <div class="progress sm-progress-bar progress-animate">
+                <div
+                    class="progress-gradient-warning"
+                    role="progressbar"
+                    [ngStyle]="{ width: item.laval }"
+                    aria-valuenow="75"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                >
+                    <span class="animate-circle"></span>
+                </div>
+              </div>
+          </div>
+        </div>
+  </div>
+
+
+    <div class="card col-md col-10 mx-2">
+        <div class="widget-joins">
+            <div class="card-header p-y-16px">
+              <strong style="font-size: 1.4rem;">{{ 'SERVICES' | translate}}</strong>
+            </div>
+            <div class="card-body p-1">
+              <div class="row gy-4">
+                <div class="col-sm-4" >
+                  <div class="widget-card"  style="cursor: pointer;" routerLink="/services/services">
+                    <div class="media align-self-center flex-column gap-1">
+                      <div class="widget-icon bg-success">
+                        <svg-icon src="assets/svgIcon/box.svg"></svg-icon>
+                      </div>
+                      <div class="media-body">
+                        <h6 class="text-center m-0" style="font-size: 15px;">{{"SERVICES" | translate}}</h6>
+                        <h5 class="text-center">{{dashboard.Service}}</h5>
+                      </div>
+                    </div>
+                    <div class="icon-bg">
+                        <svg-icon src="assets/svgIcon/box.svg"></svg-icon>
+                    </div>
+                  </div>
+                </div>
+
+                  <div class="col-sm-4" >
+                    <div class="widget-card"  style="cursor: pointer;" routerLink="/services/pending-services">
+                      <div class="media align-self-center flex-column gap-1">
+                        <div class="widget-icon bg-warning">
+                          <svg-icon src="assets/svgIcon/box.svg"></svg-icon>
+                        </div>
+                        <div class="media-body">
+                          <h6 class="text-center m-0" style="font-size: 15px;">{{"PENDING_BOOKINGS" | translate}}</h6>
+                          <h5 class="text-center">{{dashboard.PendingSerice}}</h5>
+                        </div>
+                      </div>
+                      <div class="icon-bg">
+                          <svg-icon src="assets/svgIcon/box.svg"></svg-icon>
+                      </div>
+                    </div>
+                  </div>
+
+                <div class="col-sm-4" >
+                  <div class="widget-card"   style="cursor: pointer;" routerLink="/requests/pending-requests">
+                    <div class="media align-self-center flex-column gap-1">
+                      <div class="widget-icon bg-primary">
+                        <svg-icon src="assets/svgIcon/box.svg"></svg-icon>
+                      </div>
+                      <div class="media-body">
+                        <h6 class="text-center m-0" style="font-size: 15px;">{{"PENDING_ORDERS" | translate}}</h6>
+                        <h5 class="text-center">{{dashboard.PendingRequet}}</h5>
+                      </div>
+                    </div>
+                    <div class="icon-bg">
+                        <svg-icon src="assets/svgIcon/box.svg"></svg-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+    </div>
+  </div>
+  <div class="row d-flex justify-content-center">
+    <div class="card o-hidden col-md col-10 mx-2" style="cursor: pointer;" routerLink="/users/Owners" >
+      <div class="card-header">
+        <strong style="font-size: 1rem;">{{ "ONLINE_OWNERS" | translate }}</strong>
+      </div>
+      <div class="card-body">
+        <div class="media static-widget">
+            <div class="media-body">
+            <h6 class="font-roboto">{{ "ONLINE_OWNERS" | translate }}</h6>
+            <h4
+                class="mb-0 counter"
+                [CountTo]="dashboard.OwnerOnline"
+                [from]="0"
+                [duration]="1"
+            ></h4>
+            </div>
+            <svg-icon src="assets/svgIcon/users.svg"></svg-icon>
+        </div>
+        <div class="progress-widget">
+            <div class="progress sm-progress-bar progress-animate">
+            <div
+                class="progress-gradient-success"
+                role="progressbar"
+                [ngStyle]="{ width: item.laval }"
+                aria-valuenow="75"
+                aria-valuemin="0"
+                aria-valuemax="100"
+            >
+                <span class="animate-circle"></span>
+            </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="card o-hidden col-md col-10 mx-2" style="cursor: pointer;" routerLink="/inquires/inquires-list" >
+      <div class="card-header">
+        <strong style="font-size: 1rem;">{{ "OPENED_CHATS" | translate }}</strong>
+      </div>
+      <div class="card-body">
+        <div class="media static-widget">
+            <div class="media-body">
+            <h6 class="font-roboto">{{ "OPENED_CHATS" | translate }}</h6>
+            <h4
+                class="mb-0 counter"
+                [CountTo]="dashboard.Inquires"
+                [from]="0"
+                [duration]="1"
+            ></h4>
+            </div>
+            <svg-icon src="assets/svgIcon/chat.svg"></svg-icon>
+        </div>
+        <div class="progress-widget">
+            <div class="progress sm-progress-bar progress-animate">
+            <div
+                class="progress-gradient-primary"
+                role="progressbar"
+                [ngStyle]="{ width: item.laval }"
+                aria-valuenow="75"
+                aria-valuemin="0"
+                aria-valuemax="100"
+            >
+                <span class="animate-circle"></span>
+            </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="card o-hidden col-md col-10 mx-2"  style="cursor: pointer;" routerLink="/requests/requests-list">
+      <div class="card-header">
+        <strong style="font-size: 1.1rem;">{{ "LAST_30_DAYS_ORDERS_COUNT" | translate }}</strong>
+      </div>
+      <div class="card-body">
+        <div class="media static-widget">
+            <div class="media-body">
+            <h6 class="font-roboto">{{ "LAST_30_DAYS_ORDERS_COUNT" | translate }}</h6>
+            <h4
+                class="mb-0 counter"
+                [CountTo]="dashboard.Inquires30Day"
+                [from]="0"
+                [duration]="1"
+            ></h4>
+            </div>
+            <svg-icon src="assets/svgIcon/task.svg"></svg-icon>
+        </div>
+        <div class="progress-widget">
+            <div class="progress sm-progress-bar progress-animate">
+            <div
+                class="progress-gradient-primary"
+                role="progressbar"
+                [ngStyle]="{ width: item.laval }"
+                aria-valuenow="75"
+                aria-valuemin="0"
+                aria-valuemax="100"
+            >
+                <span class="animate-circle"></span>
+            </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+  <ng-container   *ngIf="AuthUser.login == false ">
+    <div class="col-sm-12">
+      <div class="card">
+          <div class="card-body d-flex align-items-center justify-content-center"
+            style="min-height: 300px;">
+            <h4 class="text-center fw-bold"> {{"NOT_AUTH" |translate}}</h4>
+          </div>
+      </div>
+    </div>
+  </ng-container>
+  <!-- <div class="row d-flex justify-content-center">
+    <div class="card o-hidden col-md-12 col-10 mx-4">
+      <div class="chart-widget-top">
+        <div class="card-body pb-0">
+          <div class="row">
+            <div class="col-5">
+              <h6 class="f-w-600 font-{{data4.titleColor}}">{{data4.chartTitle | translate}}</h6><span class="num"><span class="counter">{{data4.parson}}</span>%<i class="icon-angle-up f-12 ms-1"></i></span>
+            </div>
+            <div class="col-7 text-end">
+              <h4 class="num total-value"><span class="counter">{{data4.price}}</span></h4>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div id="chart-widget1">
+            <apx-chart [chart]="data4.chart"
+                [chart]="data4.chart"
+                [dataLabels]="data4.dataLabels"
+                [stroke]="data4.stroke"
+                [xaxis]="data4.xaxis"
+                [yaxis]="data4.yaxis"
+                [grid]="data4.grid"
+                [fill]="data4.fill"
+                [colors]="data4.colors"
+                [series]="data4.series"
+                [tooltip]="data4.tooltip">
+                </apx-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+</div>

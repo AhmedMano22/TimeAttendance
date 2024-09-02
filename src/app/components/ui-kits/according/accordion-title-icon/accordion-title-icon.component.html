@@ -1,0 +1,33 @@
+<div class="card">
+   <div class="card-header pb-0">
+     <h5>Accordion With Icon on Title</h5><span>Add <code>&lt;i&gt;&lt;/i&gt;</code> tag Along with icon class before title text.</span>
+   </div>
+   <div class="card-body">
+      <ngb-accordion #acc="ngbAccordion" [closeOthers]="true" activeIds="static-1">
+         <ngb-panel id="static-1">
+            <ng-template ngbPanelTitle>
+               <i class="icofont icofont-briefcase-alt-2 me-2"></i>Collapsible Group Item #<span>1</span>
+             </ng-template>
+           <ng-template ngbPanelContent>
+            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+           </ng-template>
+         </ngb-panel>
+         <ngb-panel id="static-2">
+            <ng-template ngbPanelTitle>
+               <i class="icofont icofont-support me-2"></i>Collapsible Group Item #<span>2</span>
+             </ng-template>
+            <ng-template ngbPanelContent>
+             Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+            </ng-template>
+          </ngb-panel>
+         <ngb-panel id="static-3">
+            <ng-template ngbPanelTitle>
+               <i class="icofont icofont-tasks-alt me-2"></i>Collapsible Group Item #<span>3</span>
+             </ng-template>
+           <ng-template ngbPanelContent>
+            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+           </ng-template>
+         </ngb-panel>
+       </ngb-accordion>
+   </div>
+ </div>

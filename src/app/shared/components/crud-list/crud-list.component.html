@@ -1,0 +1,45 @@
+<table class="display dataTables_wrapper no-footer table" id="basic-1">
+  <thead>
+    <tr>
+      <ng-container
+        *ngTemplateOutlet="
+          headers || defaultHeaderTemplate;
+          context: { $implicit: data }
+        "
+      ></ng-container>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="odd" *ngFor="let row of data">
+      <ng-container
+        *ngTemplateOutlet="
+          rows || defaultRowTemplate;
+          context: { $implicit: row }
+        "
+      ></ng-container>
+    </tr>
+  </tbody>
+</table>
+
+<!-- If no template is provided use keys as headers and display all values -->
+<ng-template #defaultHeaderTemplate let-data>
+  <th class="sorting_asc" scope="col" *ngFor="let header of data[0] | keyvalue">
+    {{ header.key }}
+  </th>
+  <th class="sorting_asc" scope="col" >Action</th>
+</ng-template>
+
+<ng-template #defaultRowTemplate let-row>
+  <td *ngFor="let cell of row | keyvalue" class="sorting_1">
+    <ng-container *ngIf="!isImage(cell.key)">
+      {{ cell.value }}
+    </ng-container>
+    <ng-container *ngIf="isImage(cell.key)">
+      <img [src]="cell.value" alt="Image" />
+    </ng-container>
+  </td>
+  <td class="sorting_1">
+    <button class="btn btn-danger btn-xs" type="button" data-original-title="btn btn-danger btn-xs" title="">Delete</button>
+    <button class="btn btn-primary btn-xs" type="button" data-original-title="btn btn-danger btn-xs" title="">Edit</button>
+  </td>
+</ng-template>

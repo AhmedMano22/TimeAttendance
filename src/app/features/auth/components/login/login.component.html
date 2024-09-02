@@ -1,0 +1,78 @@
+<div class="container-fluid p-0">
+    <div class="row">
+        <div class="col-12">
+            <div class="login-card">
+                <!-- <form class="theme-form login-form" [formGroup]="loginForm">
+                    <h4>Login</h4>
+                    <h6>Welcome back! Log in to your account.</h6>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <div class="input-group"><span class="input-group-text"><i class="icon-email"></i></span>
+                            <input class="form-control" type="email" placeholder="app@yourmail.com"
+                                formControlName="email" />
+                            <div *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['required']"
+                                class="text text-danger mt-1"> Email is required </div>
+                            <div *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['email']"
+                                class="text text-danger mt-1"> Invalid Email </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <div class="input-group"><span class="input-group-text"><i class="icon-lock"></i></span>
+                            <input class="form-control" [type]="show ? 'text' : 'password'" formControlName="password"
+                                required="" placeholder="*********" />
+                            <div class="show-hide" (click)="showPassword()" *ngIf="!show"><span class="show"></span>
+                            </div>
+                            <div class="show-hide" (click)="showPassword()" *ngIf="show"><span class="Hide"></span>
+                            </div>
+                            <div *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].errors?.['required']"
+                                class="text text-danger mt-1"> Password is required </div>
+                        </div>
+                    </div>
+                  -->
+                  <form class="theme-form login-form" [formGroup]="loginForm" >
+                    <h4>{{ 'LOGIN' | translate }}</h4>
+                    <h6>{{ 'WELCOME_BACK' | translate }}</h6>
+                    <div class="form-group">
+                        <label>{{ 'USER_NAME' | translate }}</label>
+                        <div class="input-group"><span class="input-group-text"><i class="icon-email"></i></span>
+                            <input class="form-control" type="text" placeholder="{{ 'USER_NAME' | translate }}"
+                                formControlName="username" />
+
+                        </div>
+                        <div *ngIf="loginForm.controls['username'].touched && loginForm.controls['username'].errors?.['required']"
+                        class="text text-danger mt-1">{{ 'USER_NAME_REQUIRED' | translate }}</div>
+
+                    </div>
+                    <div class="form-group">
+                        <label>{{ 'PASSWORD' | translate }}</label>
+                        <div class="input-group"><span class="input-group-text"><i class="icon-lock"></i></span>
+                            <input class="form-control" [type]="show ? 'text' : 'password'" formControlName="password"
+                                required="" placeholder="{{ 'PASSWORD_PLACEHOLDER' | translate }}" />
+                                <div class="show-hide" (click)="showPassword()" *ngIf="!show" style="cursor: pointer;">
+                                    <app-feather-icon [icon]="'eye'"></app-feather-icon>
+                                </div>
+                                <div class="show-hide" (click)="showPassword()" *ngIf="show" style="cursor: pointer;">
+                                    <app-feather-icon [icon]="'eye-off'"></app-feather-icon>
+                                </div>
+                        </div>
+                        <div *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].errors?.['required']"
+                                class="text text-danger mt-1">{{ 'PASSWORD_REQUIRED' | translate }}</div>
+
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-block w-100" [disabled]="!loginForm.valid" (click)="login()"
+                            type="button"><span>{{"SIGN_IN" |translate}}</span> </button>
+                    </div>
+                    <li class="mode cursor-pointer bg-primary rounded py-1 px-2 w-25 m-auto mt-4"
+                    (click)="switchLanguage()" role="button">
+                    <span>
+                        {{ translate.currentLang === 'en' ? 'AR' : 'EN' }}
+                    </span>
+                </li>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

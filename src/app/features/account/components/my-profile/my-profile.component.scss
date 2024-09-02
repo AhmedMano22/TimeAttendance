@@ -1,0 +1,11 @@
+.rounded-circle {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+@media (max-width: 767.98px) {
+  .col-md-6 {
+    margin-bottom: 1rem;
+  }
+}

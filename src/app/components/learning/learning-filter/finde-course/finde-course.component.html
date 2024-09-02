@@ -1,0 +1,30 @@
+<div class="card">
+    <div class="card-header">
+      <h5 class="mb-0 p-0">
+        <button class="btn btn-link" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed"
+        aria-controls="collapseExample">Find Course</button>
+      </h5>
+    </div>
+    <div class="collapse show" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+      <div class="card-body filter-cards-view animate-chk">
+        <div class="job-filter">
+          <div class="faq-form">
+            <input class="form-control" type="text" placeholder="Search.."><i class="search-icon" data-feather="search"></i>
+          </div>
+        </div>
+        <ng-container *ngFor="let find of findCourse">
+          <div class="checkbox-animated">
+              <div class="learning-header">
+                <h5 class="f-w-600">{{find.title}}</h5>
+              </div>
+              <ng-container *ngFor="let l of find.chack">
+                  <label class="d-block" for="{{l.chackId}}">
+                    <input class="{{find.type}}_animated" id="{{l.chackId}}" type="{{find.type}}"> {{l.chackTitle}}
+                  </label>
+              </ng-container>
+            </div>
+        </ng-container>
+        <button class="btn btn-primary text-center" type="button">Filter</button>
+      </div>
+    </div>
+  </div>

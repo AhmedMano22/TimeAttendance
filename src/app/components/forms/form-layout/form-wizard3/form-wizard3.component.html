@@ -1,0 +1,100 @@
+<app-breadcrumb [title]="'Form Wizard Three'" [items]="['Forms', 'Form Layout']" [active_item]="'Form Wizard Three'"></app-breadcrumb>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>Form Wizard with icon</h5>
+        </div>
+        <div class="card-body">
+          <aw-wizard navBarLayout="large-filled-symbols">
+            <aw-wizard-step>
+              <form [formGroup]="firstFormGroup">
+                <ng-template awWizardStepSymbol>
+                  <div class="f1-step">
+                    <div class="f1-step-icon"><i class="fa fa-user"></i></div>
+                    <p>Registration</p>
+                  </div>
+                </ng-template>
+                <div class="mb-3">
+                  <label for="name">First Name</label>
+                  <input class="form-control" id="name" type="text" placeholder="Johan" formControlName="firstName"
+                    onlyAlphabets>
+                 
+                </div>
+                <div class="mb-3">
+                  <label for="lname">Last Name</label>
+                  <input class="form-control" id="lname" type="text" placeholder="Deo" formControlName="lastName"
+                    onlyAlphabets>
+                  
+                </div>
+                <button class="btn btn-primary pull-right" type="submit" awNextStep
+                  [disabled]="!firstFormGroup.valid">Next</button>
+              </form>
+            </aw-wizard-step>
+            <aw-wizard-step>
+              <form [formGroup]="secondFormGroup">
+                <ng-template awWizardStepSymbol>
+                  <div class="f1-step">
+                    <div class="f1-step-icon"><i class="fa fa-key"></i></div>
+                    <p>Email</p>
+                  </div>
+                </ng-template>
+                <div class="mb-3 m-t-15">
+                  <label for="exampleFormControlInput1">Email address</label>
+                  <input class="form-control" id="exampleFormControlInput1" type="email" placeholder="name@example.com"
+                    formControlName="email">
+                 
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1">Password</label>
+                  <input class="form-control" id="exampleInputPassword1" type="password" placeholder="Password"
+                    formControlName="password">
+                  
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1">Confirm Password</label>
+                  <input class="form-control" id="exampleInputcPassword1" type="password" placeholder="Enter again"
+                    formControlName="cnfPassword">
+                  
+                </div>
+                <button class="btn btn-primary pull-right" type="button" awNextStep
+                  [disabled]="!secondFormGroup.valid">Next</button>
+                <button class="btn btn-secondary pull-right me-1" type="button" awPreviousStep>Previous</button>
+              </form>
+            </aw-wizard-step>
+            <aw-wizard-completion-step awEnableBackLinks>
+              <form [formGroup]="thirdFormGroup">
+                <ng-template awWizardStepSymbol>
+                  <div class="f1-step">
+                    <div class="f1-step-icon"><i class="fa fa-twitter"></i></div>
+                    <p>Birth Date</p>
+                  </div>
+                </ng-template>
+                <div class="mb-3">
+                  <label>DD</label>
+                  <input class="form-control" id="dd" type="number" placeholder="dd" formControlName="dd" onlyNumbers>
+                  
+                </div>
+                <div class="mb-3">
+                  <label>MM</label>
+                  <input class="form-control" id="mm" type="number" placeholder="mm" formControlName="mm" onlyNumbers>
+                  
+                </div>
+                <div class="mb-3">
+                  <label>YYYY</label>
+                  <input class="form-control" id="yyyy" type="number" placeholder="yyyy" formControlName="yyyy"
+                    onlyNumbers>
+                  
+                </div>
+                <button class="btn btn-success pull-right" type="button" (click)="finish()"
+                  [disabled]="!thirdFormGroup.valid">Finish</button>
+                <button class="btn btn-secondary pull-right me-1" id="prevBtn" type="button" awPreviousStep>Previous</button>
+              </form>
+            </aw-wizard-completion-step>
+          </aw-wizard>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

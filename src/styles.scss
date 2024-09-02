@@ -1,0 +1,215 @@
+/* You can add global styles to this file, and also import other style files */
+@import "assets/scss/app.scss";
+
+// *** base ***
+
+
+
+
+
+
+//	*** pages ***
+
+@import "./assets/scss/pages/blog.scss";
+@import "./assets/scss/pages/bookmark-app.scss";
+@import "./assets/scss/pages/cart.scss";
+@import "./assets/scss/pages/chart.scss";
+@import "./assets/scss/pages/chat.scss";
+@import "./assets/scss/pages/checkout.scss";
+@import "./assets/scss/pages/comingsoon.scss";
+@import "./assets/scss/pages/contacts.scss";
+@import "./assets/scss/pages/dashboard_2.scss";
+@import "./assets/scss/pages/dashboard_default.scss";
+@import "./assets/scss/pages/_crypto-dashboard";
+@import "./assets/scss/pages/ecommerce.scss";
+@import "./assets/scss/pages/email-application.scss";
+@import "./assets/scss/pages/errorpage.scss";
+@import "./assets/scss/pages/faq.scss";
+@import "./assets/scss/pages/file.scss";
+@import "./assets/scss/pages/gallery.scss";
+@import "./assets/scss/pages/job-search.scss";
+@import "./assets/scss/pages/knowledgebase.scss";
+@import "./assets/scss/pages/language.scss";
+@import "./assets/scss/pages/learning.scss";
+@import "./assets/scss/pages/login.scss";
+@import "./assets/scss/pages/megaoption.scss";
+@import "./assets/scss/pages/order-history.scss";
+@import "./assets/scss/pages/page.scss";
+@import "./assets/scss/pages/pricing.scss";
+@import "./assets/scss/pages/progress.scss";
+@import "./assets/scss/pages/projectlist.scss";
+@import "./assets/scss/pages/social-app.scss";
+@import "./assets/scss/pages/task.scss";
+@import "./assets/scss/pages/invoice";
+@import "./assets/scss/pages/timeline-v.scss";
+@import "./assets/scss/pages/timeliny.scss";
+@import "./assets/scss/pages/user-profile.scss";
+@import "./assets/scss/pages/toast.scss";
+// @import "pages/calender-basic";
+@import "./assets/scss/pages/steps";
+
+
+/* ---------------------
+	*** themes ***
+-----------------------*/
+@import "./assets/scss/themes/dark";
+@import "./assets/scss/themes/theme-customizer";
+
+// *** layout ***
+
+@import "./assets/scss/layout/footer.scss";
+@import "./assets/scss/layout/grid.scss";
+@import "./assets/scss/layout/header.scss";
+@import "./assets/scss/layout/navs.scss";
+@import "./assets/scss/layout/search.scss";
+@import "./assets/scss/layout/sidebar";
+@import "./assets/scss/themes/responsive";
+@import "./assets/scss/layout/rtl.scss";
+@import "./assets/scss/layout/box-layout.scss";
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap');
+
+*:not(i) {
+    font-family: 'Cairo', sans-serif !important;
+}
+
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 20%;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #8d9da0;
+}
+ .timepicker{
+    direction: ltr !important;
+}
+.timepicker-dial__container{
+    justify-content: center !important;
+}
+
+/* ngx telephone  */
+.iti {
+  display: block !important;
+  margin-bottom: 20px;
+  direction: ltr !important;
+}
+
+.iti .dropdown-menu.country-dropdown {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-color: #c7cace;
+  margin-top: -1px;
+}
+
+.iti .iti__country-list {
+  box-shadow: none;
+  font-size: 14px;
+  margin-left: 0;
+  width: 244px;
+  max-height: 170px;
+}
+
+.iti__flag-container.open+input {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.iti .search-container input {
+  font-size: 14px;
+  border-color: #c7cace;
+  border-radius: 0;
+  padding: 5px 10px;
+}
+
+.iti .search-container input:focus {
+  outline: none;
+}
+
+@media screen and (max-width: 479px) {
+  .iti .iti__country-list {
+      width: 88.3vw;
+  }
+}
+ngx-intl-tel-input input {
+  height: 44px !important;
+  margin-bottom: 20px !important;
+  padding: 10px !important;
+  border:1px solid #c7cace !important;
+  border-radius: 4px !important;
+  font-size: 15px !important;
+  -webkit-border-radius: 4px !important;
+  -moz-border-radius: 4px !important;
+  -ms-border-radius: 4px !important;
+  -o-border-radius: 4px !important;
+}
+
+ngx-intl-tel-input.ng-invalid.ng-touched input {
+  border: 1px solid red !important;
+}
+.iti.separate-dial-code.iti--allow-dropdown.iti-sdc-3 input{
+  padding-left: 90px !important;
+}
+.iti.separate-dial-code.iti--allow-dropdown.iti-sdc-4 input {
+  padding-left: 90px !important;
+}
+.iti input#country-search-box  {
+  padding-left: 6px !important;
+}
+
+ngx-intl-tel-input input:hover {
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.24);
+}
+
+ngx-intl-tel-input input:focus {
+  outline: none !important;
+  border-color: #3498db;
+  box-shadow: 0 0 0 0 #000;
+}
+
+ngx-intl-tel-input input::-webkit-input-placeholder {
+  color: #bac2c7;
+}
+
+ngx-intl-tel-input input:-ms-input-placeholder {
+  color: #bac2c7;
+}
+
+ngx-intl-tel-input input::-ms-input-placeholder {
+  color: #bac2c7;
+}
+
+ngx-intl-tel-input input::placeholder {
+  color: #bac2c7;
+}
+
+ngx-intl-tel-input input[disabled] {
+  background-color: #e5eaf1;
+}
+
+
+.iti--allow-dropdown input, .iti--allow-dropdown input[type=text], .iti--allow-dropdown input[type=tel], .iti--separate-dial-code input, .iti--separate-dial-code input[type=text], .iti--separate-dial-code input[type=tel] {
+  padding-right: 6px !important;
+  padding-left: 52px !important;
+  margin-left: 0;
+}

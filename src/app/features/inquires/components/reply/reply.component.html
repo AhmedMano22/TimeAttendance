@@ -1,0 +1,71 @@
+
+<!-- edit -->
+<app-breadcrumb
+  [title]="'REPLY_INQUIRES' | translate"
+  [items]="['INQUIRES' | translate]"
+  [active_item]="'REPLY_INQUIRES' | translate">
+</app-breadcrumb>
+<div class="container-fluid list-products">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body" style="min-height: 400px;">
+          <div class="h-100 w-100 position-absolute d-flex align-items-center justify-content-center" style="z-index:0;">
+            <app-spinner *ngIf="loading" class="d-block mx-auto"></app-spinner>
+        </div>
+        <div class="row" *ngIf="!loading">
+            <div class="col-md-6 col-12">
+              <div class="mb-3">
+                <label class="form-label" for="MEMBER">{{"MEMBER" |translate}}</label>
+                <input class="form-control" [(ngModel)]="requestListinfo.MemberName" id="MEMBER" readonly  type="text" [placeholder]="'ENTER_TITLE_HERE' | translate">
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="mb-3">
+                  <label class="form-label" for="DEPARTMENT_NAME">{{"DEPARTMENT_NAME" |translate}}</label>
+                  <input class="form-control" [(ngModel)]="requestListinfo.DepName" id="DEPARTMENT_NAME" readonly  type="text" [placeholder]="'ENTER_TITLE_HERE' | translate">
+                </div>
+              </div>
+              <div class="col-md-6 col-12">
+                <div class="mb-3">
+                  <label class="form-label" for="REGISTER_DATE">{{"REGISTER_DATE" |translate}}</label>
+                  <input class="form-control" [(ngModel)]="requestListinfo.RegisterDateTime " id="REGISTER_DATE" readonly  type="text" [placeholder]="'ENTER_TITLE_HERE' | translate">
+                </div>
+              </div>
+              <div class="col-md-6 col-12">
+                <div class="mb-3">
+                  <label class="form-label" for="DAYS_AGO">{{"DAYS_AGO" |translate}}</label>
+                  <input class="form-control" [(ngModel)]="requestListinfo.Days" id="DAYS_AGO" readonly  type="text" [placeholder]="'ENTER_TITLE_HERE' | translate">
+                </div>
+              </div>
+
+
+
+
+          </div>
+          <form [formGroup]="form" (ngSubmit)="Submit()" *ngIf="!loading">
+            <div class="row">
+
+
+              <div class="col-12">
+                <div class="mb-3">
+                  <label class="form-label reply" for="reply">{{"REPLY" |translate}}</label>
+                  <textarea class="form-control" formControlName="Replay"  rows="5" cols="5" [placeholder]="'REPLY_INQUIRE_HERE' | translate"></textarea>
+                </div>
+              </div>
+
+
+              <div class="col-12 mt-4">
+                <div class="d-flex justify-content-center">
+                  <button class="btn btn-outline-success-2x w-50" [disabled]="!form.valid"  type="submit">{{"SUBMIT" |translate}}</button>
+                </div>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

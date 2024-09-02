@@ -1,0 +1,61 @@
+<app-breadcrumb
+  [title]="'USERS_LIST' | translate"
+  [items]="['USERS' | translate]"
+  [active_item]="'USERS_LIST' | translate"
+></app-breadcrumb>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+      <div class="card-header pb-0" >
+          <button class="btn btn-primary text-center" *ngIf="AuthUser.login == true && AuthUser.New == true"
+          [routerLink]="['/users/Add-User']"  type="button">
+            {{ 'ADD_USER' | translate }}
+          </button>
+      </div>
+      <div class="card-body d-flex align-items-center justify-content-center" style="min-height: 300px;" *ngIf="AuthUser.login == true">
+        <div class=" w-100  position-absolute  d-flex align-items-center" style="z-index:0;">
+          <app-spinner *ngIf="loading" class="d-block mx-auto"></app-spinner>
+        </div>
+        <div class="table-responsive product-table w-100" *ngIf="!loading">
+
+          <app-crud-list [data]="ListData" *ngIf="ListData.length > 0">
+            <ng-template #headers>
+                <th scope="col" class="text-center">{{"ID" |translate}}</th>
+                <th scope="col" class="text-center">{{"USER_NAME" |translate}}</th>
+                <th scope="col" class="text-center">{{"ACTIONS" |translate}}</th>
+            </ng-template>
+            <ng-template #rows let-data>
+                <td class="text-center">{{data.id}}</td>
+                 <td class="text-center">{{data.UserName}}</td>
+
+
+                 <td class="d-flex gap-1 action-buttons justify-content-center" >
+                  <button class="btn  btn-primary" type="button"
+                  *ngIf="AuthUser.login == true"
+                          [routerLink]="['/users/User-details', data.id]"
+                          [queryParams]="{mode: 'view'}"
+
+                          > {{"ACTIONS" |translate}}</button>
+                  <button class="btn  success" type="button"
+                  *ngIf="AuthUser.edit == true"
+                  [routerLink]="['/users/User-details', data.id]" [queryParams]="{mode: 'edit'}"> {{"EDIT" |translate}}</button>
+                  <button class="btn  danger" type="button"
+                  *ngIf="AuthUser.delete == true"
+                  (click)="remove(data.id)"> {{"DELETE" |translate}}</button>
+                </td>
+            </ng-template>
+          </app-crud-list>
+        </div>
+        <div *ngIf="ListData.length == 0 && !loading " class="noInquires">
+            <p class="text-center"> {{"NO_UNITS" |translate}}</p>
+        </div>
+      </div>
+      <div class="card-body d-flex align-items-center justify-content-center"
+      style="min-height: 300px;" *ngIf="AuthUser.login == false ">
+      <h4 class="text-center fw-bold"> {{"NOT_AUTH" |translate}}</h4>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<app-breadcrumb [title]="'MY_PROFILE' | translate" [items]="['ACCOUNT' | translate]" [active_item]="'MY_PROFILE' | translate"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-11">
+        <div class="card shadow">
+          <div class="card-body mb-2">
+            <div class="d-flex justify-content-center my-4">
+              <img src="{{ supervisor.picture }}" class="img-fluid rounded-circle" alt="{{ supervisor.fullName }} Picture" style="height: 240px; width: 240px;">
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <h4 class="my-4"><strong>{{ 'NAME' | translate }}:</strong> {{ supervisor.fullName }}</h4>
+                <h4 class="my-4"><strong>{{ 'EMAIL' | translate }}:</strong> {{ supervisor.email }}</h4>
+                <h4 class="my-4"><strong>{{ 'PHONE_NUMBER' | translate }}:</strong> {{ supervisor.phoneNumber }}</h4>
+              </div>
+              <div class="col-md-6">
+                <h4 class="my-3"><strong>{{ 'COUNTRY' | translate }}:</strong> {{ supervisor.country }}</h4>
+                <h4 class="my-3"><strong>{{ 'GENDER' | translate }}:</strong> {{ supervisor.gender }}</h4>
+                <h4 class="my-3"><strong>{{ 'TYPE' | translate }}:</strong> {{ supervisor.type }}</h4>
+                <h4 class="my-3"><strong>{{ 'PERMISSION' | translate }}:</strong> {{ supervisor.permission }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

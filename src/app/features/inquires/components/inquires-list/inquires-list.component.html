@@ -1,0 +1,64 @@
+<app-breadcrumb
+  [title]="'INQUIRES_LIST' | translate"
+  [items]="['INQUIRES' | translate]"
+  [active_item]="'INQUIRES_LIST' | translate"
+></app-breadcrumb>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body d-flex align-items-center justify-content-center"
+        style="min-height: 300px;" *ngIf="AuthUser.login == true">
+          <div class=" w-100  position-absolute  d-flex align-items-center" style="z-index:0;">
+            <app-spinner *ngIf="loading" class="d-block mx-auto"></app-spinner>
+          </div>
+          <div class="table-responsive w-100" *ngIf="!loading">
+            <table class="table table-hover table-border-horizontal" *ngIf="ListData.length > 0">
+              <thead>
+                <tr>
+                  <!-- <th scope="col">{{"ID" |translate}}</th> -->
+                  <th scope="col" class="text-center">{{"UNIT_NUMBER" |translate}}</th>
+                  <th scope="col" class="text-center">{{"MEMBER_NAME" |translate}}</th>
+                  <th scope="col" class="text-center">{{"DEPARTMENT_NAME" |translate}}</th>
+                  <th scope="col" class="text-center">{{"REGISTER_DATE" |translate}}</th>
+                  <th scope="col" class="text-center">{{"DAYS_AGO" |translate}}</th>
+                  <th scope="col" >{{"INQUIRE" |translate}}</th>
+                  <!-- style="min-width: 210px;" -->
+                  <th scope="col" class="text-center" style="min-width: 215px;">{{"ACTIONS" |translate}}</th>
+                </tr>
+              </thead>
+              <tbody>
+
+               <ng-container *ngFor="let data of ListData">
+                 <tr >
+                   <!-- <th scope="row">{{data.id}}</th> -->
+                   <td class="text-center">{{data.UnitNO}}</td>
+                   <td class="text-center">{{data.MemberName}}</td>
+                   <td class="text-center">{{data.DepName}}</td>
+                   <td class="text-center">  {{data.RegisterDateTime | date:'short'}}</td>
+                   <td class="text-center">{{data.Days}}</td>
+                   <td>{{data.Note}}</td>
+                   <td class="d-flex gap-1 action-buttons justify-content-center" >
+                    <button class="btn  btn-primary" type="button" [routerLink]="['/inquires/reply', data.Id]"> {{"REPLAY" |translate}}</button>
+                    <button class="btn  success" type="button" (click)="reply(data.Id)"> {{"REPLAY_NOW" |translate}}</button>
+                   </td>
+
+                 </tr>
+
+               </ng-container>
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="ListData.length == 0 && !loading  " class="noInquires">
+              <p class="text-center"> {{"NO_INQUIRES" |translate}}</p>
+          </div>
+        </div>
+        <div class="card-body d-flex align-items-center justify-content-center"
+        style="min-height: 300px;" *ngIf="AuthUser.login == false ">
+        <h4 class="text-center fw-bold"> {{"NOT_AUTH" |translate}}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

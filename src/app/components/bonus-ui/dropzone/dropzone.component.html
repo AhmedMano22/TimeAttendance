@@ -1,0 +1,70 @@
+<app-breadcrumb [title]="'Dropzone'" [items]="['Bonus Ui']" [active_item]="'Dropzone'"></app-breadcrumb>
+<div class="container-fluid">
+   <div class="row">
+     <div class="col-sm-12">
+       <div class="card">
+         <div class="card-header pb-0">
+           <h5>Single File Upload</h5>
+         </div>
+         <div class="card-body">
+           <ngx-dropzone [multiple]="false" (change)="onSelect($event)">
+            <ngx-dropzone-label>
+               <div>
+                  <div class="dz-message needsclick ">
+                     <i class="icon-cloud-up"></i>
+                     <h6>Drop files here or click to upload.</h6><span class="dz-message needsclick">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
+                    </div>
+                 </div>
+              </ngx-dropzone-label>
+              <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                 <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+              </ngx-dropzone-preview>
+           </ngx-dropzone>
+         </div>
+       </div>
+     </div>
+     <div class="col-sm-12">
+       <div class="card">
+         <div class="card-header pb-0">
+           <h5>Multi File Upload</h5>
+         </div>
+         <div class="card-body">
+            <ngx-dropzone (change)="onSelect2($event)" [multiple]="true">
+               <ngx-dropzone-label>
+                  <div>
+                     <div class="dz-message needsclick ">
+                        <i class="icon-cloud-up"></i>
+                        <h6>Drop files here or click to upload.</h6><span class="dz-message needsclick">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
+                       </div>
+                    </div>
+                 </ngx-dropzone-label>
+                 <ngx-dropzone-preview *ngFor="let f of files2" [removable]="true" (removed)="onRemove2(f)">
+                    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                 </ngx-dropzone-preview>
+              </ngx-dropzone>
+         </div>
+       </div>
+     </div>
+     <div class="col-sm-12">
+       <div class="card">
+         <div class="card-header pb-0">
+           <h5>File Type Validation</h5>
+         </div>
+         <div class="card-body">
+            <ngx-dropzone (change)="onSelect3($event)" [multiple]="true">
+               <ngx-dropzone-label>
+                  <div>
+                     <div class="dz-message needsclick ">
+                        <i class="icon-cloud-up"></i>
+                        <h6>Drop files here or click to upload.</h6><span class="dz-message needsclick">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
+                       </div>
+                    </div>
+                 </ngx-dropzone-label>
+                 <ngx-dropzone-preview *ngFor="let f of files3" [removable]="true" (removed)="onRemove3(f)">
+                    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                 </ngx-dropzone-preview>
+              </ngx-dropzone>
+         </div>
+       </div>
+     </div>
+   </div>

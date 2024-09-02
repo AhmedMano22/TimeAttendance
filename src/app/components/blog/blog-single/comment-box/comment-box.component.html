@@ -1,0 +1,50 @@
+<div class="card-body">
+   <h4>Comment</h4>
+   <ul>
+    <ng-container *ngFor="let data of commentsData">
+      <div *ngIf="data.reply === false">
+        <li>
+          <div class="media align-self-center"><img class="align-self-center" src="{{data.img}}" alt="Generic placeholder image">
+            <div class="media-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <a href="users/users-profile">
+                    <h6 class="mt-0">{{data.name}}<span> {{data.designation }}</span></h6>
+                  </a>
+                </div>
+                <div class="col-md-8">
+                  <ul class="comment-social float-start float-md-end">
+                    <li class="digits"><i class="icofont icofont-thumbs-up"></i>{{data.hits}} Hits</li>
+                    <li class="digits"><i class="icofont icofont-ui-chat"></i>{{data.comments}} Comments</li>
+                  </ul>
+                </div>
+              </div>
+              <p>{{data.decs}}</p>
+            </div>
+          </div>
+        </li>
+      </div>
+      <div *ngIf="data.reply === true">
+        <li>
+          <ul>
+            <li>
+              <div class="media"><img class="align-self-center" src="{{data.img}}" alt="Generic placeholder image">
+                <div class="media-body">
+                  <div class="row">
+                    <div class="col-xl-12">
+                      <a href="users/users-profile">
+                        <h6 class="mt-0">{{data.name}}<span> {{data.designation}}</span></h6>
+                      </a>
+                    </div>
+                  </div>
+                  <p>{{data.decs}}</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </div>
+    </ng-container>
+   </ul>
+  </div>
+

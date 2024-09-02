@@ -1,0 +1,188 @@
+<!-- edit -->
+<app-breadcrumb   *ngIf="mode === 'edit'"
+  [title]="'EDIT_UNIT' | translate"
+  [items]="['UNITS' | translate]"
+  [active_item]="'EDIT_UNIT' | translate">
+</app-breadcrumb>
+<div class="container-fluid list-products" *ngIf="mode === 'edit'">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+
+            <div class="card-body" style="min-height: 300px;">
+                <div class="h-100 w-100  position-absolute  d-flex align-items-center" style="z-index:0; top:0">
+                    <app-spinner *ngIf="loading" class="d-block mx-auto"></app-spinner>
+                  </div>
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!loading" class="">
+                <div class="row ">
+                  <div class="col-12">
+                    <div class="mb-3">
+                      <label class="form-label" for="exampleFormControlSelect9">{{"UNIT_TYPE"|translate}}</label>
+                      <select class="form-select digits"
+                              id="exampleFormControlSelect9"
+                              (change)="onUnitTypeChange($event)"
+                              formControlName="UnitType" >
+
+                          <option value="" selected disabled>{{"SELECT_UNIT_TYPE" |translate}}</option>
+                          <option *ngFor="let unitType of unitstpes" [value]="unitType.Id">{{ unitType.Name }}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mt-3" >
+                    <div class="mb-3">
+                      <label class="form-label" for="BUILDING_NUMBER">{{"BUILDING_NUMBER" |translate}}</label>
+                      <input class="form-control" id="BUILDING_NUMBER" type="number"  formControlName="BuildingNumber"
+                      [placeholder]="'ENTER_BUILDING_NUMBER' | translate">
+                    </div>
+                  </div>
+                  <div class="col-12 mt-3" *ngIf="unitinfo.Apartment !== 0 || form.get('UnitType')?.value === 4">
+                    <div class="mb-3">
+                      <label class="form-label" for="APARTMENT">{{"APARTMENT" |translate}}</label>
+                      <input class="form-control" id="APARTMENT" type="number" formControlName="Apartment"
+                      [placeholder]="'ENTER_APARTMENT' | translate">
+                    </div>
+                  </div>
+                  <div class=" col-12 mt-3">
+                    <div class="mb-3">
+
+                      <div class="form-check checkbox checkbox-primary mb-3">
+                        <input class="form-check-input" formControlName="UnActive" id="checkbox-primary-1" type="checkbox">
+                        <label class="form-check-label"   for="checkbox-primary-1">{{"NOTACTIVE" |translate}}</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 mt-4">
+                    <div class="d-flex justify-content-center">
+                      <button class="btn btn-outline-success-2x w-50" [disabled]="!form.valid" type="submit">{{"SUBMIT" |translate}}</button>
+                    </div>
+                  </div>
+                </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-breadcrumb   *ngIf="mode === 'view'"
+  [title]="'UNIT_DETAILS' | translate"
+  [items]="['UNITS' | translate]"
+  [active_item]="'UNIT_DETAILS' | translate">
+</app-breadcrumb>
+<div class="container-fluid list-products" *ngIf="mode === 'view'">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body" style="min-height: 300px;">
+            <div class="h-100 w-100  position-absolute  d-flex align-items-center" style="z-index:0; top:0">
+                <app-spinner *ngIf="loading" class="d-block mx-auto"></app-spinner>
+              </div>
+
+          <div class="row w-100" *ngIf="!loading">
+            <div class="col-12">
+              <div class="mb-3">
+                <label class="form-label" for="exampleFormControlSelect9">{{"UNIT_TYPE"|translate}}</label>
+                <input class="form-control" id="BUILDING_NUMBER" type="text" readonly [(ngModel)]="unitinfo.UnitTypeName"
+                [placeholder]="'SELECT_UNIT_TYPE' | translate">
+
+              </div>
+            </div>
+
+            <div class="col-12 mt-3" >
+              <div class="mb-3">
+                <label class="form-label" for="BUILDING_NUMBER">{{"BUILDING_NUMBER" |translate}}</label>
+                <input class="form-control" id="BUILDING_NUMBER" type="number" readonly [(ngModel)]="unitinfo.BuildingNumber"
+                [placeholder]="'ENTER_BUILDING_NUMBER' | translate">
+              </div>
+            </div>
+            <div class="col-12 mt-3" *ngIf="unitinfo.Apartment !== 0 ">
+              <div class="mb-3">
+                <label class="form-label" for="APARTMENT">{{"APARTMENT" |translate}}</label>
+                <input class="form-control" id="APARTMENT" type="number" readonly [(ngModel)]="unitinfo.Apartment"
+                [placeholder]="'ENTER_APARTMENT' | translate">
+              </div>
+            </div>
+            <div class=" col-12 mt-3">
+              <div class="mb-3">
+
+                <div class="form-check checkbox checkbox-primary mb-3">
+                  <input class="form-check-input" onclick="return false" [(ngModel)]="unitinfo.UnActive" id="checkbox-primary-1" type="checkbox">
+                  <label class="form-check-label"   for="checkbox-primary-1">{{"NOTACTIVE" |translate}}</label>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-breadcrumb *ngIf="mode === 'new'"
+        [title]="'ADD_UNIT' | translate"
+        [items]="['UNITS' | translate]"
+        [active_item]="'ADD_UNIT' | translate">
+</app-breadcrumb>
+<div class="container-fluid list-products" *ngIf="mode === 'new'">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body"  *ngIf="AuthUser.login == true && AuthUser.New == true  " >
+          <form [formGroup]="createform" (ngSubmit)="NewonSubmit()">
+              <div class="row">
+                <div class="col-12">
+                  <div class="mb-3">
+                    <label class="form-label" for="exampleFormControlSelect9">{{"UNIT_TYPE"|translate}}</label>
+                    <select class="form-select digits"
+                            id="exampleFormControlSelect9"
+                            (change)="onUnitTypeChangecrete($event)"
+                            formControlName="UnitType" >
+
+                        <option value="" selected disabled>{{"SELECT_UNIT_TYPE" |translate}}</option>
+                        <option *ngFor="let unitType of unitstpes" [value]="unitType.Id">{{ unitType.Name }}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-12 mt-3" *ngIf="showEmailAddressInput">
+                  <div class="mb-3">
+                    <label class="form-label" for="APARTMENT">{{"APARTMENT" |translate}}</label>
+                    <input class="form-control" id="APARTMENT" type="number" formControlName="Apartment"
+                    [placeholder]="'ENTER_APARTMENT' | translate">
+                  </div>
+                </div>
+                <div class="col-12 mt-3" >
+                  <div class="mb-3">
+                    <label class="form-label" for="BUILDING_NUMBER">{{"BUILDING_NUMBER" |translate}}</label>
+                    <input class="form-control" id="BUILDING_NUMBER" type="number"  formControlName="BuildingNumber"
+                    [placeholder]="'ENTER_BUILDING_NUMBER' | translate">
+                  </div>
+                </div>
+                <div class=" col-12 mt-3">
+                  <div class="mb-3">
+                    <!-- formControlName="unActive" -->
+                    <div class="form-check checkbox checkbox-primary mb-3">
+                      <input class="form-check-input" formControlName="UnActive" id="checkbox-primary-1" type="checkbox">
+                      <label class="form-check-label"   for="checkbox-primary-1">{{"NOTACTIVE" |translate}}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 mt-4">
+                  <div class="d-flex justify-content-center">
+                    <button class="btn btn-outline-success-2x w-50" [disabled]="!createform.valid" type="submit">{{"SUBMIT" |translate}}</button>
+                  </div>
+                </div>
+              </div>
+        </form>
+
+        </div>
+        <div class="card-body d-flex align-items-center justify-content-center"
+        style="min-height: 300px;" *ngIf="AuthUser.New == false ">
+        <h4 class="text-center fw-bold"> {{"NOT_AUTH" |translate}}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

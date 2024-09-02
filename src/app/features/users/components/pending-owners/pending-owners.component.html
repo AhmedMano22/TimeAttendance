@@ -1,0 +1,90 @@
+
+<app-breadcrumb
+  [title]="'PENDING_OWNERS' | translate"
+  [items]="['OWNERS' | translate]"
+  [active_item]="'PENDING_OWNERS' | translate">
+</app-breadcrumb>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body d-flex align-items-center justify-content-center"
+          style="min-height: 300px;"  *ngIf="AuthUser.login == true">
+          <div class="w-100 position-absolute d-flex align-items-center" style="z-index:0;">
+            <app-spinner *ngIf="loading" class="d-block mx-auto"></app-spinner>
+          </div>
+          <div class="table-responsive product-table w-100" *ngIf="!loading">
+
+            <app-crud-list [data]="paginatedData" *ngIf="paginatedData.length > 0">
+              <ng-template #headers>
+                <th scope="col" class="text-center">{{"NAME" |translate}}</th>
+                <th scope="col" class="text-center" >{{"EMAIL" |translate}}</th>
+                <th scope="col" class="text-center" >{{"MOBILE" |translate}}</th>
+                <th scope="col" class="text-center">{{"REGISTER_DATE" |translate}}</th>
+                <th scope="col" class="text-center">{{"UNIT_NUMBER" |translate}}</th>
+                <th scope="col" class="text-center">{{"ACTIONS" |translate}}</th>
+              </ng-template>
+              <ng-template #rows let-data>
+                <td class="text-center">{{data.Name}}</td>
+                    <td class="text-center" style="max-width: 200px">{{data.Email}}</td>
+                    <td class="text-center" style="max-width: 170px;">{{data.Phone}}</td>
+                    <td class="text-center">{{data.RegisterDateTime | date:'short'}}</td>
+                    <td class="text-center">{{data.UnitNO}}</td>
+                    <td class="d-flex gap-1 action-buttons justify-content-center">
+                      <button class="btn btn-primary" type="button" [routerLink]="['/users/details', data.Id]">
+                        {{"ACTIONS" |translate}}
+                      </button>
+                    </td>
+              </ng-template>
+            </app-crud-list>
+
+            <div class="d-flex justify-content-center mt-5"  *ngIf="paginatedData.length > 0">
+              <nav aria-label="Page navigation example">
+                <ul class="pagination pagination-primary">
+                  <li class="page-item" [class.disabled]="currentPage === 1">
+                    <a class="page-link" href="javascript:void(0)" (click)="prevPage()">{{"PREV" |translate}}</a>
+                  </li>
+                  <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index" [class.active]="currentPage === i + 1">
+                    <a class="page-link" href="javascript:void(0)" (click)="changePage(i + 1)">{{ i + 1 }}</a>
+                  </li>
+                  <li class="page-item" [class.disabled]="currentPage === totalPages">
+                    <a class="page-link" href="javascript:void(0)" (click)="nextPage()">{{"NEXT" |translate}}</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          <div *ngIf="paginatedData.length == 0 && !loading" class="noInquires">
+            <p class="text-center">{{"NO_PENDING_OWNERS" |translate}}</p>
+          </div>
+        </div>
+        <div class="card-body d-flex align-items-center justify-content-center"
+        style="min-height: 300px;" *ngIf="AuthUser.login == false ">
+        <h4 class="text-center fw-bold"> {{"NOT_AUTH" |translate}}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

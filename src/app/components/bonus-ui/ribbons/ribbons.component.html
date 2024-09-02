@@ -1,0 +1,51 @@
+<app-breadcrumb [title]="'Ribbons'" [items]="['Bonus Ui']" [active_item]="'Ribbons'"></app-breadcrumb>
+ <div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-xl-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>Colored Ribbons</h5><span>use class <code>.ribbons-colored .bg-primary</code></span>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <ng-container *ngFor="let item of ribbonTop" >
+              <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="card">
+                  <div class="ribbon-wrapper">
+                    <div class="card-body">
+                      <div class="ribbon ribbon-{{item}} ribbon-space-bottom"> Ribbon</div>
+                      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngFor="let color of ribbonColor">
+      <ng-container *ngFor="let c of color.ribbon">
+        <div class="col-sm-12 col-md-6 col-xl-4">
+          <div class="ribbon-vertical-{{color.class}}-wrapper card">
+            <div class="card-body">
+              <div class="ribbon ribbon-{{c.color}} ribbon-vertical-{{color.class}}"><i class="{{c.icon}}"></i></div>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngFor="let color of ribbon">
+      <ng-container *ngFor="let c of color.colors">
+        <div class="col-sm-12 col-md-6 col-xl-4">
+         <div class="{{color.ribbonClass}}">
+           <div class="card-body">
+              <div class="ribbon ribbon-{{c}} {{color.labelClass}}"> Ribbon</div>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>  
+</div>

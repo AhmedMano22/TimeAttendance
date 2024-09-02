@@ -1,0 +1,15 @@
+<div class="card card-mb-faq">
+   <div class="card-header faq-header">
+     <h5>Navigation</h5><i data-feather="settings"></i>
+   </div>
+   <div class="card-body faq-body">
+     <div class="navigation-btn"><a class="btn btn-primary" href="javascript:void(0)"><i class="m-r-10" data-feather="message-square"></i>Ask Question</a></div>
+     <div class="navigation-option">
+       <ul>
+        <ng-container *ngFor="let n of navigation">
+          <li><a href="javascript:void(0)"><app-feather-icon [icon]=n.icon></app-feather-icon>{{n.title}}</a><span class="badge badge-primary badge-pill pull-right" *ngIf="n.count">{{n.count}}</span></li>
+        </ng-container>
+       </ul>
+     </div>
+   </div>
+ </div>

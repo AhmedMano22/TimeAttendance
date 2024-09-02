@@ -1,0 +1,73 @@
+<app-breadcrumb [title]="'ADD_ANNOUNCEMENT' | translate" [items]="['ADS' | translate]"
+  [active_item]="'ADD_ANNOUNCEMENT' | translate"></app-breadcrumb>
+
+<div class="container-fluid list-products">
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body" style="min-height: 300px;" *ngIf="AuthUser.login == true && AuthUser.New == true  ">
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-6 col-12 mb-2  image">
+                <h3>{{"LOGO" |translate}}</h3>
+                 <div class="image-container">
+                  <img [src]="logoPreview" alt="" (click)="fileInput1.click()" >
+                   <span class="add-img rounded-circle" (click)="fileInput1.click()" >+</span>
+                 </div>
+                <input type="file" style="display: none;" id="image1" formControlName="logo"  (change)="onFileSelected($event)" #fileInput1 class="form-control"
+                    accept=".png, .jpg, .jpeg , .gif"
+                   />
+               </div>
+
+              <div class="col-md-6 col-12 mb-2  image">
+                <h3>{{"PICIMAGE" |translate}}</h3>
+                 <div class="image-container">
+                  <img [src]="picPreview" alt=""(click)="fileInput2.click()" >
+                   <span class="add-img rounded-circle" (click)="fileInput2.click()" >+</span>
+                 </div>
+                <input type="file" style="display: none;" id="image2" formControlName="pic"   (change)="onFileSelected2($event)"  #fileInput2 class="form-control" accept=".png, .jpg, .jpeg , .gif"
+                   />
+              </div>
+              <div class="col-12">
+                <div class="mb-3">
+                  <label class="form-label" for="title">{{"TITLE" |translate}}</label>
+                  <input class="form-control" id="title" formControlName="title" type="text" [placeholder]="'ENTER_TITLE_HERE' | translate">
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="mb-3">
+                  <label class="form-label" for="description">{{"DESCRIPTION" |translate}}</label>
+                  <textarea class="form-control" id="description" formControlName="description" [placeholder]="'ENTER_DESCRIPTION_HERE' | translate" rows="3"></textarea>
+                </div>
+
+              </div>
+              <div class="col-12">
+                <div class="mb-3">
+                  <div class="form-check checkbox checkbox-primary mb-3">
+                    <input class="form-check-input" formControlName="unActive" id="checkbox-primary-1" type="checkbox">
+                    <label class="form-check-label" for="checkbox-primary-1">{{"NOTACTIVE" |translate}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 mt-4">
+                <div class="d-flex justify-content-center">
+                  <button class="btn btn-outline-success-2x w-50" [disabled]="!form.valid" type="submit">{{"SUBMIT" |translate}}</button>
+                </div>
+              </div>
+                <!-- <div class="col-12">
+                  <input [ngxTimepicker]="picker">
+                  <ngx-material-timepicker #picker dir="ltr"></ngx-material-timepicker>
+                </div> -->
+
+            </div>
+          </form>
+        </div>
+        <div class="card-body d-flex align-items-center justify-content-center"
+        style="min-height: 300px;" *ngIf="AuthUser.New == false ">
+        <h4 class="text-center fw-bold"> {{"NOT_AUTH" |translate}}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
