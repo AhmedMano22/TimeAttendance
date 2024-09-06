@@ -20,6 +20,8 @@ import { LightboxModule } from "@ngx-gallery/lightbox";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ToastrModule } from "ngx-toastr";
 import { NgxIntlTelInputModule } from "ngx-intl-tel-input";
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { TokenInterceptorService } from "./shared/interceptor/token-interceptor.service";
 
 @NgModule({
   declarations: [AppComponent, ButtonsComponent, LoginComponent],
@@ -39,7 +41,11 @@ import { NgxIntlTelInputModule } from "ngx-intl-tel-input";
     ToastrModule.forRoot(),
     NgxIntlTelInputModule
   ],
-  providers: [AdminGuard],
+  providers: [AdminGuard, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptorService,
+    multi: true,
+  },],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -10,28 +10,28 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 declare var require: any;
 const Swal = require("sweetalert2");
-interface Department {
+interface Job {
   nameAr: string;
   nameEn: string;
   id: number;
 }
 @Component({
-  selector: "app-department-list",
-  templateUrl: "./department-list.component.html",
-  styleUrls: ["./department-list.component.scss"],
+  selector: 'app-locations-list',
+  templateUrl: './locations-list.component.html',
+  styleUrls: ['./locations-list.component.scss']
 })
-export class DepartmentListComponent {
+export class LocationsListComponent {
   subscriptions = ["Lawyer", "Normal", "Admin", "Translator"];
   
   loading = false;
   ListData: any[] = [];
   subscriptionType: string[];
   item: boolean = false;
-  DepartmentForm!: FormGroup;
-  EditDepartmentForm!: FormGroup;
+  JobForm!: FormGroup;
+  EditJobForm!: FormGroup;
   isSubmited = false;
   isEditSubmited = false;
-  department:Department={
+  job:Job={
     nameAr: "",
     nameEn: "",
     id: 0
@@ -48,11 +48,11 @@ export class DepartmentListComponent {
   ngOnInit() {
     this.loading = true;
      this.load();
-     this.DepartmentForm = this.fb.group({
+     this.JobForm = this.fb.group({
       nameAr: ['', Validators.required], 
       nameEn: ['', Validators.required], 
     });
-    this.EditDepartmentForm = this.fb.group({
+    this.EditJobForm = this.fb.group({
       nameAr: ['', Validators.required], 
       nameEn: ['', Validators.required], 
     });
@@ -60,7 +60,7 @@ export class DepartmentListComponent {
 
   load() {
     this.loading = true; // Start loading
-    this.apiSer.getDepartments().subscribe({
+    this.apiSer.getLocations().subscribe({
       next: (res: any) => {
         this.ListData = res.result;
         console.log("res", res);
@@ -80,20 +80,20 @@ export class DepartmentListComponent {
  
   onSubmit(modal: any) {
     this.isSubmited = true;
-    if (this.DepartmentForm.valid) {
-      console.log(this.DepartmentForm.value);
-      const formData = this.DepartmentForm.value
-      this.apiSer.addDepartment(formData).subscribe({
+    if (this.JobForm.valid) {
+      console.log(this.JobForm.value);
+      const formData = this.JobForm.value
+      this.apiSer.addLocation(formData).subscribe({
         next: (res: any) => {
           console.log(res);
         
           if (res.success == true) {
             this.load();
-            this.DepartmentForm.reset();
+            this.JobForm.reset();
             this.isSubmited = false;
             modal.dismiss();
             this.translate
-              .get("Create_department_Success")
+              .get("Create_Location_Success")
               .subscribe((translations: any) => {
                 Swal.fire({
                   title: translations.title,
@@ -171,7 +171,7 @@ export class DepartmentListComponent {
           })
           .then((result: any) => {
             if (result.isConfirmed) {
-              this.apiSer.deleteDepartment(id).subscribe({
+              this.apiSer.deleteLocation(id).subscribe({
                 next: (res: any) => {
                   console.log(res);
               
@@ -234,19 +234,19 @@ export class DepartmentListComponent {
   EditModal(content: any, id: any) {
     const modalRef = this.modalService.open(content,{ size: 'lg' });
 
-    this.apiSer.getDepartmentByID(id).subscribe({
+    this.apiSer.getLocationByID(id).subscribe({
       next: (res: any) => {
         console.log(res);
         if (res.success) {
-          this.department = {
+          this.job = {
             nameAr: res.result.nameAr,
             nameEn: res.result.nameEn,
             id: res.result.id,
            
           };
-          this.EditDepartmentForm.patchValue({
-            nameAr: this.department.nameAr,
-            nameEn:this.department.nameEn,
+          this.EditJobForm.patchValue({
+            nameAr: this.job.nameAr,
+            nameEn:this.job.nameEn,
     
           });
         }
@@ -258,24 +258,24 @@ export class DepartmentListComponent {
   }
   onSubmitEdit(modal: any) {
     this.isEditSubmited = true;
-    if (this.EditDepartmentForm.valid) {
-      const { nameAr, nameEn } = this.EditDepartmentForm.value;
+    if (this.EditJobForm.valid) {
+      const { nameAr, nameEn } = this.EditJobForm.value;
 
       const body = {
         nameAr: nameAr,
         nameEn: nameEn,
-        id:this.department.id
+        id:this.job.id
       };
       console.log("Update body:", body);
 
-      this.apiSer.UpdateDepartment(body).subscribe({
+      this.apiSer.UpdateLocation(body).subscribe({
         next: (res: any) => {
           console.log("Update response:", res);
           if (res.success == true) {
             this.load();
             modal.dismiss();
             this.translate
-              .get("update_Depart_Success")
+              .get("update_Location_Success")
               .subscribe((translations: any) => {
                 Swal.fire({
                   title: translations.title,
@@ -323,3 +323,4 @@ export class DepartmentListComponent {
     }
   }
 }
+

@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { TranslateService } from "@ngx-translate/core";
 import { BehaviorSubject } from "rxjs";
 import { ApiService } from "src/app/shared/services/api/api.service";
 import Swal from "sweetalert2";
@@ -15,7 +16,8 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
     private route: ActivatedRoute,
-    private apiser: ApiService
+    private apiser: ApiService,
+    private translate: TranslateService,
   ) {
     if (localStorage.getItem("user") != null) {
       this.userSubject.next(this.payload);
@@ -25,14 +27,27 @@ export class AuthService {
   login(username: string, password: string): void {
     console.log("username is ", username);
     console.log("password is ", password);
-    this.apiser.login(username, password).subscribe({
+    const body = {
+      userNameOrEmailAddress: username, 
+      password: password
+    }
+    this.apiser.login(body).subscribe({
       next: (res: any) => {
         console.log(res);
-        if (res.status == "Success") {
-          localStorage.setItem("userID", res.UsId);
+        if (res.success) {
+          localStorage.setItem("userToken", res.result.accessToken);
           this.userSubject.next(res);
           localStorage.setItem("user", JSON.stringify(res));
           this.router.navigate(["/"]);
+          this.translate.get("LoginSuccess").subscribe((translations: any) => {
+            Swal.fire({
+              title: translations.title,
+              text: translations.message,
+              icon: "success",
+              confirmButtonText: translations.confirmButtonText,
+            })
+          
+          });
         }
       },
       error: (errors) => {

@@ -13,87 +13,29 @@ import { ApiService } from "src/app/shared/services/api/api.service";
 })
 export class SysAdminComponent {
   dashboard: DashboardStats = {
-    Owner: 0,
-    Unit: 0,
-    Service: 0,
-    PendingSerice: 0,
-    PendingRequet: 0,
-    OwnerOnline: 0,
-    Inquires: 0,
-    Inquires30Day: 0,
+    Owner: 12,
+    Unit: 10,
+    Service: 8,
+    PendingSerice: 7,
+    PendingRequet: 6,
+    OwnerOnline: 3,
+    Inquires: 2,
+    Inquires30Day: 5,
   };
-  User: UserInfo = {
-    status: "",
-    UsId: 0,
-    Name: "",
-    Image: null,
-    Job: null,
-    Department: null,
-    Year: null,
-    Active: null,
-    Audit: null,
-    Message: null,
-    ImageRequired: null,
-    CompLog: null,
-    CompNew: null,
-    CompEdit: null,
-    CompDelete: null,
-  };
-  AuthUser: authUser = {
-    UserId: 0,
-    pageId: 0,
-    PaageName: "",
-    New: false,
-    edit: false,
-    delete: false,
-    login: false,
-    username: "",
-    password: "",
-  };
+
   item = { laval: "80%" };
   loading = false;
   ListData: any[] = [];
   constructor(private authservice: AuthService, private apiser: ApiService) {
-    this.authservice.user$.subscribe((userData) => {
-      if (userData) {
-        this.User = userData;
-        console.log("user is ", this.User);
-      }
-    });
+  
   }
   ngOnInit(): void {
     this.loading = true;
-    this.UserPageAuthnticated();
+  
     // this.load();
   }
-  UserPageAuthnticated() {
-    this.apiser
-      .userauthorizedtoPage(this.User.UsId, 11)
-      .subscribe((res: any) => {
-        this.AuthUser = res[0];
-        console.log("AuthUser", this.AuthUser);
-        if (this.AuthUser.login == true) {
-          this.load();
-        }
-      });
-  }
-  load() {
-    this.loading = true; // Start loading
-    this.apiser.getdashboardData().subscribe({
-      next: (res: any) => {
-        //this.ListData = res;
-        this.dashboard = res;
-        console.log("res", res);
-        console.log("dashboard", this.dashboard);
 
-        this.loading = false; // Stop loading after data is fetched
-      },
-      error: (err) => {
-        console.error("Failed to load requests", err);
-        this.loading = false; // Stop loading on error
-      },
-    });
-  }
+ 
   data = [
     {
       title: "OWNERS_COUNT",

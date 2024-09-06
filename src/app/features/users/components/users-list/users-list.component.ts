@@ -17,67 +17,25 @@ export class UsersListComponent {
   ListData: any[] = [];
   subscriptionType: string[];
   item: boolean = false;
-  User: UserInfo = {
-    status: "",
-    UsId: 0,
-    Name: "",
-    Image: null,
-    Job: null,
-    Department: null,
-    Year: null,
-    Active: null,
-    Audit: null,
-    Message: null,
-    ImageRequired: null,
-    CompLog: null,
-    CompNew: null,
-    CompEdit: null,
-    CompDelete: null,
-  };
-  AuthUser: authUser = {
-    UserId: 0,
-    pageId: 0,
-    PaageName: "",
-    New: false,
-    edit: false,
-    delete: false,
-    login: false,
-    username: "",
-    password: "",
-  };
+
   constructor(
     private apiSer: ApiService,
     private translate: TranslateService,
     private authservice: AuthService
   ) {
-    this.authservice.user$.subscribe((userData) => {
-      if (userData) {
-        this.User = userData;
-        console.log("user is ", this.User);
-      }
-    });
+   
   }
   ngOnInit() {
     this.loading = true;
-    this.UserPageAuthnticated();
-    // this.load();
+
+    this.load();
   }
-  UserPageAuthnticated() {
-    this.apiSer
-      .userauthorizedtoPage(this.User.UsId, 10)
-      .subscribe((res: any) => {
-        this.AuthUser = res[0];
-        console.log("AuthUser", this.AuthUser);
-        if (this.AuthUser.login == true) {
-          this.load();
-        }
-      });
-  }
+ 
   load() {
     this.loading = true; // Start loading
     this.apiSer.getUsers().subscribe({
       next: (res: any) => {
-        this.ListData = res;
+        this.ListData = res.result;
         console.log("res", res);
 
         this.loading = false; // Stop loading after data is fetched
@@ -92,6 +50,7 @@ export class UsersListComponent {
     this.apiSer.deleteUser(id).subscribe({
       next: (res) => {
         console.log("Delete response", res);
+        this.load();
         this.translate
           .get("userdeletesweetAlert")
           .subscribe((translations: any) => {
@@ -107,7 +66,16 @@ export class UsersListComponent {
             });
           });
       },
-      error: (err) => console.error("Delete failed", err),
+      error: (err) => {console.error("Delete failed", err)
+        this.translate.get("errorMessage").subscribe((translations: any) => {
+          Swal.fire({
+            title: translations.title,
+            text: translations.message,
+            icon: "error",
+            confirmButtonText: translations.confirmButtonText,
+          });
+        });
+      },
     });
   }
 }

@@ -70,123 +70,79 @@ export class EyasNavService {
       badgeType: "light-primary",
       active: true,
     },
-    // {
-    //   title: "UNITS",
-    //   icon: "bookmark",
-    //   type: "sub",
-    //   active: false,
-    //   children: [
-    //     { path: "/units/units", title: "UNITS_LIST", type: "link" },
-    //     { path: "/units/add-unit", title: "ADD_UNIT", type: "link" },
-    //     { path: "/units/Pending-Units", title: "PENDING_UNITS", type: "link" },
-    //   ],
-    // },
+ 
 
-    // {
-    //   title: "OWNERS",
-    //   icon: "users",
-    //   type: "sub",
-    //   active: false,
-    //   children: [
-    //     { path: "/users/Owners", title: "OWNERS_LIST", type: "link" },
-
-    //   ],
-    // },
-    // {
-    //   title: "PENDING_OWNERS",
-    //   icon: "users",
-    //   type: "link",
-    //   active: false,
-    //   path: "/users/Pending-Owners",
-    // },
-    // {
-    //   title: "DISCOVER",
-    //   icon: "page",
-    //   type: "sub",
-    //   active: false,
-    //   children: [
-    //     {
-    //       path: "/discover/discover-list",
-    //       title: "DISCOVERS_LIST",
-    //       type: "link",
-    //     },
-    //     { path: "/discover/add", title: "ADD_DISCOVER", type: "link" },
-    //   ],
-    // },
-    // {
-    //   title: "ADS",
-    //   icon: "page",
-    //   type: "sub",
-    //   active: false,
-    //   children: [
-    //     { path: "/ads/ads-list", title: "ADS_LIST", type: "link" },
-    //     { path: "/ads/add", title: "ADD_ANNOUNCEMENT", type: "link" },
-    //   ],
-    // },
-    // {
-    //   title: "SERVICES",
-    //   icon: "widgets",
-    //   type: "sub",
-    //   active: false,
-    //   children: [
-    //     { path: "/services/services", title: "SERVICES", type: "link" },
-    //     { path: "/services/add-service", title: "ADD_SERVICE", type: "link" },
-
-    //     {
-    //       path: "/services/bookings-List",
-    //       title: "BOOKINGS_LIST",
-    //       type: "link",
-    //     },
-    //     { path: "/services/add-bookings", title: "ADD_BOOKINGS", type: "link" },
-    //   ],
-    // },
-    // {
-    //   title: "ORDERS",
-    //   icon: "widgets",
-    //   type: "sub",
-    //   active: false,
-    //   children: [
-    //     { path: "/requests/requests-list", title: "ORDERS_LIST", type: "link" },
-
-    //     { path: "/requests/add", title: "ADD_ORDERS", type: "link" },
-    //   ],
-    // },
-
-    // {
-    //   title: "PENDING_BOOKINGS",
-    //   icon: "widgets",
-    //   type: "link",
-    //   active: false,
-    //   path: "/services/pending-services",
-    // },
-    // {
-    //   title: "PENDING_ORDERS",
-    //   icon: "widgets",
-    //   type: "link",
-    //   active: false,
-    //   path: "/requests/pending-requests",
-    // },
-    // {
-    //   title: "DEPARTMENTS",
-    //   icon: "widgets",
-    //   type: "sub",
-    //   active: false,
-    //   children: [
-    //     {
-    //       path: "/departments/departments-list",
-    //       title: "DEPARTMENTS_LIST",
-    //       type: "link",
-    //     },
-    //     { path: "/departments/add", title: "ADD_DEPARTMENT", type: "link" },
-    //   ],
-    // },
-    // {
-    //   title: "INQUIRES",
-    //   icon: "others",
-    //   type: "link",
-    //   active: false,
-    //   path: "/inquires/inquires-list",
-    // },
+    {
+      title: "DEPARTMENTS",
+      icon: "widgets",
+      type: "sub",
+      active: false,
+      children: [
+        {
+          path: "/departments/departments-list",
+          title: "DEPARTMENTS_LIST",
+          type: "link",
+        },
+      ],
+    },
+    {
+      title: "JOBS",
+      icon: "widgets",
+      type: "sub",
+      active: false,
+      children: [
+        {
+          path: "/Jobs/jobs-list",
+          title: "JOBS_LIST",
+          type: "link",
+        },
+      ],
+    },
+    {
+      title: "LOCATION",
+      icon: "widgets",
+      type: "sub",
+      active: false,
+      children: [
+        {
+          path: "/Loccation/locations-list",
+          title: "LOCATION_LIST",
+          type: "link",
+        },
+      ],
+    },
+    {
+      title: "SHIFTS",
+      icon: "widgets",
+      type: "sub",
+      active: false,
+      children: [
+        {
+          path: "/Shifts/shifts-list",
+          title: "SHIFTS_LIST",
+          type: "link",
+        },
+      ],
+    },{
+      title: "LEAVES",
+      icon: "widgets",
+      type: "sub",
+      active: false,
+      children: [
+        {
+          path: "/Leaves/Leaves-list",
+          title: "LEAVES_LIST",
+          type: "link",
+        },
+      ],
+    },
+     {
+      title: "REPORTS",
+      icon: "charts",
+      type: "link",
+      active: false,
+      path: "/reports/reports-list",
+    },
 
     {
       title: "ACCOUNTS_RULES",
@@ -197,34 +153,7 @@ export class EyasNavService {
         { path: "/users/users-list", title: "USERS_LIST", type: "link" },
       ],
     },
-    // {
-    //   title: "CONTACT_US",
-    //   icon: "knowledgebase",
-    //   type: "link",
-    //   active: false,
-    //   path: "/contact/contact-us",
-    // },
-    // {
-    //   title: "REPORTSS",
-    //   icon: "charts",
-    //   type: "link",
-    //   active: false,
-    //   path: "/reports/reports-list",
-    // },
-
-    // {
-    //   title: "SETTINGS",
-    //   icon: "samplepage",
-    //   type: "sub",
-    //   active: false,
-    //   children: [
-    //     {
-    //       path: "/setting/change-password",
-    //       title: "CHANGE_PASS",
-    //       type: "link",
-    //     },
-    //   ],
-    // },
+  
   ];
 
   items = new BehaviorSubject<Menu[]>(this.MENUITEMS);

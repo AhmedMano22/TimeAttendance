@@ -1,7 +1,7 @@
 <app-breadcrumb
-  [title]="'DEPARTMENTS_LIST' | translate"
-  [items]="['DEPARTMENTS' | translate]"
-  [active_item]="'DEPARTMENTS_LIST' | translate"
+  [title]="'JOBS_LIST' | translate"
+  [items]="['JOBS' | translate]"
+  [active_item]="'JOBS_LIST' | translate"
 ></app-breadcrumb>
 <div class="container-fluid">
   <div class="row">
@@ -10,7 +10,7 @@
         <div class="card-header pb-0" >
           <button class="btn btn-primary text-center" (click)="lmModal(lmcontent)"
             type="button">
-            {{ 'ADD_DEPARTMENT' | translate }}
+            {{ 'ADD_JOB' | translate }}
           </button>
         </div>
         <div class="card-body d-flex align-items-center justify-content-center" style="min-height: 300px;"
@@ -64,11 +64,11 @@
 
 <ng-template #lmcontent let-modal>
   <div class="modal-header">
-      <h4 class="modal-title ">{{ 'ADD_DEPARTMENT' | translate }}</h4>
+      <h4 class="modal-title ">{{ 'ADD_JOB' | translate }}</h4>
       <button type="button" class="btn-close" aria-label="Close"
           (click)="modal.dismiss('Cross click')"></button>
   </div>
-  <form [formGroup]="DepartmentForm" (ngSubmit)="onSubmit(modal)">
+  <form [formGroup]="JobForm" (ngSubmit)="onSubmit(modal)">
     <div class="modal-body">
       <!-- Existing Form Control -->
       <div class="row mb-3">
@@ -80,10 +80,10 @@
           <div>
             <label class="form-label">{{"nameAr" | translate}}</label>
             <input class="form-control mt-2" type="text" formControlName="nameAr"
-              [class.invalid]="DepartmentForm.get('nameAr')?.invalid && isSubmited"
+              [class.invalid]="JobForm.get('nameAr')?.invalid && isSubmited"
               [placeholder]="'nameAr' | translate">
             <div class="error"
-              *ngIf="DepartmentForm.get('nameAr')?.invalid && (DepartmentForm.get('nameAr')?.dirty || isSubmited)">
+              *ngIf="JobForm.get('nameAr')?.invalid && (JobForm.get('nameAr')?.dirty || isSubmited)">
               يجب إدخال الإسم بالعربية
             </div>
           </div>
@@ -96,10 +96,10 @@
           <div>
             <label class="form-label">{{"nameEn" | translate}}</label>
             <input class="form-control mt-2" type="text" formControlName="nameEn"
-              [class.invalid]="DepartmentForm.get('nameEn')?.invalid && isSubmited"
+              [class.invalid]="JobForm.get('nameEn')?.invalid && isSubmited"
               [placeholder]="'nameEn' | translate">
             <div class="error"
-              *ngIf="DepartmentForm.get('nameEn')?.invalid && (DepartmentForm.get('nameEn')?.dirty || isSubmited)">
+              *ngIf="JobForm.get('nameEn')?.invalid && (JobForm.get('nameEn')?.dirty || isSubmited)">
               يجب إدخال الإسم بالإنجليزية
             </div>
           </div>
@@ -119,11 +119,11 @@
 </ng-template>
 <ng-template #Editcontent let-modal>
   <div class="modal-header">
-      <h4 class="modal-title ">{{ 'EDIT_DEPARTMENT' | translate }}</h4>
+      <h4 class="modal-title ">{{ 'EDIT_JOB' | translate }}</h4>
       <button type="button" class="btn-close" aria-label="Close"
           (click)="modal.dismiss('Cross click')"></button>
   </div>
-  <form [formGroup]="EditDepartmentForm" (ngSubmit)="onSubmitEdit(modal)">
+  <form [formGroup]="EditJobForm" (ngSubmit)="onSubmitEdit(modal)">
     <div class="modal-body">
       <!-- Existing Form Control -->
       <div class="row mb-3">
@@ -135,10 +135,10 @@
           <div>
             <label class="form-label">{{"nameAr" | translate}}</label>
             <input class="form-control mt-2" type="text" formControlName="nameAr"
-              [class.invalid]="EditDepartmentForm.get('nameAr')?.invalid && isEditSubmited"
+              [class.invalid]="EditJobForm.get('nameAr')?.invalid && isEditSubmited"
               [placeholder]="'nameAr' | translate">
             <div class="error"
-              *ngIf="EditDepartmentForm.get('nameAr')?.invalid && (EditDepartmentForm.get('nameAr')?.dirty || isEditSubmited)">
+              *ngIf="EditJobForm.get('nameAr')?.invalid && (EditJobForm.get('nameAr')?.dirty || isEditSubmited)">
               يجب إدخال الإسم بالعربية
             </div>
           </div>
@@ -151,10 +151,10 @@
           <div>
             <label class="form-label">{{"nameEn" | translate}}</label>
             <input class="form-control mt-2" type="text" formControlName="nameEn"
-              [class.invalid]="EditDepartmentForm.get('nameEn')?.invalid && isEditSubmited"
+              [class.invalid]="EditJobForm.get('nameEn')?.invalid && isEditSubmited"
               [placeholder]="'nameEn' | translate">
             <div class="error"
-              *ngIf="EditDepartmentForm.get('nameEn')?.invalid && (EditDepartmentForm.get('nameEn')?.dirty || isEditSubmited)">
+              *ngIf="EditJobForm.get('nameEn')?.invalid && (EditJobForm.get('nameEn')?.dirty || isEditSubmited)">
               يجب إدخال الإسم بالإنجليزية
             </div>
           </div>

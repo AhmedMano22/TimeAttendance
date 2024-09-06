@@ -35,47 +35,7 @@ const routes: Routes = [
     loadChildren: () =>
       import("./features/users/users.module").then((m) => m.UsersModule),
   },
-  {
-    path: "units",
-    loadChildren: () =>
-      import("./features/units/units.module").then((m) => m.UnitsModule),
-  },
-  {
-    path: "discover",
-    loadChildren: () =>
-      import("./features/discover/discover.module").then(
-        (m) => m.DiscoverModule
-      ),
-  },
-  {
-    path: "ads",
-    loadChildren: () =>
-      import("./features/ads/ads.module").then((m) => m.AdsModule),
-  },
-  {
-    path: "inquires",
-    loadChildren: () =>
-      import("./features/inquires/inquires.module").then(
-        (m) => m.InquiresModule
-      ),
-  },
-  {
-    path: "contact",
-    loadChildren: () =>
-      import("./features/contact/contact.module").then((m) => m.ContactModule),
-  },
-  {
-    path: "reports",
-    loadChildren: () =>
-      import("./features/reports/reports.module").then((m) => m.ReportsModule),
-  },
-  {
-    path: "services",
-    loadChildren: () =>
-      import("./features/services-management/services-management.module").then(
-        (m) => m.ServicesManagementModule
-      ),
-  },
+
   {
     path: "departments",
     loadChildren: () =>
@@ -84,12 +44,28 @@ const routes: Routes = [
       ),
   },
   {
-    path: "requests",
+    path: "Jobs",
     loadChildren: () =>
-      import("./features/requests/requests.module").then(
-        (m) => m.RequestsModule
+      import("./features/jobs/jobs.module").then(
+        (m) => m.JobsModule
       ),
   },
+  /*  */
+  {
+    path: "Loccation",
+    loadChildren: () =>
+      import("./features/location/location.module").then(
+        (m) => m.LocationModule
+      ),
+  },
+  {
+    path: "Shifts",
+    loadChildren: () =>
+      import("./features/shift/shift.module").then(
+        (m) => m.ShiftModule
+      ),
+  },
+
   {
     path: "setting",
     loadChildren: () =>
@@ -97,24 +73,19 @@ const routes: Routes = [
         (m) => m.SettingsModule
       ),
   },
-  /*  */
-  // {
-  //   path: "authdefault/login",
-  //   component: LoginComponent,
-  // },
-  // {
-  //   path: "",
-  //   component: ContentComponent,
-  //   canActivate: [AdminGuard],
-  //   children: content,
-  // },
-  // {
-  //   path: "",
-  //   component: FullComponent,
-  //   canActivate: [AdminGuard],
-
-  //   children: full,
-  // },
+  {
+    path: "reports",
+    loadChildren: () =>
+      import("./features/reports/reports.module").then((m) => m.ReportsModule),
+  },
+  {
+    path: "Leaves",
+    loadChildren: () =>
+      import("./features/leaves/leaves.module").then(
+        (m) => m.LeavesModule
+      ),
+  },
+ 
   {
     path: "**",
     redirectTo: "",

@@ -10,28 +10,28 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 declare var require: any;
 const Swal = require("sweetalert2");
-interface Department {
+interface Shift {
   nameAr: string;
   nameEn: string;
   id: number;
 }
 @Component({
-  selector: "app-department-list",
-  templateUrl: "./department-list.component.html",
-  styleUrls: ["./department-list.component.scss"],
+  selector: 'app-shifts-list',
+  templateUrl: './shifts-list.component.html',
+  styleUrls: ['./shifts-list.component.scss']
 })
-export class DepartmentListComponent {
+export class ShiftsListComponent {
   subscriptions = ["Lawyer", "Normal", "Admin", "Translator"];
   
   loading = false;
   ListData: any[] = [];
   subscriptionType: string[];
   item: boolean = false;
-  DepartmentForm!: FormGroup;
-  EditDepartmentForm!: FormGroup;
+  shiftForm!: FormGroup;
+  EditshiftForm!: FormGroup;
   isSubmited = false;
   isEditSubmited = false;
-  department:Department={
+  shift:Shift={
     nameAr: "",
     nameEn: "",
     id: 0
@@ -48,11 +48,11 @@ export class DepartmentListComponent {
   ngOnInit() {
     this.loading = true;
      this.load();
-     this.DepartmentForm = this.fb.group({
+     this.shiftForm = this.fb.group({
       nameAr: ['', Validators.required], 
       nameEn: ['', Validators.required], 
     });
-    this.EditDepartmentForm = this.fb.group({
+    this.EditshiftForm = this.fb.group({
       nameAr: ['', Validators.required], 
       nameEn: ['', Validators.required], 
     });
@@ -60,7 +60,7 @@ export class DepartmentListComponent {
 
   load() {
     this.loading = true; // Start loading
-    this.apiSer.getDepartments().subscribe({
+    this.apiSer.getShifts().subscribe({
       next: (res: any) => {
         this.ListData = res.result;
         console.log("res", res);
@@ -80,20 +80,20 @@ export class DepartmentListComponent {
  
   onSubmit(modal: any) {
     this.isSubmited = true;
-    if (this.DepartmentForm.valid) {
-      console.log(this.DepartmentForm.value);
-      const formData = this.DepartmentForm.value
-      this.apiSer.addDepartment(formData).subscribe({
+    if (this.shiftForm.valid) {
+      console.log(this.shiftForm.value);
+      const formData = this.shiftForm.value
+      this.apiSer.addShift(formData).subscribe({
         next: (res: any) => {
           console.log(res);
         
           if (res.success == true) {
             this.load();
-            this.DepartmentForm.reset();
+            this.shiftForm.reset();
             this.isSubmited = false;
             modal.dismiss();
             this.translate
-              .get("Create_department_Success")
+              .get("Create_Shift_Success")
               .subscribe((translations: any) => {
                 Swal.fire({
                   title: translations.title,
@@ -171,7 +171,7 @@ export class DepartmentListComponent {
           })
           .then((result: any) => {
             if (result.isConfirmed) {
-              this.apiSer.deleteDepartment(id).subscribe({
+              this.apiSer.deleteShift(id).subscribe({
                 next: (res: any) => {
                   console.log(res);
               
@@ -234,19 +234,19 @@ export class DepartmentListComponent {
   EditModal(content: any, id: any) {
     const modalRef = this.modalService.open(content,{ size: 'lg' });
 
-    this.apiSer.getDepartmentByID(id).subscribe({
+    this.apiSer.getShiftByID(id).subscribe({
       next: (res: any) => {
         console.log(res);
         if (res.success) {
-          this.department = {
+          this.shift = {
             nameAr: res.result.nameAr,
             nameEn: res.result.nameEn,
             id: res.result.id,
            
           };
-          this.EditDepartmentForm.patchValue({
-            nameAr: this.department.nameAr,
-            nameEn:this.department.nameEn,
+          this.EditshiftForm.patchValue({
+            nameAr: this.shift.nameAr,
+            nameEn:this.shift.nameEn,
     
           });
         }
@@ -258,24 +258,24 @@ export class DepartmentListComponent {
   }
   onSubmitEdit(modal: any) {
     this.isEditSubmited = true;
-    if (this.EditDepartmentForm.valid) {
-      const { nameAr, nameEn } = this.EditDepartmentForm.value;
+    if (this.EditshiftForm.valid) {
+      const { nameAr, nameEn } = this.EditshiftForm.value;
 
       const body = {
         nameAr: nameAr,
         nameEn: nameEn,
-        id:this.department.id
+        id:this.shift.id
       };
       console.log("Update body:", body);
 
-      this.apiSer.UpdateDepartment(body).subscribe({
+      this.apiSer.UpdateShift(body).subscribe({
         next: (res: any) => {
           console.log("Update response:", res);
           if (res.success == true) {
             this.load();
             modal.dismiss();
             this.translate
-              .get("update_Depart_Success")
+              .get("update_Shift_Success")
               .subscribe((translations: any) => {
                 Swal.fire({
                   title: translations.title,
@@ -323,3 +323,4 @@ export class DepartmentListComponent {
     }
   }
 }
+

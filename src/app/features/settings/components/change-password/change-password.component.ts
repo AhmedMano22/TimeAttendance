@@ -81,17 +81,9 @@ export class ChangePasswordComponent {
       this.checkPasswords();
       this.checkOldPassword();
     });
-    this.UserPageAuthnticated();
+
   }
-  UserPageAuthnticated() {
-    this.apiSer
-      .userauthorizedtoPage(this.User.UsId, 1)
-      .subscribe((res: any) => {
-        this.AuthUser = res[0];
-        console.log("AuthUser", this.AuthUser);
-        this.userPassword = this.AuthUser.password;
-      });
-  }
+ 
   checkOldPassword() {
     const oldpassword = this.form.get("oldpassword")?.value;
     this.oldPasswordMatches = oldpassword === this.userPassword;

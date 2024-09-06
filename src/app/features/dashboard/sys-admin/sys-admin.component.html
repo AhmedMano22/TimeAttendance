@@ -1,9 +1,9 @@
 <app-breadcrumb [title]="'ADMIN_DASHBOARD' | translate" [items]="['DASHBOARD' | translate]" [active_item]="'ADMIN_DASHBOARD' | translate"></app-breadcrumb>
 <div class="container-fluid list-products" >
-  <ng-container  *ngIf="AuthUser.login == true">
+  <ng-container  >
   <div class="row d-flex justify-content-center">
     <!-- owners -->
-    <div class="card o-hidden col-md-2 col-10 mx-2 " style="cursor: pointer;" routerLink="/users/Owners">
+    <div class="card o-hidden col-md-2 col-10 mx-2 " style="cursor: pointer;">
         <div class="card-header">
           <p style="font-size: 0.9rem; font-weight: 600">{{ "OWNERS_COUNT" | translate }}</p>
         </div>
@@ -37,7 +37,7 @@
           </div>
     </div>
         <!-- units -->
-    <div class="card o-hidden col-md-2 col-10 mx-2" style="cursor: pointer;" routerLink="/units/units">
+    <div class="card o-hidden col-md-2 col-10 mx-2" style="cursor: pointer;" >
       <div class="card-header">
         <p style="font-size: 0.9rem; font-weight: 600">{{ "UNITS_COUNT" | translate }}</p>
       </div>
@@ -80,7 +80,7 @@
             <div class="card-body p-1">
               <div class="row gy-4">
                 <div class="col-sm-4" >
-                  <div class="widget-card"  style="cursor: pointer;" routerLink="/services/services">
+                  <div class="widget-card"  style="cursor: pointer;">
                     <div class="media align-self-center flex-column gap-1">
                       <div class="widget-icon bg-success">
                         <svg-icon src="assets/svgIcon/box.svg"></svg-icon>
@@ -97,7 +97,7 @@
                 </div>
 
                   <div class="col-sm-4" >
-                    <div class="widget-card"  style="cursor: pointer;" routerLink="/services/pending-services">
+                    <div class="widget-card"  style="cursor: pointer;" >
                       <div class="media align-self-center flex-column gap-1">
                         <div class="widget-icon bg-warning">
                           <svg-icon src="assets/svgIcon/box.svg"></svg-icon>
@@ -114,7 +114,7 @@
                   </div>
 
                 <div class="col-sm-4" >
-                  <div class="widget-card"   style="cursor: pointer;" routerLink="/requests/pending-requests">
+                  <div class="widget-card"   style="cursor: pointer;">
                     <div class="media align-self-center flex-column gap-1">
                       <div class="widget-icon bg-primary">
                         <svg-icon src="assets/svgIcon/box.svg"></svg-icon>
@@ -136,7 +136,7 @@
     </div>
   </div>
   <div class="row d-flex justify-content-center">
-    <div class="card o-hidden col-md col-10 mx-2" style="cursor: pointer;" routerLink="/users/Owners" >
+    <div class="card o-hidden col-md col-10 mx-2" style="cursor: pointer;">
       <div class="card-header">
         <strong style="font-size: 1rem;">{{ "ONLINE_OWNERS" | translate }}</strong>
       </div>
@@ -169,7 +169,7 @@
         </div>
       </div>
     </div>
-    <div class="card o-hidden col-md col-10 mx-2" style="cursor: pointer;" routerLink="/inquires/inquires-list" >
+    <div class="card o-hidden col-md col-10 mx-2" style="cursor: pointer;"  >
       <div class="card-header">
         <strong style="font-size: 1rem;">{{ "OPENED_CHATS" | translate }}</strong>
       </div>
@@ -202,7 +202,7 @@
         </div>
       </div>
     </div>
-    <div class="card o-hidden col-md col-10 mx-2"  style="cursor: pointer;" routerLink="/requests/requests-list">
+    <div class="card o-hidden col-md col-10 mx-2"  style="cursor: pointer;" >
       <div class="card-header">
         <strong style="font-size: 1.1rem;">{{ "LAST_30_DAYS_ORDERS_COUNT" | translate }}</strong>
       </div>
@@ -237,7 +237,7 @@
     </div>
   </div>
 </ng-container>
-  <ng-container   *ngIf="AuthUser.login == false ">
+  <!-- <ng-container   *ngIf="AuthUser.login == false ">
     <div class="col-sm-12">
       <div class="card">
           <div class="card-body d-flex align-items-center justify-content-center"
@@ -246,7 +246,7 @@
           </div>
       </div>
     </div>
-  </ng-container>
+  </ng-container> -->
   <!-- <div class="row d-flex justify-content-center">
     <div class="card o-hidden col-md-12 col-10 mx-4">
       <div class="chart-widget-top">
