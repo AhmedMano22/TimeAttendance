@@ -183,7 +183,7 @@ export class EyasNavService {
       active: false,
       children: [
         {
-          path: "/Shifts/shifts-list",
+          path: "/WorkTime/WorkTime-list",
           title: "WORKTIME_LIST",
           type: "link",
         },

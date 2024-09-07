@@ -663,7 +663,12 @@
 
   "PUBLIC_LIST":"Public Holiday List" ,
   "ADD_PUBLIC":"Add Public Holiday",
-  "PUBLIC":"Public Holiday"
+  "PUBLIC":"Public Holiday",
+  "ADD_WORKTIME":"Add Work Time",
+  "EDIT_WORKTIME":"Edit Work Time"
+  
+
+  
 
 
 

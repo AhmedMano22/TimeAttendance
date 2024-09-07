@@ -58,6 +58,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: "WorkTime",
+    loadChildren: () =>
+      import("./features/work-time/work-time.module").then(
+        (m) => m.WorkTimeModule
+      ),
+  },
+  {
     path: "Jobs",
     loadChildren: () =>
       import("./features/jobs/jobs.module").then(
