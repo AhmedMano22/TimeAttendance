@@ -100,6 +100,31 @@
   "DEGREES": "Degrees",
   "DELETE": "Delete",
   "DESCRIPTION": "Description",
+
+  
+  "SHIFTS":"Shift",
+  "SHIFTS_LIST":"Shift list",
+
+  "EMPLOYEE":"Employee",
+  "EMPLOYEE_LIST":"Employee List",
+
+
+  "WORKTIME":"Work Time",
+  "WORKTIME_LIST":"Work Time List",
+
+  
+  "PUBLICHOLIDAY":"Public Holiday",
+  "PUBLICHOLIDAY_LIST":"Public Holiday List",
+
+  
+  "TIMETABLE":"Time Table",
+  "TIMETABLE_LIST":"Time Table List",
+
+  "RegisterLeaves":"Time Table",
+  "Vac_LIST":"Vacation List",
+  "Mis_LIST":"Mission List",
+  "Per_LIST":"Permission List",
+
   "DETAILS": "Details",
   "DISCOUNT": "Discount",
   "DOCUMENTATION_SETTINGS": "Documentation Settings",
@@ -113,6 +138,7 @@
   "ELIGIBLE_USERS": "Eligible Users",
   "EMAIL": "Email",
   "END": "End",
+
   "END_DATE": "End date",
   "ENTER_SUBSCRIPTION_DESCRIPTION": "Enter subscription description",
   "ENTER_SUBSCRIPTION_NAME": "Enter subscription name",
@@ -426,6 +452,7 @@
   "DEPARTMENTS":"departments",
   "DEPARTMENTS_LIST":"departments List",
   "ADD_DEPARTMENT":"Add department",
+  "ADD_EMPLOYEE":"Add Employee",
   "NO_DEPARTMENTS":"There are currently no departments",
   "DEPARTMENTS_INFO":"department Fields",
   "ADD_ORDERS":"Add Request",
@@ -442,6 +469,8 @@
   },
   "ENTER_NAME_HERE":"Enter Name Here",
   "EDIT_DEPARTMENT":"Edit Department",
+  "EDIT_EMPLOYEE":"Edit Employee",
+  "EDIT_PUBLIC":"Edit Public Holiday",
   "departmentupdatesweetAlert":{
     "title": "Good",
     "message": "The Department has been Updated successfully",
@@ -629,11 +658,12 @@
   "NO_PENDING_REQUESTS":"There are no Pending Requests currently",
   "PENDING_UNITS":"Pending Units",
   "NO_PENDING_UNITS":"There are no Pending Units currently",
-  "ACCOUNTS_RULES":"Accounts/Rules"
+  "ACCOUNTS_RULES":"Accounts/Rules",
 
 
-
-
+  "PUBLIC_LIST":"Public Holiday List" ,
+  "ADD_PUBLIC":"Add Public Holiday",
+  "PUBLIC":"Public Holiday"
 
 
 

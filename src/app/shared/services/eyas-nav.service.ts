@@ -73,6 +73,58 @@ export class EyasNavService {
  
 
     {
+      title: "EMPLOYEE",
+      icon: "widgets",
+      type: "sub",
+      active: false,
+      children: [
+        {
+          path: "/employee/employee-list",
+          title: "EMPLOYEE_LIST",
+          type: "link",
+        },
+      ],
+    },
+    
+    
+    {
+      title: "RegisterLeaves",
+      icon: "widgets",
+      type: "sub",
+      active: false,
+      children: [
+        {
+          path: "/departments/departments-list",
+          title: "Vac_LIST",
+          type: "link",
+        },
+        {
+          path: "/departments/departments-list",
+          title: "Mis_LIST",
+          type: "link",
+        },
+        {
+          path: "/departments/departments-list",
+          title: "Per_LIST",
+          type: "link",
+        },
+      ],
+    },
+
+    {
+      title: "PUBLICHOLIDAY",
+      icon: "widgets",
+      type: "sub",
+      active: false,
+      children: [
+        {
+          path: "/Public/Public-list",
+          title: "PUBLICHOLIDAY_LIST",
+          type: "link",
+        },
+      ],
+    },
+    {
       title: "DEPARTMENTS",
       icon: "widgets",
       type: "sub",
@@ -123,7 +175,34 @@ export class EyasNavService {
           type: "link",
         },
       ],
-    },{
+    },
+    {
+      title: "WORKTIME",
+      icon: "widgets",
+      type: "sub",
+      active: false,
+      children: [
+        {
+          path: "/Shifts/shifts-list",
+          title: "WORKTIME_LIST",
+          type: "link",
+        },
+      ],
+    },
+    {
+      title: "TIMETABLE",
+      icon: "widgets",
+      type: "sub",
+      active: false,
+      children: [
+        {
+          path: "/Shifts/shifts-list",
+          title: "TIMETABLE_LIST",
+          type: "link",
+        },
+      ],
+    },
+    {
       title: "LEAVES",
       icon: "widgets",
       type: "sub",

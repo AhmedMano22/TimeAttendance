@@ -23,6 +23,7 @@ import { NgxIntlTelInputModule } from "ngx-intl-tel-input";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { TokenInterceptorService } from "./shared/interceptor/token-interceptor.service";
 
+
 @NgModule({
   declarations: [AppComponent, ButtonsComponent, LoginComponent],
   imports: [

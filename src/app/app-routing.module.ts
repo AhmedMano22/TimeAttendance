@@ -44,6 +44,20 @@ const routes: Routes = [
       ),
   },
   {
+    path: "employee",
+    loadChildren: () =>
+      import("./features/employee/employee.module").then(
+        (m) => m.employeeModule
+      ),
+  },
+  {
+    path: "Public",
+    loadChildren: () =>
+      import("./features/public-holiday/public-holiday.module").then(
+        (m) => m.PublicHolidayModule
+      ),
+  },
+  {
     path: "Jobs",
     loadChildren: () =>
       import("./features/jobs/jobs.module").then(

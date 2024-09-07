@@ -31,6 +31,54 @@ getDepartmentByID(id: number) {
 UpdateDepartment( body: any) {
   return this._HttpClient.post(this.url + `/Department/Update`, body);
 }
+/* Employee */
+getEmployee() {
+  return this._HttpClient.get(this.url + "/Employee/GetAll");
+}
+addEmployee(body: any) {
+  return this._HttpClient.post(this.url + "/Employee/Create", body);
+}
+deleteEmployee(id: number) {
+  return this._HttpClient.delete(this.url + `/Employee/Delete/${id}`);
+}
+getEmployeeByID(id: number) {
+  return this._HttpClient.get(this.url + `/Employee/GetById/${id}`);
+}
+UpdateEmployee( body: any) {
+  return this._HttpClient.post(this.url + `/Employee/Update`, body);
+}
+/* Public Holiday */
+getPublicHoliday() {
+  return this._HttpClient.get(this.url + "/PublicHoliday/GetAll");
+}
+addPublicHoliday(body: any) {
+  return this._HttpClient.post(this.url + "/PublicHoliday/Create", body);
+}
+deletePublicHoliday(id: number) {
+  return this._HttpClient.delete(this.url + `/PublicHoliday/Delete/${id}`);
+}
+getPublicHolidayByID(id: number) {
+  return this._HttpClient.get(this.url + `/PublicHoliday/GetById/${id}`);
+}
+UpdatePublicHoliday( body: any) {
+  return this._HttpClient.post(this.url + `/PublicHoliday/Update`, body);
+}
+/* Work Time */
+getWorkTime() {
+  return this._HttpClient.get(this.url + "/WorkTime/GetAll");
+}
+addWorkTime(body: any) {
+  return this._HttpClient.post(this.url + "/WorkTime/Create", body);
+}
+deleteWorkTime(id: number) {
+  return this._HttpClient.delete(this.url + `/WorkTime/Delete/${id}`);
+}
+getWorkTimeByID(id: number) {
+  return this._HttpClient.get(this.url + `/WorkTime/GetById/${id}`);
+}
+UpdateWorkTime( body: any) {
+  return this._HttpClient.post(this.url + `/WorkTime/Update`, body);
+}
 
 
  /* JOBS */
