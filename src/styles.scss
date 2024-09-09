@@ -213,3 +213,14 @@ ngx-intl-tel-input input[disabled] {
   padding-left: 52px !important;
   margin-left: 0;
 }
+.modal {
+  z-index: 99 !important; /* Ensure the modal is still above other content */
+  position: fixed;
+}
+
+.modal-backdrop.show {
+  z-index: 12 !important; /* Keep the backdrop below the modal */
+}
+.owl-dt-container {
+  z-index: 2000 !important; /* Higher than Bootstrap modal */
+}

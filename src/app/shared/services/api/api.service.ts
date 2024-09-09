@@ -48,6 +48,9 @@ UpdateEmployee( body: any) {
   return this._HttpClient.post(this.url + `/Employee/Update`, body);
 }
 /* Public Holiday */
+GetAllPublicHolidaysType(){
+  return this._HttpClient.get(this.url + "/PublicHoliday/GetAllPublicHolidaysType");
+}
 getPublicHoliday() {
   return this._HttpClient.get(this.url + "/PublicHoliday/GetAll");
 }
@@ -152,6 +155,15 @@ UpdateLeave( body: any) {
   return this._HttpClient.post(this.url + `/Leave/Update`, body);
 }
 
+GetAllLeavesType() {
+  return this._HttpClient.get(this.url + "/Leave/GetAllLeavesType");
+}
+GetAllLeaveRules() {
+  return this._HttpClient.get(this.url + "/Leave/GetAllLeaveRules");
+}
+GetAllLeaveVaces() {
+  return this._HttpClient.get(this.url + "/Leave/GetAllLeaveVaces");
+}
  /* System Page */
  getSystemPage() {
   return this._HttpClient.get(this.url + "/SystemPage/GetAll");

@@ -7,12 +7,12 @@
   <div class="row">
     <div class="col-sm-12">
       <div class="card">
-        <!-- <div class="card-header pb-0" >
+        <div class="card-header pb-0" >
           <button class="btn btn-primary text-center" (click)="lmModal(lmcontent)"
             type="button">
             {{ 'ADD_LEAVE' | translate }}
           </button>
-        </div> -->
+        </div>
         <div class="card-body d-flex align-items-center justify-content-center" style="min-height: 300px;"
          >
           <div class=" w-100  position-absolute  d-flex align-items-center" style="z-index:0;">
@@ -25,7 +25,17 @@
                   <th scope="col" class="text-center">#</th>
                   <th scope="col" class="text-center">{{"nameAr" |translate}}</th>
                   <th scope="col" class="text-center">{{"nameEn" |translate}}</th>
-                  <!-- <th scope="col" class="text-center">{{"ACTIONS" |translate}}</th> -->
+                  <th scope="col" class="text-center">{{"alisAr" |translate}}</th>
+                  <th scope="col" class="text-center">{{"alisEn" |translate}}</th>
+
+                  <th scope="col" class="text-center">{{"leavesTypeId" |translate}}</th>
+                  <th scope="col" class="text-center">{{"leavesVacId" |translate}}</th>
+                  <th scope="col" class="text-center">{{"leavesRuleId" |translate}}</th>
+
+                  <th scope="col" class="text-center">{{"cutVal" |translate}}</th>
+            
+
+                  <th scope="col" class="text-center">{{"ACTIONS" |translate}}</th>
                 </tr>
               </thead>
               <tbody>
@@ -35,15 +45,21 @@
                     <td class="text-center">{{i + 1}}</td>
                     <td class="text-center">{{data.nameAr}}</td>
                     <td class="text-center">{{data.nameEn}}</td>
-   
+                    <td class="text-center">{{data.alisAr}}</td>
+                    <td class="text-center">{{data.alisEn}}</td>
 
-                    <!-- <td class="d-flex gap-1 action-buttons justify-content-center">
+                    <td class="text-center">{{getLeaveTypeNameById(data.leavesTypeId)}}</td>
+                    <td class="text-center">{{getLeaveVacNameById(data.leavesVacId)}}</td>
+                    <td class="text-center">{{getLeaveRuleNameById(data.leavesRuleId)}}</td>
+
+                    <td class="text-center">{{data.cutVal}}</td>
+                    <td class="d-flex gap-1 action-buttons justify-content-center">
                  
                       <button class="btn  success" type="button" (click)="EditModal(Editcontent,data.id)" >
                         {{"EDIT" |translate}}</button>
                       <button class="btn  danger" type="button" 
                         (click)="delete(data.id)"> {{"DELETE" |translate}}</button>
-                    </td> -->
+                    </td> 
 
                   </tr>
 
@@ -67,23 +83,35 @@
       <button type="button" class="btn-close" aria-label="Close"
           (click)="modal.dismiss('Cross click')"></button>
   </div>
-  <form [formGroup]="shiftForm" (ngSubmit)="onSubmit(modal)">
+  <form [formGroup]="LeaveForm" (ngSubmit)="onSubmit(modal)">
     <div class="modal-body">
       <!-- Existing Form Control -->
       <div class="row mb-3">
-      
+         <div class="col-12">
   
       <!-- New Form Control: Arabic Name -->
       <div class="row mb-3">
-        <div class="col">
+        <div class="col-md-6 col-12 mb-2">
           <div>
             <label class="form-label">{{"nameAr" | translate}}</label>
             <input class="form-control mt-2" type="text" formControlName="nameAr"
-              [class.invalid]="shiftForm.get('nameAr')?.invalid && isSubmited"
+              [class.invalid]="LeaveForm.get('nameAr')?.invalid && isSubmited"
               [placeholder]="'nameAr' | translate">
             <div class="error"
-              *ngIf="shiftForm.get('nameAr')?.invalid && (shiftForm.get('nameAr')?.dirty || isSubmited)">
+              *ngIf="LeaveForm.get('nameAr')?.invalid && (LeaveForm.get('nameAr')?.dirty || isSubmited)">
               يجب إدخال الإسم بالعربية
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-12 mb-2">
+          <div>
+            <label class="form-label">{{"nameEn" | translate}}</label>
+            <input class="form-control mt-2" type="text" formControlName="nameEn"
+              [class.invalid]="LeaveForm.get('nameEn')?.invalid && isSubmited"
+              [placeholder]="'nameEn' | translate">
+            <div class="error"
+              *ngIf="LeaveForm.get('nameEn')?.invalid && (LeaveForm.get('nameEn')?.dirty || isSubmited)">
+              يجب إدخال الإسم بالإنجليزية
             </div>
           </div>
         </div>
@@ -91,22 +119,108 @@
   
       <!-- New Form Control: English Name -->
       <div class="row mb-3">
-        <div class="col">
+        <div class="col-md-6 col-12 mb-2">
           <div>
-            <label class="form-label">{{"nameEn" | translate}}</label>
-            <input class="form-control mt-2" type="text" formControlName="nameEn"
-              [class.invalid]="shiftForm.get('nameEn')?.invalid && isSubmited"
-              [placeholder]="'nameEn' | translate">
+            <label class="form-label">{{"alisAr" | translate}}</label>
+            <input class="form-control mt-2" type="text" formControlName="alisAr"
+              [class.invalid]="LeaveForm.get('alisAr')?.invalid && isSubmited"
+              [placeholder]="'alisAr' | translate">
             <div class="error"
-              *ngIf="shiftForm.get('nameEn')?.invalid && (shiftForm.get('nameEn')?.dirty || isSubmited)">
-              يجب إدخال الإسم بالإنجليزية
+              *ngIf="LeaveForm.get('alisAr')?.invalid && (LeaveForm.get('alisAr')?.dirty || isSubmited)">
+              يجب إدخال الإسم المستعار بالعربية
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-12 mb-2">
+          <div>
+            <label class="form-label">{{"alisEn" | translate}}</label>
+            <input class="form-control mt-2" type="text" formControlName="alisEn"
+              [class.invalid]="LeaveForm.get('alisEn')?.invalid && isSubmited"
+              [placeholder]="'alisEn' | translate">
+            <div class="error"
+              *ngIf="LeaveForm.get('alisEn')?.invalid && (LeaveForm.get('alisEn')?.dirty || isSubmited)">
+              يجب إدخال الإسم المستعار بالإنجليزية
+            </div>
+          </div>
+        </div>
+        <div class=" col-12 mb-2">
+          <div>
+            <label class="form-label">{{"cutVal" | translate}}</label>
+            <input class="form-control mt-2" type="number" formControlName="cutVal"
+              [class.invalid]="LeaveForm.get('cutVal')?.invalid && isSubmited"
+              [placeholder]="'cutVal' | translate">
+            <div class="error"
+              *ngIf="LeaveForm.get('cutVal')?.invalid && (LeaveForm.get('cutVal')?.dirty || isSubmited)">
+              يجب إدخال  الاستقطاع
             </div>
           </div>
         </div>
       </div>
-  
+      <div class="row mb-3">
+        <div class="col">
+          <div>
+            <label class="form-label" for="validation1">{{"leavesTypeId" | translate}}</label>
+            <select class="form-select" id="validation1" formControlName="leavesTypeId">
+              <option selected disabled value="">{{"leavesTypeId" | translate}}</option>
+              <option *ngFor="let type of leavesTypeList" [value]="type.id">{{ getName(type) }}</option>
+            </select>
+            <div class="error"
+              *ngIf="LeaveForm.get('leavesTypeId')?.invalid && (LeaveForm.get('leavesTypeId')?.dirty || isSubmited)">
+              يجب اختيار نوع المؤثر
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <div>
+            <label class="form-label" for="validation2">{{"leavesRuleId" | translate}}</label>
+            <select class="form-select" id="validation2" formControlName="leavesRuleId">
+              <option selected disabled value="">{{"leavesRuleId" | translate}}</option>
+              <option *ngFor="let type of LeaveRulesList" [value]="type.id">{{ getName(type) }}</option>
+            </select>
+            <div class="error"
+              *ngIf="LeaveForm.get('leavesRuleId')?.invalid && (LeaveForm.get('leavesRuleId')?.dirty || isSubmited)">
+              يجب اختيار نوع القرار
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <div>
+            <label class="form-label" for="validation3">{{"leavesVacId" | translate}}</label>
+            <select class="form-select" id="validation3" formControlName="leavesVacId">
+              <option selected disabled value="">{{"leavesVacId" | translate}}</option>
+              <option *ngFor="let type of LeaveVacesList" [value]="type.id">{{ getName(type) }}</option>
+            </select>
+            <div class="error"
+              *ngIf="LeaveForm.get('leavesVacId')?.invalid && (LeaveForm.get('leavesVacId')?.dirty || isSubmited)">
+              يجب اختيار نوع الاجازة
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-12  d-flex justify-content-center gap-5">
+          <div class="form-check checkbox checkbox-primary d-flex justify-content-center mb-3">
+            <input class="form-check-input" formControlName="isSub" id="isSub" type="checkbox">
+            <label class="form-check-label" for="isSub">{{"isSub" |translate}}</label>
+          </div>
+          <div class="form-check checkbox checkbox-primary d-flex justify-content-center mb-3">
+            <input class="form-check-input" formControlName="acceptVac" id="acceptVac" type="checkbox">
+            <label class="form-check-label" for="acceptVac">{{"acceptVac" |translate}}</label>
+          </div>
+        </div>
+      
+      </div>
     </div>
-  </div>
+
+
+
+    </div>
+    </div>
     <!-- Modal Footer with Action Buttons -->
     <div class="modal-footer action-buttons">
       <button class="btn btn-primary" type="button" aria-label="Close"
@@ -122,23 +236,35 @@
       <button type="button" class="btn-close" aria-label="Close"
           (click)="modal.dismiss('Cross click')"></button>
   </div>
-  <form [formGroup]="EditshiftForm" (ngSubmit)="onSubmitEdit(modal)">
+  <form [formGroup]="EditLeaveForm" (ngSubmit)="onSubmitEdit(modal)">
     <div class="modal-body">
       <!-- Existing Form Control -->
       <div class="row mb-3">
-      
+         <div class="col-12">
   
       <!-- New Form Control: Arabic Name -->
       <div class="row mb-3">
-        <div class="col">
+        <div class="col-md-6 col-12 mb-2">
           <div>
             <label class="form-label">{{"nameAr" | translate}}</label>
             <input class="form-control mt-2" type="text" formControlName="nameAr"
-              [class.invalid]="EditshiftForm.get('nameAr')?.invalid && isEditSubmited"
+              [class.invalid]="EditLeaveForm.get('nameAr')?.invalid && isEditSubmited"
               [placeholder]="'nameAr' | translate">
             <div class="error"
-              *ngIf="EditshiftForm.get('nameAr')?.invalid && (EditshiftForm.get('nameAr')?.dirty || isEditSubmited)">
+              *ngIf="EditLeaveForm.get('nameAr')?.invalid && (EditLeaveForm.get('nameAr')?.dirty || isEditSubmited)">
               يجب إدخال الإسم بالعربية
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-12 mb-2">
+          <div>
+            <label class="form-label">{{"nameEn" | translate}}</label>
+            <input class="form-control mt-2" type="text" formControlName="nameEn"
+              [class.invalid]="EditLeaveForm.get('nameEn')?.invalid && isEditSubmited"
+              [placeholder]="'nameEn' | translate">
+            <div class="error"
+              *ngIf="EditLeaveForm.get('nameEn')?.invalid && (EditLeaveForm.get('nameEn')?.dirty || isEditSubmited)">
+              يجب إدخال الإسم بالإنجليزية
             </div>
           </div>
         </div>
@@ -146,22 +272,108 @@
   
       <!-- New Form Control: English Name -->
       <div class="row mb-3">
-        <div class="col">
+        <div class="col-md-6 col-12 mb-2">
           <div>
-            <label class="form-label">{{"nameEn" | translate}}</label>
-            <input class="form-control mt-2" type="text" formControlName="nameEn"
-              [class.invalid]="EditshiftForm.get('nameEn')?.invalid && isEditSubmited"
-              [placeholder]="'nameEn' | translate">
+            <label class="form-label">{{"alisAr" | translate}}</label>
+            <input class="form-control mt-2" type="text" formControlName="alisAr"
+              [class.invalid]="EditLeaveForm.get('alisAr')?.invalid && isEditSubmited"
+              [placeholder]="'alisAr' | translate">
             <div class="error"
-              *ngIf="EditshiftForm.get('nameEn')?.invalid && (EditshiftForm.get('nameEn')?.dirty || isEditSubmited)">
-              يجب إدخال الإسم بالإنجليزية
+              *ngIf="EditLeaveForm.get('alisAr')?.invalid && (EditLeaveForm.get('alisAr')?.dirty || isEditSubmited)">
+              يجب إدخال الإسم المستعار بالعربية
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-12 mb-2">
+          <div>
+            <label class="form-label">{{"alisEn" | translate}}</label>
+            <input class="form-control mt-2" type="text" formControlName="alisEn"
+              [class.invalid]="EditLeaveForm.get('alisEn')?.invalid && isEditSubmited"
+              [placeholder]="'alisEn' | translate">
+            <div class="error"
+              *ngIf="EditLeaveForm.get('alisEn')?.invalid && (EditLeaveForm.get('alisEn')?.dirty || isEditSubmited)">
+              يجب إدخال الإسم المستعار بالإنجليزية
+            </div>
+          </div>
+        </div>
+        <div class=" col-12 mb-2">
+          <div>
+            <label class="form-label">{{"cutVal" | translate}}</label>
+            <input class="form-control mt-2" type="number" formControlName="cutVal"
+              [class.invalid]="EditLeaveForm.get('cutVal')?.invalid && isEditSubmited"
+              [placeholder]="'cutVal' | translate">
+            <div class="error"
+              *ngIf="EditLeaveForm.get('cutVal')?.invalid && (EditLeaveForm.get('cutVal')?.dirty || isEditSubmited)">
+              يجب إدخال  الاستقطاع
             </div>
           </div>
         </div>
       </div>
-  
+      <div class="row mb-3">
+        <div class="col">
+          <div>
+            <label class="form-label" for="validation1">{{"leavesTypeId" | translate}}</label>
+            <select class="form-select" id="validation1" formControlName="leavesTypeId">
+              <option selected disabled value="">{{"leavesTypeId" | translate}}</option>
+              <option *ngFor="let type of leavesTypeList" [value]="type.id">{{ getName(type) }}</option>
+            </select>
+            <div class="error"
+              *ngIf="EditLeaveForm.get('leavesTypeId')?.invalid && (EditLeaveForm.get('leavesTypeId')?.dirty || isEditSubmited)">
+              يجب اختيار نوع المؤثر
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <div>
+            <label class="form-label" for="validation2">{{"leavesRuleId" | translate}}</label>
+            <select class="form-select" id="validation2" formControlName="leavesRuleId">
+              <option selected disabled value="">{{"leavesRuleId" | translate}}</option>
+              <option *ngFor="let type of LeaveRulesList" [value]="type.id">{{ getName(type) }}</option>
+            </select>
+            <div class="error"
+              *ngIf="EditLeaveForm.get('leavesRuleId')?.invalid && (EditLeaveForm.get('leavesRuleId')?.dirty || isEditSubmited)">
+              يجب اختيار نوع القرار
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <div>
+            <label class="form-label" for="validation3">{{"leavesVacId" | translate}}</label>
+            <select class="form-select" id="validation3" formControlName="leavesVacId">
+              <option selected disabled value="">{{"leavesVacId" | translate}}</option>
+              <option *ngFor="let type of LeaveVacesList" [value]="type.id">{{ getName(type) }}</option>
+            </select>
+            <div class="error"
+              *ngIf="EditLeaveForm.get('leavesVacId')?.invalid && (EditLeaveForm.get('leavesVacId')?.dirty || isEditSubmited)">
+              يجب اختيار نوع الاجازة
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-12  d-flex justify-content-center gap-5">
+          <div class="form-check checkbox checkbox-primary d-flex justify-content-center mb-3">
+            <input class="form-check-input" formControlName="isSub" id="isSub" type="checkbox">
+            <label class="form-check-label" for="isSub">{{"isSub" |translate}}</label>
+          </div>
+          <div class="form-check checkbox checkbox-primary d-flex justify-content-center mb-3">
+            <input class="form-check-input" formControlName="acceptVac" id="acceptVac" type="checkbox">
+            <label class="form-check-label" for="acceptVac">{{"acceptVac" |translate}}</label>
+          </div>
+        </div>
+      
+      </div>
     </div>
-  </div>
+
+
+
+    </div>
+    </div>
     <!-- Modal Footer with Action Buttons -->
     <div class="modal-footer action-buttons">
       <button class="btn btn-primary" type="button" aria-label="Close"

@@ -10,9 +10,14 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 declare var require: any;
 const Swal = require("sweetalert2");
-interface Employee {
-  nameAr: string;
+interface Hoilday {
   nameEn: string;
+  nameAr: string;
+  from: string; 
+  to: string;   
+  publicHolidayTypeId: number;
+  publicHolidayTypeNameAr: string;
+  publicHolidayTypeNameEn: string;
   id: number;
 }
 @Component({
@@ -32,10 +37,18 @@ export class PublicHolidayListComponent {
   EditForm!: FormGroup;
   isSubmited = false;
   isEditSubmited = false;
-  employee:Employee={
+  selectedDate: string;
+  typesList: any[] = [];
+  currentLang: string;
+  hoilday:Hoilday={
     nameAr: "",
     nameEn: "",
-    id: 0
+    id: 0,
+    from: "",
+    to: "",
+    publicHolidayTypeId: 0,
+    publicHolidayTypeNameAr: "",
+    publicHolidayTypeNameEn: ""
   }
   constructor(
     private apiSer: ApiService,
@@ -44,21 +57,50 @@ export class PublicHolidayListComponent {
     private authservice: AuthService,
     private fb: FormBuilder
   ) {
- 
+    this.currentLang = localStorage.getItem('app-lang') ?? 'ar';
+    this.translate.onLangChange.subscribe((event) => {
+      this.currentLang = event.lang;
+      console.log("lang",this.currentLang);
+      
+    });
+    
   }
   ngOnInit() {
     this.loading = true;
      this.load();
+     this.loadHilodayTypes();
      this.AddForm = this.fb.group({
       nameAr: ['', Validators.required], 
       nameEn: ['', Validators.required], 
+      From: ["", Validators.required],
+      To: ["", Validators.required],
+      Type: ["", Validators.required],
     });
     this.EditForm = this.fb.group({
       nameAr: ['', Validators.required], 
       nameEn: ['', Validators.required], 
+      From: ["", Validators.required],
+      To: ["", Validators.required],
+      Type: ["", Validators.required],
+
     });
   }
-
+loadHilodayTypes(){
+   // Fetch the list of types from the API
+    this.apiSer.GetAllPublicHolidaysType().subscribe((res:any) => {
+      if (res.success) {
+        this.typesList = res.result;
+      }
+    });
+}
+getHolidayTypeNameById(id: number): string {
+  const type = this.typesList.find(type => type.id === id);
+  if (!type) return 'Unknown'; 
+  return this.currentLang === 'ar' ? type.nameAr : type.nameEn;
+}
+getName(type: any): string {
+  return this.currentLang === 'ar' ? type.nameAr : type.nameEn;
+}
   load() {
     this.loading = true; // Start loading
     this.apiSer.getPublicHoliday().subscribe({
@@ -84,17 +126,24 @@ export class PublicHolidayListComponent {
     if (this.AddForm.valid) {
       console.log(this.AddForm.value);
       const formData = this.AddForm.value
-      this.apiSer.addPublicHoliday(formData).subscribe({
+  const body =     {
+        nameEn: formData.nameEn,
+        nameAr: formData.nameAr,
+        from: formData.From,
+        to: formData.To,
+        publicHolidayTypeId:+formData.Type,
+      }
+      console.log("body",body);
+      this.apiSer.addPublicHoliday(body).subscribe({
         next: (res: any) => {
           console.log(res);
-        
           if (res.success == true) {
             this.load();
             this.AddForm.reset();
             this.isSubmited = false;
             modal.dismiss();
             this.translate
-              .get("Create_department_Success")
+              .get("Create_holiday_Success")
               .subscribe((translations: any) => {
                 Swal.fire({
                   title: translations.title,
@@ -239,16 +288,22 @@ export class PublicHolidayListComponent {
       next: (res: any) => {
         console.log(res);
         if (res.success) {
-          this.employee = {
+          this.hoilday = {
             nameAr: res.result.nameAr,
             nameEn: res.result.nameEn,
+            from: res.result.from,
+            to: res.result.to,
+            publicHolidayTypeId: res.result.publicHolidayTypeId,
+            publicHolidayTypeNameAr: res.result.publicHolidayTypeNameAr,
+            publicHolidayTypeNameEn: res.result.publicHolidayTypeNameEn,
             id: res.result.id,
-           
           };
           this.EditForm.patchValue({
-            nameAr: this.employee.nameAr,
-            nameEn:this.employee.nameEn,
-    
+            nameAr: this.hoilday.nameAr,
+            nameEn:this.hoilday.nameEn,
+            From:this.hoilday.from,
+            To:this.hoilday.to,
+            Type:this.hoilday.publicHolidayTypeId
           });
         }
       },
@@ -260,12 +315,14 @@ export class PublicHolidayListComponent {
   onSubmitEdit(modal: any) {
     this.isEditSubmited = true;
     if (this.EditForm.valid) {
-      const { nameAr, nameEn } = this.EditForm.value;
-
+      const { nameAr, nameEn ,From,To,Type} = this.EditForm.value;
       const body = {
         nameAr: nameAr,
-        nameEn: nameEn,
-        id:this.employee.id
+        nameEn:nameEn,
+        From:From,
+        To:To,
+        publicHolidayTypeId:Type,
+        id:this.hoilday.id
       };
       console.log("Update body:", body);
 
@@ -276,7 +333,7 @@ export class PublicHolidayListComponent {
             this.load();
             modal.dismiss();
             this.translate
-              .get("update_Depart_Success")
+              .get("update_Hoilday_Success")
               .subscribe((translations: any) => {
                 Swal.fire({
                   title: translations.title,

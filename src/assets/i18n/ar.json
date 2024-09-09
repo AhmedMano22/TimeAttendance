@@ -184,6 +184,43 @@
   
   "ADD_WORKTIME":"اضافه مواعيد العمل",
   "EDIT_WORKTIME":"تعديل مواعيد العمل",
+  "HOLIDAY_TYPE":"نوع الاجازه",
+  "FROM":"من",
+  "TO":"إلي",
+  "ADD_HOLIDAY":"إضافة أجازة",
+  "EDIT_HOLIDAY":"تعديل أجازة",
+  "Create_holiday_Success":{
+    "title": "أحسنت",
+    "message": "تم إاضافة الأجازة بنجاح",
+    "confirmButtonText": "موافق"
+  },
+  "DATE_FROM":"من تاريخ",
+  "DATE_TO":"إلي تاريخ",
+  "update_Hoilday_Success":{
+    "title": "أحسنت",
+    "message": "تم تعديل الأجازة بنجاح ",
+    "confirmButtonText": "موافق"
+  },
+  "alisAr":"الاسم المستعار بالعربية",
+  "alisEn":"الاسم المستعار بالانجليزية",
+  "isSub": "يطرح من",
+  "acceptVac": "مقبول ايام الاجازات",
+  "leavesTypeId": "نوع المؤثر",
+  "leavesVacId": "نوع الاجازة",
+  "cutVal": "الاستقطاع",
+  "leavesRuleId": "القرار",
+  "Create_Leave_Success":{
+    "title": "أحسنت",
+    "message": "تم إضافة المؤثر بنجاح ",
+    "confirmButtonText": "موافق"
+  },
+  "update_Leave_Success":{
+  "title": "أحسنت",
+  "message": "تم تعديل المؤثر بنجاح ",
+  "confirmButtonText": "موافق"
+},
+  "شسيسي":"",
+  "شسيسي":"",
   "شسيسي":""
   
 

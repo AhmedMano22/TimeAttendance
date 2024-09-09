@@ -122,13 +122,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
 })
 export class SharedModule {
-  // constructor(private translate:TranslateService) {
-  //   const lang = localStorage.getItem('lang');
-  //     if(lang !== null) {
-  //       translate.use(lang);
-  //     }
-  //     else translate.use('ar');
-  // }
+ 
   constructor(
     private translateService: TranslateService,
     private titleService: Title
@@ -141,8 +135,6 @@ export class SharedModule {
       document.documentElement.dir = event.lang === "ar" ? "rtl" : "ltr";
       document.documentElement.lang = event.lang;
       localStorage.setItem("app-lang", event.lang);
-      // const translatedTitle = this.translateService.instant("app.title");
-      // this.titleService.setTitle(translatedTitle);
     });
   }
 }
