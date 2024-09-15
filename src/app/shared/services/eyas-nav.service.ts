@@ -190,6 +190,19 @@ export class EyasNavService {
       ],
     },
     {
+      title: "EXEPTION_WORKTIME",
+      icon: "widgets",
+      type: "sub",
+      active: false,
+      children: [
+        {
+          path: "/ExceptionWorkTime/ExceptionWT-List",
+          title: "WORKTIME_LIST",
+          type: "link",
+        },
+      ],
+    },
+    {
       title: "TIMETABLE",
       icon: "widgets",
       type: "sub",

@@ -1,7 +1,7 @@
 <app-breadcrumb
-  [title]="'WORKTIME_LIST' | translate"
+  [title]="'EX_WORKTIME_LIST' | translate"
   [items]="['WORKTIME' | translate]"
-  [active_item]="'WORKTIME_LIST' | translate"
+  [active_item]="'EX_WORKTIME_LIST' | translate"
 ></app-breadcrumb>
 <div class="container-fluid">
   <div class="row">
@@ -10,7 +10,7 @@
         <div class="card-header pb-0" >
           <button class="btn btn-primary text-center" (click)="lmModal(lmcontent)"
             type="button">
-            {{ 'ADD_WORKTIME' | translate }}
+            {{ 'ADD_EX_WORKTIME' | translate }}
           </button>
         </div>
         <div class="card-body d-flex align-items-center justify-content-center" style="min-height: 300px;"
@@ -25,8 +25,8 @@
                   <th scope="col" class="text-center">#</th>
                   <th scope="col" class="text-center">{{"SHIFT" | translate}}
                   </th>
-                  <th scope="col" class="text-center">{{"DATE" |translate}}</th>
-                  
+                  <th scope="col" class="text-center">{{"FromDate" |translate}}</th>
+                  <th scope="col" class="text-center">{{"ToDate" |translate}}</th>
                   <th scope="col" class="text-center">{{"overTimeStart" | translate}}
                   </th>
                   <th scope="col" class="text-center">{{"START" |translate}}</th>
@@ -52,9 +52,10 @@
                   <tr>
                     <td class="text-center">{{i + 1}}</td>
                     <td class="text-center">{{getShiftNameByRecordId(data.id)}}</td>
-                    <td class="text-center">{{ data.date | date:'yyyy-MM-dd' }}</td>
+                    <td class="text-center">{{ data.from | date:'yyyy-MM-dd' }}</td>
+                    <td class="text-center">{{ data.to | date:'yyyy-MM-dd' }}</td>
                     <td class="text-center">{{data.overTimeStart}}</td>
-                    
+                     
                     <td class="text-center">{{data.startSign}}</td>
                     <td class="text-center">{{data.endSign}}</td>
                     <td class="text-center">{{data.startShift}}</td>
@@ -89,7 +90,7 @@
 
 <ng-template #lmcontent let-modal>
   <div class="modal-header">
-      <h4 class="modal-title ">{{ 'ADD_WORKTIME' | translate }}</h4>
+      <h4 class="modal-title ">{{ 'ADD_EX_WORKTIME' | translate }}</h4>
       <button type="button" class="btn-close" aria-label="Close"
           (click)="modal.dismiss('Cross click')"></button>
   </div>
@@ -111,23 +112,37 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-12">
+            <div class="col-md-6 col-12 mb-2">
               <div class="mb-3">
-                <label class="form-label" for="date">{{"DATE" |translate}}</label>
-                <input class="form-control digits" id="date" formControlName="date" name="date"
-                  [class.invalid]="AddForm.get('date')?.invalid && isSubmited"
-                placeholder="yyyy-mm-dd" [owlDateTimeTrigger]="dt4"
-                  [owlDateTime]="dt4">
+                <label class="form-label" for="from">{{"FromDate" |translate}}</label>
+                <input class="form-control digits" id="from" formControlName="from" name="from"
+                  [class.invalid]="AddForm.get('from')?.invalid && isSubmited"
+                placeholder="yyyy-mm-dd" [owlDateTimeTrigger]="dt3"
+                  [owlDateTime]="dt3">
                 <div class="error"
-                  *ngIf="AddForm.get('date')?.invalid && (AddForm.get('date')?.dirty || isSubmited)">
+                  *ngIf="AddForm.get('from')?.invalid && (AddForm.get('from')?.dirty || isSubmited)">
                   يجب إدخال التاريخ  
                 </div>
-                <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>
+                <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
               </div>
             </div>
           </div>
           <div class="mb-3 row ">
-            <div class="col-12 mb-2">
+            <div class="col-md-6 col-12 mb-2">
+                <div class="mb-3">
+                  <label class="form-label" for="to">{{"ToDate" |translate}}</label>
+                  <input class="form-control digits" id="to" formControlName="to" name="to"
+                    [class.invalid]="AddForm.get('to')?.invalid && isSubmited"
+                  placeholder="yyyy-mm-dd" [owlDateTimeTrigger]="dt4"
+                    [owlDateTime]="dt4">
+                  <div class="error"
+                    *ngIf="AddForm.get('to')?.invalid && (AddForm.get('to')?.dirty || isSubmited)">
+                    يجب إدخال التاريخ  
+                  </div>
+                  <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>
+                </div>
+              </div>
+            <div class="col-md-6 col-12 mb-2">
               <div>
                 <label class="form-label" for="validation3">{{"overTimeStart" | translate}}</label>
                 <input class="form-control" [ngxTimepicker]="overTimeStart" formControlName="overTimeStart"
@@ -250,7 +265,7 @@
 </ng-template>
 <ng-template #Editcontent let-modal>
   <div class="modal-header">
-      <h4 class="modal-title ">{{ 'EDIT_WORKTIME' | translate }}</h4>
+      <h4 class="modal-title ">{{ 'EDIT_EX_WORKTIME' | translate }}</h4>
       <button type="button" class="btn-close" aria-label="Close"
           (click)="modal.dismiss('Cross click')"></button>
   </div>
@@ -258,51 +273,65 @@
     <div class="modal-body">
       <div class="row mb-3">
         <div class="col-12">
-          <div class="mb-3 row ">
-            <div class="col-md-6 col-12 mb-2">
-              <div>
-                <label class="form-label" for="validation3">{{"SHIFT" | translate}}</label>
-                <select class="form-select" id="validation3" formControlName="shiftId">
-                  <option selected disabled value="">{{"SHIFT" | translate}}</option>
-                  <option *ngFor="let type of Shifts" [value]="type.id">{{ getName(type) }}</option>
-                </select>
-                <div class="error"
-                  *ngIf="EditForm.get('shiftId')?.invalid && (EditForm.get('shiftId')?.dirty || isEditSubmited)">
-                  يجب اختيار الوردية
+            <div class="mb-3 row ">
+                <div class="col-md-6 col-12 mb-2">
+                  <div>
+                    <label class="form-label" for="validation3">{{"SHIFT" | translate}}</label>
+                    <select class="form-select" id="validation3" formControlName="shiftId">
+                      <option selected disabled value="">{{"SHIFT" | translate}}</option>
+                      <option *ngFor="let type of Shifts" [value]="type.id">{{ getName(type) }}</option>
+                    </select>
+                    <div class="error"
+                      *ngIf="EditForm.get('shiftId')?.invalid && (EditForm.get('shiftId')?.dirty || isEditSubmited)">
+                      يجب اختيار الوردية
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-12 mb-2">
+                  <div class="mb-3">
+                    <label class="form-label" for="from">{{"FromDate" |translate}}</label>
+                    <input class="form-control digits" id="from" formControlName="from" name="from"
+                      [class.invalid]="EditForm.get('from')?.invalid && isEditSubmited"
+                    placeholder="yyyy-mm-dd" [owlDateTimeTrigger]="dt3"
+                      [owlDateTime]="dt3">
+                    <div class="error"
+                      *ngIf="EditForm.get('from')?.invalid && (EditForm.get('from')?.dirty || isEditSubmited)">
+                      يجب إدخال التاريخ  
+                    </div>
+                    <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-6 col-12">
-              <div class="mb-3">
-                <label class="form-label" for="date">{{"DATE" |translate}}</label>
-                <input class="form-control digits" id="date" formControlName="date" name="date"
-                  [class.invalid]="EditForm.get('date')?.invalid && isEditSubmited"
-                placeholder="yyyy-mm-dd" [owlDateTimeTrigger]="dt4"
-                  [owlDateTime]="dt4">
-                <div class="error"
-                  *ngIf="EditForm.get('date')?.invalid && (EditForm.get('date')?.dirty || isEditSubmited)">
-                  يجب إدخال التاريخ  
+              <div class="mb-3 row ">
+                <div class="col-md-6 col-12 mb-2">
+                    <div class="mb-3">
+                      <label class="form-label" for="to">{{"ToDate" |translate}}</label>
+                      <input class="form-control digits" id="to" formControlName="to" name="to"
+                        [class.invalid]="EditForm.get('to')?.invalid && isEditSubmited"
+                      placeholder="yyyy-mm-dd" [owlDateTimeTrigger]="dt4"
+                        [owlDateTime]="dt4">
+                      <div class="error"
+                        *ngIf="EditForm.get('to')?.invalid && (EditForm.get('to')?.dirty || isEditSubmited)">
+                        يجب إدخال التاريخ  
+                      </div>
+                      <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>
+                    </div>
+                  </div>
+                <div class="col-md-6 col-12 mb-2">
+                  <div>
+                    <label class="form-label" for="validation3">{{"overTimeStart" | translate}}</label>
+                    <input class="form-control" [ngxTimepicker]="overTimeStart" formControlName="overTimeStart"
+                    [class.invalid]="EditForm.get('overTimeStart')?.invalid && isEditSubmited"
+                        [placeholder]="'overTimeStart' | translate">
+                      <ngx-material-timepicker #overTimeStart dir="ltr"></ngx-material-timepicker>
+                    <div class="error"
+                      *ngIf="EditForm.get('overTimeStart')?.invalid && (EditForm.get('overTimeStart')?.dirty || isEditSubmited)">
+                      يجب اختيار الوقت الإضافي
+                    </div>
+                  </div>
                 </div>
-                <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>
+               
               </div>
-            </div>
-          </div>
-          <div class="mb-3 row ">
-            <div class="col-12 mb-2">
-              <div>
-                <label class="form-label" for="validation3">{{"overTimeStart" | translate}}</label>
-                <input class="form-control" [ngxTimepicker]="overTimeStart" formControlName="overTimeStart"
-                [class.invalid]="EditForm.get('overTimeStart')?.invalid && isEditSubmited"
-                    [placeholder]="'overTimeStart' | translate" >
-                  <ngx-material-timepicker #overTimeStart dir="ltr"></ngx-material-timepicker>
-                <div class="error"
-                  *ngIf="EditForm.get('overTimeStart')?.invalid && (EditForm.get('overTimeStart')?.dirty || isEditSubmited)">
-                  يجب اختيار الوقت الإضافي
-                </div>
-              </div>
-            </div>
-           
-          </div>
           <div class="mb-3 row ">
             <div class="col-6 mb-2">
               <div>

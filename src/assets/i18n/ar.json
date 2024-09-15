@@ -104,7 +104,7 @@
   
   "SHIFTS":"الورديات",
   "SHIFTS_LIST":"قائمة الورديات",
-
+"SHIFT":"الوردية",
   
   "EMPLOYEE":"الموظفين",
   "EMPLOYEE_LIST":"قائمه الموظفين",
@@ -219,10 +219,73 @@
   "message": "تم تعديل المؤثر بنجاح ",
   "confirmButtonText": "موافق"
 },
+  "CODE":"الكود",
+  "MANAGER_CODE":"كود المدير",
+  "DEPAERTMENT":"القسم",
+  "JOB":"الوظيفة",
+  "NOTE":"الملاحظة",
+  "active":"نشط",
+  "STATUS":"الحالة",
+  "Create_employee_Success":{
+    "title": "أحسنت",
+    "message": "تم إضافة الموظف بنجاح ",
+    "confirmButtonText": "موافق"
+  },
+  "noManagerCode":{
+"title": "عذرا",
+"message": "لا يوجد مدير بهذا الكود تأكد من كود المدير الصحيح واعد المحاولة"
+,
+"confirmButtonText": "موافق"
+},
+"update_employee_Success":{
+  "title": "أحسنت",
+  "message": "تم تعديل بيانات الموظف بنجاح ",
+  "confirmButtonText": "موافق"
+},
+  "DATE":"التاريخ",
+  "FROM_HOUR":"من الساعة",
+  "TO_HOUR":"الي الساعة",
+  "overTimeStart":"الوقت الإضافي",
+  "START":"البداية",
+  "END":"النهاية",
+  "START_SHIFT":"بداية الوردية",
+  "END_SHIFT":"نهاية الوردية",
+  "earlyPermission":"الإذن المبكر",
+  "latePermission":"الإذن المتأخر",
+  "isHour":"بالساعة",
+  "Create_worktime_Success":{
+    "title": "أحسنت",
+    "message": "تم إضافة موعد العمل بنجاح ",
+    "confirmButtonText": "موافق"
+  },
+  "update_worktime_Success":{
+    "title": "أحسنت",
+    "message": "تم تعديل موعد العمل بنجاح ",
+    "confirmButtonText": "موافق"
+  },
+  "Create_EXworktime_Success":{
+    "title": "أحسنت",
+    "message": "تم إضافة إستثناء موعد العمل بنجاح ",
+    "confirmButtonText": "موافق"
+  },
+  "update_EXworktime_Success":{
+    "title": "أحسنت",
+    "message": "تم تعديل إستثناء موعد العمل بنجاح ",
+    "confirmButtonText": "موافق"
+  },
+  "":" إاضافة موعد عمل",
+  "EXEPTION_WORKTIME":"استثناء موعد العمل",
+  "FromDate":"من تاريخ",
+  "ToDate":"إلي تاريخ",
+  "EX_WORKTIME_LIST":"قائمة استثناء مواعيد العمل",
+  "ADD_EX_WORKTIME":"اضافه استثناء لمواعيد العمل",
+  "EDIT_EX_WORKTIME":"تعديل استثناء لمواعيد العمل",
+  "شسيسي":"",
+  "شسيسي":"",
+  "شسيسي":"",
   "شسيسي":"",
   "شسيسي":"",
   "شسيسي":""
-  
 
 
 }

@@ -65,6 +65,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: "ExceptionWorkTime",
+    loadChildren: () =>
+      import("./features/exception-working-time/exception-working-time.module").then(
+        (m) => m.ExceptionWorkingTimeModule
+      ),
+  },
+  {
     path: "Jobs",
     loadChildren: () =>
       import("./features/jobs/jobs.module").then(

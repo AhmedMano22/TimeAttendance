@@ -8,14 +8,15 @@ import { authUser } from "src/app/shared/interface/isAuthUser";
 import { UserInfo } from "src/app/shared/interface/user-info";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { DatePipe } from "@angular/common";
+
 declare var require: any;
 const Swal = require("sweetalert2");
-interface WorkingTime {
+interface ExceptionWorkingTime {
   shiftId: number;
   shiftNameAr: string;
   shiftNameEn: string;
-  date: string;
+  from: string;
+  to: string;
   isHour: boolean;
   overTimeStart: string;
   startSign: string;
@@ -27,13 +28,11 @@ interface WorkingTime {
   id: number;
 }
 @Component({
-  selector: 'app-work-time-list',
-  templateUrl: './work-time-list.component.html',
-  styleUrls: ['./work-time-list.component.scss'],
-  providers: [DatePipe],
+  selector: 'app-exception-wt-list',
+  templateUrl: './exception-wt-list.component.html',
+  styleUrls: ['./exception-wt-list.component.scss']
 })
-export class WorkTimeListComponent {
-
+export class ExceptionWTListComponent {
 
   subscriptions = ["Lawyer", "Normal", "Admin", "Translator"];
   
@@ -47,11 +46,10 @@ export class WorkTimeListComponent {
   isEditSubmited = false;
   Shifts: any[] = [];
   currentLang: string;
-  WorkingTime:WorkingTime={
+  ExceptionWorkingTime:ExceptionWorkingTime={
     shiftId: 0,
     shiftNameAr: "",
     shiftNameEn: "",
-    date: "",
     isHour: false,
     overTimeStart: "",
     startSign: "",
@@ -60,7 +58,9 @@ export class WorkTimeListComponent {
     endShift: "",
     earlyPermission: "",
     latePermission: "",
-    id: 0
+    id: 0,
+    from: "",
+    to: ""
   }
   constructor(
     private apiSer: ApiService,
@@ -68,7 +68,6 @@ export class WorkTimeListComponent {
     private modalService: NgbModal,
     private authservice: AuthService,
     private fb: FormBuilder,
-    private datePipe: DatePipe
   ) {
     this.currentLang = localStorage.getItem('app-lang') ?? 'ar';
     this.translate.onLangChange.subscribe((event) => {
@@ -82,7 +81,8 @@ export class WorkTimeListComponent {
      this.load();
      this.AddForm = this.fb.group({
       shiftId: ['', Validators.required], 
-      date: ['', Validators.required], 
+      from: ['', Validators.required],
+      to: ['', Validators.required], 
       isHour: [false], 
       overTimeStart: ["", Validators.required], 
       startSign: ["", Validators.required],
@@ -94,7 +94,8 @@ export class WorkTimeListComponent {
     });
     this.EditForm = this.fb.group({
       shiftId: ['', Validators.required], 
-      date: ['', Validators.required], 
+      from: ['', Validators.required],
+      to: ['', Validators.required], 
       isHour: [false], 
       overTimeStart: ["", Validators.required], 
       startSign: ["", Validators.required],
@@ -109,7 +110,7 @@ export class WorkTimeListComponent {
 
   load() {
     this.loading = true; // Start loading
-    this.apiSer.getWorkTime().subscribe({
+    this.apiSer.getExceptionWorkTime().subscribe({
       next: (res: any) => {
         this.ListData = res.result;
         console.log("res", res);
@@ -126,27 +127,7 @@ export class WorkTimeListComponent {
   lmModal(content:any){
     const modalRef = this.modalService.open(content,{ size: 'xl' });
   }
-   formatTime = (time: string): string => {
-    if (!time) return '';
   
-    // Split the time into [hour:minute] and AM/PM
-    const [hourMinute, period] = time.split(' ');
-    let [hours, minutes] = hourMinute.split(':');
-  
-    // Convert hours to 24-hour format
-    if (period === 'PM' && hours !== '12') {
-      hours = (parseInt(hours, 10) + 12).toString();
-    } else if (period === 'AM' && hours === '12') {
-      hours = '00';
-    }
-  
-    // Ensure hours and minutes are two digits
-    hours = hours.padStart(2, '0');
-    minutes = minutes.padStart(2, '0');
-  
-    // Return formatted time with seconds set to 00
-    return `${hours}:${minutes}:00`;
-  };
   getShiftNameByRecordId(id: number): string {
     const type = this.ListData.find(type => type.id === id);
     if (!type) return 'Unknown'; 
@@ -161,7 +142,8 @@ export class WorkTimeListComponent {
 
       const body = {
         shiftId: +formData.shiftId,
-        date: formData.date,
+        from: formData.from,
+        to: formData.to,
         isHour: formData.isHour,
         overTimeStart: formData.overTimeStart,
         startSign: formData.startSign,
@@ -172,7 +154,7 @@ export class WorkTimeListComponent {
         latePermission: formData.latePermission
       };
     console.log("body",body);
-      this.apiSer.addWorkTime(body).subscribe({
+      this.apiSer.addExceptionWorkingTime(body).subscribe({
         next: (res: any) => {
           console.log(res);
         
@@ -183,7 +165,7 @@ export class WorkTimeListComponent {
             this.isSubmited = false;
             modal.dismiss();
             this.translate
-              .get("Create_worktime_Success")
+              .get("Create_EXworktime_Success")
               .subscribe((translations: any) => {
                 Swal.fire({
                   title: translations.title,
@@ -261,7 +243,7 @@ export class WorkTimeListComponent {
           })
           .then((result: any) => {
             if (result.isConfirmed) {
-              this.apiSer.deleteWorkTime(id).subscribe({
+              this.apiSer.deleteExceptionWorkingTime(id).subscribe({
                 next: (res: any) => {
                   console.log(res);
               
@@ -324,15 +306,16 @@ export class WorkTimeListComponent {
   EditModal(content: any, id: any) {
     const modalRef = this.modalService.open(content,{ size: 'xl' });
 
-    this.apiSer.getWorkTimeByID(id).subscribe({
+    this.apiSer.getExceptionWorkingTimeByID(id).subscribe({
       next: (res: any) => {
      
         if (res.success) {
-          this.WorkingTime = {
+          this.ExceptionWorkingTime = {
             shiftId: res.result.shiftId,
             shiftNameAr: res.result.shiftNameAr,
             shiftNameEn: res.result.shiftNameEn,
-            date: res.result.date,
+            from: res.result.from,
+            to: res.result.to,
             isHour: res.result.isHour,
             overTimeStart: res.result.overTimeStart ? res.result.overTimeStart.trim() : '',
             startSign: res.result.startSign ? res.result.startSign.trim() : '',
@@ -344,18 +327,19 @@ export class WorkTimeListComponent {
             id: res.result.id,
            
           };
-          console.log( this.WorkingTime);
+          console.log( this.ExceptionWorkingTime);
           this.EditForm.patchValue({
-            shiftId: this.WorkingTime.shiftId,
-            date: this.WorkingTime.date,
-            isHour: this.WorkingTime.isHour,
-            overTimeStart: this.WorkingTime.overTimeStart,
-            startSign: this.WorkingTime.startSign,
-            endSign: this.WorkingTime.endSign,
-            startShift: this.WorkingTime.startShift,
-            endShift: this.WorkingTime.endShift,
-            earlyPermission: this.WorkingTime.earlyPermission,
-            latePermission: this.WorkingTime.latePermission,
+            shiftId: this.ExceptionWorkingTime.shiftId,
+            from: this.ExceptionWorkingTime.from,
+            to: this.ExceptionWorkingTime.to,
+            isHour: this.ExceptionWorkingTime.isHour,
+            overTimeStart: this.ExceptionWorkingTime.overTimeStart,
+            startSign: this.ExceptionWorkingTime.startSign,
+            endSign: this.ExceptionWorkingTime.endSign,
+            startShift: this.ExceptionWorkingTime.startShift,
+            endShift: this.ExceptionWorkingTime.endShift,
+            earlyPermission: this.ExceptionWorkingTime.earlyPermission,
+            latePermission: this.ExceptionWorkingTime.latePermission,
           });
         }
       },
@@ -367,11 +351,12 @@ export class WorkTimeListComponent {
   onSubmitEdit(modal: any) {
     this.isEditSubmited = true;
     if (this.EditForm.valid) {
-      const { shiftId, date ,isHour,overTimeStart,startSign,endSign,startShift,endShift,earlyPermission,latePermission} = this.EditForm.value;
+      const { shiftId, from,to ,isHour,overTimeStart,startSign,endSign,startShift,endShift,earlyPermission,latePermission} = this.EditForm.value;
       const body = {
-        id: this.WorkingTime.id,
+        id: this.ExceptionWorkingTime.id,
         shiftId: shiftId,
-        date: date,
+        from: from,
+        to: to,
         isHour: isHour,
         overTimeStart: overTimeStart,
         startSign: startSign,
@@ -383,14 +368,14 @@ export class WorkTimeListComponent {
       };
       console.log("Update body:", body);
 
-      this.apiSer.UpdateWorkTime(body).subscribe({
+      this.apiSer.UpdateExceptionWorkingTime(body).subscribe({
         next: (res: any) => {
           console.log("Update response:", res);
           if (res.success == true) {
             this.load();
             modal.dismiss();
             this.translate
-              .get("update_worktime_Success")
+              .get("update_EXworktime_Success")
               .subscribe((translations: any) => {
                 Swal.fire({
                   title: translations.title,

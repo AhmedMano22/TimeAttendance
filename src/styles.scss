@@ -224,3 +224,12 @@ ngx-intl-tel-input input[disabled] {
 .owl-dt-container {
   z-index: 2000 !important; /* Higher than Bootstrap modal */
 }
+.owl-dt-calendar-control{
+  direction: ltr !important;
+}
+.timepicker{
+  direction: ltr !important;
+}
+.timepicker-dial__container{
+  justify-content: center !important;
+}

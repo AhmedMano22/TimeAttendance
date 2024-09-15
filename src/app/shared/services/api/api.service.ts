@@ -68,21 +68,36 @@ UpdatePublicHoliday( body: any) {
 }
 /* Work Time */
 getWorkTime() {
-  return this._HttpClient.get(this.url + "/WorkTime/GetAll");
+  return this._HttpClient.get(this.url + "/WorkingTime/GetAll");
 }
 addWorkTime(body: any) {
-  return this._HttpClient.post(this.url + "/WorkTime/Create", body);
+  return this._HttpClient.post(this.url + "/WorkingTime/Create", body);
 }
 deleteWorkTime(id: number) {
-  return this._HttpClient.delete(this.url + `/WorkTime/Delete/${id}`);
+  return this._HttpClient.delete(this.url + `/WorkingTime/Delete/${id}`);
 }
 getWorkTimeByID(id: number) {
-  return this._HttpClient.get(this.url + `/WorkTime/GetById/${id}`);
+  return this._HttpClient.get(this.url + `/WorkingTime/GetById/${id}`);
 }
 UpdateWorkTime( body: any) {
-  return this._HttpClient.post(this.url + `/WorkTime/Update`, body);
+  return this._HttpClient.post(this.url + `/WorkingTime/Update`, body);
 }
-
+/* Exception Work Time */
+getExceptionWorkTime() {
+  return this._HttpClient.get(this.url + "/ExceptionWorkingTime/GetAll");
+}
+addExceptionWorkingTime(body: any) {
+  return this._HttpClient.post(this.url + "/ExceptionWorkingTime/Create", body);
+}
+deleteExceptionWorkingTime(id: number) {
+  return this._HttpClient.delete(this.url + `/ExceptionWorkingTime/Delete/${id}`);
+}
+getExceptionWorkingTimeByID(id: number) {
+  return this._HttpClient.get(this.url + `/ExceptionWorkingTime/GetById/${id}`);
+}
+UpdateExceptionWorkingTime( body: any) {
+  return this._HttpClient.post(this.url + `/ExceptionWorkingTime/Update`, body);
+}
 
  /* JOBS */
  getJobs() {

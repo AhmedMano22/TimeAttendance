@@ -11,8 +11,17 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 declare var require: any;
 const Swal = require("sweetalert2");
 interface Employee {
-  nameAr: string;
   nameEn: string;
+  nameAr: string;
+  code: string;
+  note: string;
+  managerCode: string | null;
+  email: string;
+  active: boolean;
+  departmentId: number;
+  locationId: number;
+  jobId: number;
+
   id: number;
 }
 @Component({
@@ -31,11 +40,23 @@ export class EmployeelistComponent {
   EditForm!: FormGroup;
   isSubmited = false;
   isEditSubmited = false;
+  Departments: any[] = [];
+  Locations: any[] = [];
+  Jobs: any[] = [];
   employee:Employee={
-    nameAr: "",
     nameEn: "",
+    nameAr: "",
+    code: "",
+    note: "",
+    managerCode: null,
+    email: "",
+    active: false,
+    departmentId: 0,
+    locationId: 0,
+    jobId: 0,
     id: 0
   }
+  currentLang: string;
   constructor(
     private apiSer: ApiService,
     private translate: TranslateService,
@@ -43,7 +64,12 @@ export class EmployeelistComponent {
     private authservice: AuthService,
     private fb: FormBuilder
   ) {
- 
+    this.currentLang = localStorage.getItem('app-lang') ?? 'ar';
+    this.translate.onLangChange.subscribe((event) => {
+      this.currentLang = event.lang;
+      console.log("lang",this.currentLang);
+      
+    });
   }
   ngOnInit() {
     this.loading = true;
@@ -51,11 +77,30 @@ export class EmployeelistComponent {
      this.AddForm = this.fb.group({
       nameAr: ['', Validators.required], 
       nameEn: ['', Validators.required], 
+      code: ['', Validators.required], 
+      managerCode: [null], 
+      email: ['', Validators.required], 
+      active: [false], 
+      departmentId: ['', Validators.required], 
+      locationId: ['', Validators.required], 
+      jobId: ['', Validators.required], 
+      note: ['', Validators.required], 
     });
     this.EditForm = this.fb.group({
       nameAr: ['', Validators.required], 
       nameEn: ['', Validators.required], 
+      code: ['', Validators.required], 
+      managerCode: [null], 
+      email: ['', Validators.required], 
+      active: [false], 
+      departmentId: ['', Validators.required], 
+      locationId: ['', Validators.required], 
+      jobId: ['', Validators.required], 
+      note: ['', Validators.required], 
     });
+    this.loadlDepartments();
+    this.loadlLocations();
+    this.loadlJobs();
   }
 
   load() {
@@ -75,21 +120,41 @@ export class EmployeelistComponent {
   }
 
   lmModal(content:any){
-    const modalRef = this.modalService.open(content,{ size: 'lg' });
+    const modalRef = this.modalService.open(content,{ size: 'xl' });
   }
  
   onSubmit(modal: any) {
     this.isSubmited = true;
     if (this.AddForm.valid) {
       console.log(this.AddForm.value);
-      const formData = this.AddForm.value
-      this.apiSer.addEmployee(formData).subscribe({
+      const formData = this.AddForm.value;
+      if (formData.managerCode === "") {
+        formData.managerCode = null;
+      }
+      const body = {
+          nameEn: formData.nameEn,
+          nameAr: formData.nameAr,
+          code: formData.code,
+          note: formData.note,
+          managerCode: formData.managerCode,
+          email: formData.email,
+          active: formData.active,
+          departmentId: +formData.departmentId,
+          locationId: +formData.locationId,
+          jobId: +formData.jobId
+      }
+      console.log("body",body);
+      
+      this.apiSer.addEmployee(body).subscribe({
         next: (res: any) => {
           console.log(res);
         
           if (res.success == true) {
             this.load();
             this.AddForm.reset();
+            this.AddForm.reset({ departmentId: "" });
+            this.AddForm.reset({ locationId: "" });
+            this.AddForm.reset({ jobId: "" });
             this.isSubmited = false;
             modal.dismiss();
             this.translate
@@ -117,14 +182,26 @@ export class EmployeelistComponent {
         },
         error: (error) => {
           console.log(error);
-          this.translate.get("errorMessage").subscribe((translations: any) => {
-            Swal.fire({
-              title: translations.title,
-              text: translations.message,
-              icon: "error",
-              confirmButtonText: translations.confirmButtonText,
+          if(error.error.result == "No manager with this code"){
+            this.translate.get("noManagerCode").subscribe((translations: any) => {
+              Swal.fire({
+                title: translations.title,
+                text: translations.message,
+                icon: "error",
+                confirmButtonText: translations.confirmButtonText,
+              });
             });
-          });
+          }else{
+            this.translate.get("errorMessage").subscribe((translations: any) => {
+              Swal.fire({
+                title: translations.title,
+                text: translations.message,
+                icon: "error",
+                confirmButtonText: translations.confirmButtonText,
+              });
+            });
+          }
+      
         },
       });
     } else {
@@ -232,7 +309,7 @@ export class EmployeelistComponent {
       });
   }
   EditModal(content: any, id: any) {
-    const modalRef = this.modalService.open(content,{ size: 'lg' });
+    const modalRef = this.modalService.open(content,{ size: 'xl' });
 
     this.apiSer.getEmployeeByID(id).subscribe({
       next: (res: any) => {
@@ -241,13 +318,28 @@ export class EmployeelistComponent {
           this.employee = {
             nameAr: res.result.nameAr,
             nameEn: res.result.nameEn,
+            code: res.result.code,
+            note: res.result.note,
+            managerCode: res.result.managerCode,
+            email: res.result.email,
+            active: res.result.active,
+            departmentId: res.result.departmentId,
+            locationId: res.result.locationId,
+            jobId: res.result.jobId,
             id: res.result.id,
            
           };
           this.EditForm.patchValue({
             nameAr: this.employee.nameAr,
             nameEn:this.employee.nameEn,
-    
+            code: this.employee.code,
+            note: this.employee.note,
+            managerCode: this.employee.managerCode,
+            email: this.employee.email,
+            active: this.employee.active,
+            departmentId: this.employee.departmentId,
+            locationId: this.employee.locationId,
+            jobId: this.employee.jobId,
           });
         }
       },
@@ -259,11 +351,19 @@ export class EmployeelistComponent {
   onSubmitEdit(modal: any) {
     this.isEditSubmited = true;
     if (this.EditForm.valid) {
-      const { nameAr, nameEn } = this.EditForm.value;
+      const { nameAr, nameEn,code,managerCode,email,active,departmentId,locationId,jobId,note } = this.EditForm.value;
 
       const body = {
         nameAr: nameAr,
         nameEn: nameEn,
+        code: code,
+        note: note,
+        managerCode: managerCode,
+        email: email,
+        active: active,
+        departmentId:departmentId,
+        locationId: locationId,
+        jobId: jobId,
         id:this.employee.id
       };
       console.log("Update body:", body);
@@ -275,7 +375,7 @@ export class EmployeelistComponent {
             this.load();
             modal.dismiss();
             this.translate
-              .get("update_Depart_Success")
+              .get("update_employee_Success")
               .subscribe((translations: any) => {
                 Swal.fire({
                   title: translations.title,
@@ -321,6 +421,50 @@ export class EmployeelistComponent {
           });
         });
     }
+  }
+
+
+
+
+  loadlDepartments(){
+    this.apiSer.getDepartments().subscribe((res:any) => {
+      if (res.success) {
+        this.Departments = res.result;
+      }
+    });
+  }
+  loadlLocations(){
+    this.apiSer.getLocations().subscribe((res:any) => {
+      if (res.success) {
+        this.Locations = res.result;
+      }
+    });
+  } 
+  loadlJobs(){
+    this.apiSer.getJobs().subscribe((res:any) => {
+      if (res.success) {
+        this.Jobs = res.result;
+      }
+    });
+  }
+  getName(type: any): string {
+    return this.currentLang === 'ar' ? type.nameAr : type.nameEn;
+  }
+
+  getDepartmentNameById(id: number): string {
+    const type = this.Departments.find(type => type.id === id);
+    if (!type) return 'Unknown'; 
+    return this.currentLang === 'ar' ? type.nameAr : type.nameEn;
+  }
+  getLocationNameById(id: number): string {
+    const type = this.Locations.find(type => type.id === id);
+    if (!type) return 'Unknown'; 
+    return this.currentLang === 'ar' ? type.nameAr : type.nameEn;
+  }
+  getJobNameById(id: number): string {
+    const type = this.Jobs.find(type => type.id === id);
+    if (!type) return 'Unknown'; 
+    return this.currentLang === 'ar' ? type.nameAr : type.nameEn;
   }
 }
 
