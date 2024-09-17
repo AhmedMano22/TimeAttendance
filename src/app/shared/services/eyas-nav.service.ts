@@ -202,19 +202,7 @@ export class EyasNavService {
         },
       ],
     },
-    {
-      title: "Transaction",
-      icon: "widgets",
-      type: "sub",
-      active: false,
-      children: [
-        {
-          path: "/Transaction/Transactions-List",
-          title: "TRANSACTION_LIST",
-          type: "link",
-        },
-      ],
-    },
+ 
     {
       title: "TIMETABLE",
       icon: "widgets",
