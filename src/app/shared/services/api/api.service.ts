@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 
 @Injectable({
@@ -153,10 +153,56 @@ UpdateShift( body: any) {
 }
 
 
- /* Leaves */
- getLeaves() {
-  return this._HttpClient.get(this.url + "/Leave/GetAll");
+/* transactions */
+getTransactions(leavesTypeId?: number, TransactionStatusId?: string) {
+  let params = new HttpParams();
+  
+  // Append parameters if they are provided
+  if (leavesTypeId) {
+    params = params.append('LeavesTypeId', leavesTypeId.toString());
+  }
+  
+  if (TransactionStatusId) {
+    params = params.append('TransactionStatusId', TransactionStatusId.toString());
+  }
+  
+  return this._HttpClient.get(this.url + "/Transaction/GetAll", { params });
 }
+//  getTransactions() {
+//   return this._HttpClient.get(this.url + "/Transaction/GetAll");
+// }
+addTransaction(body: any) {
+  return this._HttpClient.post(this.url + "/Transaction/Create", body);
+}
+deleteTransaction(id: number) {
+  return this._HttpClient.delete(this.url + `/Transaction/Delete/${id}`);
+}
+getTransactionByID(id: number) {
+  return this._HttpClient.get(this.url + `/Transaction/GetById/${id}`);
+}
+UpdateTransaction( body: any) {
+  return this._HttpClient.post(this.url + `/Transaction/Update`, body);
+}
+
+ /* Leaves */
+//  getLeaves() {
+//   return this._HttpClient.get(this.url + "/Leave/GetAll");
+// }
+getLeaves(leavesTypeId?: number, name?: string) {
+  let params = new HttpParams();
+  
+  // Append parameters if they are provided
+  if (leavesTypeId) {
+    params = params.append('LeavesTypeId', leavesTypeId.toString());
+  }
+  
+  if (name) {
+    params = params.append('Name', name);
+  }
+  
+  return this._HttpClient.get(this.url + "/Leave/GetAll", { params });
+}
+
 addLeave(body: any) {
   return this._HttpClient.post(this.url + "/Leave/Create", body);
 }

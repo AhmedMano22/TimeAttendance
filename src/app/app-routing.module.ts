@@ -72,6 +72,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: "Transaction",
+    loadChildren: () =>
+      import("./features/transaction/transaction.module").then(
+        (m) => m.TransactionModule
+      ),
+  },
+  {
     path: "Jobs",
     loadChildren: () =>
       import("./features/jobs/jobs.module").then(

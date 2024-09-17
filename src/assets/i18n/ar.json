@@ -280,6 +280,28 @@
   "EX_WORKTIME_LIST":"قائمة استثناء مواعيد العمل",
   "ADD_EX_WORKTIME":"اضافه استثناء لمواعيد العمل",
   "EDIT_EX_WORKTIME":"تعديل استثناء لمواعيد العمل",
+  "Transaction":"المعاملات المالية",
+  "TRANSACTION_LIST":"قائمة المعاملات المالية",
+  "ADD_TRANSACTION":"إضافة معاملة مالية",
+  "EDIT_TRANSACTION":"تعديل معاملة مالية",
+  "EMPLOYE":"الموظف",
+  "LEAVE":"المؤثر",
+  "Create_transaction_Success":{
+    "title": "أحسنت",
+    "message": "تم إضافة العملية بنجاح",
+    "confirmButtonText": "موافق"
+  },
+  "Edit_transaction_Success":{
+    "title": "أحسنت",
+    "message": "تم تعديل العملية بنجاح",
+    "confirmButtonText": "موافق"
+  },
+  "ADD_VACATION":"إضافة أجازة",
+  "EDIT_VACATION":"تعديل أجازة",
+  "ADD_Mission":"إضافة مأمورية",
+  "EDIT_Mission":"تعديل مأمورية",
+  "ADD_PERMISSION":"إضافة إذن",
+  "EDIT_PERMISSION":"تعديل إذن",
   "شسيسي":"",
   "شسيسي":"",
   "شسيسي":"",

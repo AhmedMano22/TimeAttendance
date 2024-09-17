@@ -94,17 +94,17 @@ export class EyasNavService {
       active: false,
       children: [
         {
-          path: "/departments/departments-list",
+          path: "/Transaction/Vacation-List",
           title: "Vac_LIST",
           type: "link",
         },
         {
-          path: "/departments/departments-list",
+          path: "/Transaction/Mission-List",
           title: "Mis_LIST",
           type: "link",
         },
         {
-          path: "/departments/departments-list",
+          path: "/Transaction/Permission-List",
           title: "Per_LIST",
           type: "link",
         },
@@ -198,6 +198,19 @@ export class EyasNavService {
         {
           path: "/ExceptionWorkTime/ExceptionWT-List",
           title: "WORKTIME_LIST",
+          type: "link",
+        },
+      ],
+    },
+    {
+      title: "Transaction",
+      icon: "widgets",
+      type: "sub",
+      active: false,
+      children: [
+        {
+          path: "/Transaction/Transactions-List",
+          title: "TRANSACTION_LIST",
           type: "link",
         },
       ],
