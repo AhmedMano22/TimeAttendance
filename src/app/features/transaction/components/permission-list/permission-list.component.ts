@@ -16,17 +16,17 @@ interface Transaction {
   employeeNameEn: string;
   from: string; 
   to: string;   
-  transactionStatusId: number;
-  transactionStatusNameAr: string;
-  transactionStatusNameEn: string;
+  // transactionStatusId: number;
+  // transactionStatusNameAr: string;
+  // transactionStatusNameEn: string;
   note: string;
   leaveId: number;
   leaveNameAr: string;
   leaveNameEn: string;
-  reason: string | null;
-  managerId: number | null;
-  managerNameAr: string | null;
-  managerNameEn: string | null;
+  // reason: string | null;
+  // managerId: number | null;
+  // managerNameAr: string | null;
+  // managerNameEn: string | null;
   id: number;
 }
 @Component({
@@ -56,17 +56,10 @@ export class PermissionListComponent {
     employeeNameEn: "",
     from: "",
     to: "",
-    transactionStatusId: 0,
-    transactionStatusNameAr: "",
-    transactionStatusNameEn: "",
     note: "",
     leaveId: 0,
     leaveNameAr: "",
     leaveNameEn: "",
-    reason: null,
-    managerId: null,
-    managerNameAr: null,
-    managerNameEn: null,
     id: 0
   }
   constructor(
@@ -327,17 +320,10 @@ getName(type: any): string {
             employeeNameEn:res.result.employeeNameEn,
             from:res.result.from,
             to:res.result.to,
-            transactionStatusId:res.result.transactionStatusId,
-            transactionStatusNameAr:res.result.transactionStatusNameAr,
-            transactionStatusNameEn:res.result.transactionStatusNameEn,
             note:res.result.note,
             leaveId:res.result.leaveId,
             leaveNameAr:res.result.leaveNameAr,
             leaveNameEn:res.result.leaveNameEn,
-            reason: res.result.reason,
-            managerId: res.result.managerId,
-            managerNameAr: res.result.managerNameAr,
-            managerNameEn: res.result.managerNameEn,
             id: res.result.id,
           };
           this.EditForm.patchValue({
@@ -346,17 +332,11 @@ getName(type: any): string {
             employeeNameEn:this.transaction.employeeNameEn,
             From:this.transaction.from,
             To:this.transaction.to,
-            transactionStatusId:this.transaction.transactionStatusId,
-            transactionStatusNameAr:this.transaction.transactionStatusNameAr,
-            transactionStatusNameEn:this.transaction.transactionStatusNameEn,
             note:this.transaction.note,
             leaveId:this.transaction.leaveId,
             leaveNameAr:this.transaction.leaveNameAr,
             leaveNameEn:this.transaction.leaveNameEn,
-            reason: this.transaction.reason,
-            managerId: this.transaction.managerId,
-            managerNameAr: this.transaction.managerNameAr,
-            managerNameEn: this.transaction.managerNameEn,
+      
           });
         }
       },
@@ -370,19 +350,19 @@ getName(type: any): string {
     if (this.EditForm.valid) {
       const { employeeId, leaveId ,From,To,note} = this.EditForm.value;
       const body = {
-        // id: this.transaction.id,
-        // employeeId: employeeId,
-        // from: From,
-        // to: To,
+        id: this.transaction.id,
+        employeeId: employeeId,
+        from: From,
+        to: To,
         // transactionStatusId: 0,
-        // note: note,
-        // leaveId: leaveId,
+        note: note,
+        leaveId: leaveId,
         // reason: this.transaction.reason,
         // managerCode: this.transaction.managerCode
       };
       console.log("Update body:", body);
 
-      this.apiSer.UpdatePublicHoliday(body).subscribe({
+      this.apiSer.UpdateTransaction(body).subscribe({
         next: (res: any) => {
           console.log("Update response:", res);
           if (res.success == true) {
