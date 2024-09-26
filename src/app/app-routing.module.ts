@@ -100,7 +100,13 @@ const routes: Routes = [
         (m) => m.ShiftModule
       ),
   },
-
+  {
+    path: "TimeTable",
+    loadChildren: () =>
+      import("./features/time-table/time-table.module").then(
+        (m) => m.TimeTableModule
+      ),
+  },
   {
     path: "setting",
     loadChildren: () =>
@@ -123,7 +129,7 @@ const routes: Routes = [
  
   {
     path: "**",
-    redirectTo: "",
+    redirectTo: "dashboard",
   },
 ];
 

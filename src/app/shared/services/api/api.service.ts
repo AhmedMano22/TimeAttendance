@@ -44,6 +44,9 @@ deleteEmployee(id: number) {
 getEmployeeByID(id: number) {
   return this._HttpClient.get(this.url + `/Employee/GetById/${id}`);
 }
+getEmployeeByCode(code: number) {
+  return this._HttpClient.get(this.url + `/Employee/GetByCode/${code}`);
+}
 UpdateEmployee( body: any) {
   return this._HttpClient.post(this.url + `/Employee/Update`, body);
 }
@@ -82,6 +85,21 @@ getWorkTimeByID(id: number) {
 UpdateWorkTime( body: any) {
   return this._HttpClient.post(this.url + `/WorkingTime/Update`, body);
 }
+
+/* Time Table */
+getAllTimeTable() {
+  return this._HttpClient.get(this.url + "/TimeTableH/GetAll");
+}
+addTimeTable(body: any) {
+  return this._HttpClient.post(this.url + "/TimeTableH/SaveAllTimeTableData", body);
+}
+deleteTimeTable(id: number) {
+  return this._HttpClient.delete(this.url + `/TimeTableH/Delete/${id}`);
+}
+getTimeTableByID(id: number) {
+  return this._HttpClient.get(this.url + `/TimeTableH/GetById/${id}`);
+}
+/* End Time Table */
 /* Exception Work Time */
 getExceptionWorkTime() {
   return this._HttpClient.get(this.url + "/ExceptionWorkingTime/GetAll");

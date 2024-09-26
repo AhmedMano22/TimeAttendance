@@ -1,0 +1,67 @@
+<app-breadcrumb
+  [title]="'TIMETABLE_LIST' | translate"
+  [items]="['TIMETABLE' | translate]"
+  [active_item]="'TIMETABLE_LIST' | translate"
+></app-breadcrumb>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header pb-0" >
+          <button class="btn btn-primary text-center" 
+          routerLink="/TimeTable/Add-TimeTable"
+            type="button">
+            {{ 'ADD_TIMETABLE' | translate }}
+          </button>
+        </div>
+        <div class="card-body d-flex align-items-center justify-content-center" style="min-height: 300px;"
+         >
+          <div class=" w-100  position-absolute  d-flex align-items-center" style="z-index:0;">
+            <app-spinner *ngIf="loading" class="d-block mx-auto"></app-spinner>
+          </div>
+          <div class="table-responsive w-100" *ngIf="!loading">
+            <table class="table table-hover " *ngIf="ListData.length > 0">
+              <thead>
+                <tr>
+                  <th scope="col" class="text-center">#</th>
+                  <th scope="col" class="text-center">{{"nameAr" |translate}}</th>
+                  <th scope="col" class="text-center">{{"nameEn" |translate}}</th>
+                  <th scope="col" class="text-center">{{"START_DATE" |translate}}</th>
+                  <th scope="col" class="text-center">{{"ACTIONS" |translate}}</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <ng-container *ngFor="let data of ListData; let i = index">
+                  <tr>
+                    <td class="text-center">{{i + 1}}</td>
+                    <td class="text-center">{{data.nameAr}}</td>
+                    <td class="text-center">{{data.nameEn}}</td>
+   
+                    <td class="text-center">{{ formatDate(data.startDate) }}</td>
+
+                    <td class="d-flex gap-1 action-buttons justify-content-center">
+                      <!-- <button class="btn  btn-primary" type="button"  >
+                        {{"ACTIONS" |translate}}</button> -->
+                      <button class="btn  success" type="button"    [routerLink]="['/TimeTable/Edit-TimeTable',data.id]">
+                        {{"EDIT" |translate}}</button>
+                      <button class="btn  danger" type="button" 
+                        (click)="delete(data.id)"> {{"DELETE" |translate}}</button>
+                    </td>
+
+                  </tr>
+
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="ListData.length == 0 && !loading " class="noInquires">
+            <p class="text-center"> {{"NO_CONTENT" |translate}}</p>
+          </div>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+</div>
+

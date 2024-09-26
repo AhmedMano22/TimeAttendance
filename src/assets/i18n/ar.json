@@ -119,8 +119,9 @@
 
   "TIMETABLE":"جداول العمل",
   "TIMETABLE_LIST":"قائمة جداول العمل",
-
-  
+"ADD_TIMETABLE":"إضافة جدول العمل",
+"EDIT_TIMETABLE":"تعديل جدول العمل",
+  "TIMETABLE_DETAILS":"تفاصيل الجدول",
   "RegisterLeaves":"تسجيل المؤثرات",
   "Vac_LIST":"سجل الاجازات",
   "Mis_LIST":"سجل المامؤريات",
@@ -187,6 +188,7 @@
   "HOLIDAY_TYPE":"نوع الاجازه",
   "FROM":"من",
   "TO":"إلي",
+  "IS_VACATION":"أجازه",
   "ADD_HOLIDAY":"إضافة أجازة",
   "EDIT_HOLIDAY":"تعديل أجازة",
   "Create_holiday_Success":{
@@ -248,6 +250,7 @@
   "overTimeStart":"الوقت الإضافي",
   "START":"البداية",
   "END":"النهاية",
+  "START_DATE":"تاريخ البداية",
   "START_SHIFT":"بداية الوردية",
   "END_SHIFT":"نهاية الوردية",
   "earlyPermission":"الإذن المبكر",
@@ -302,7 +305,24 @@
   "EDIT_Mission":"تعديل مأمورية",
   "ADD_PERMISSION":"إضافة إذن",
   "EDIT_PERMISSION":"تعديل إذن",
-  "شسيسي":"",
+  "Create_TimeTable_Success":{
+    "title": "أحسنت",
+    "message": "تم إضافة جدول العمل بنجاح ",
+    "confirmButtonText": "موافق"
+  },
+  "NoUserFound":{
+    "title": "عذرا",
+    "message": "لا يوجد موظف بهذا الكود تأكد من كود الموظف الصحيح واعد المحاولة"
+    ,
+    "confirmButtonText": "موافق"
+    },
+    "startDataNotFound":{
+      "title": "عذرا",
+      "message": "يجب إضافة تاريخ البداية"
+      ,
+      "confirmButtonText": "موافق"
+    },
+  "TIME":"",
   "شسيسي":"",
   "شسيسي":"",
   "شسيسي":"",

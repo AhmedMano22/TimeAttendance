@@ -210,7 +210,7 @@ export class EyasNavService {
       active: false,
       children: [
         {
-          path: "/Shifts/shifts-list",
+          path: "/TimeTable/TimeTable-list",
           title: "TIMETABLE_LIST",
           type: "link",
         },
