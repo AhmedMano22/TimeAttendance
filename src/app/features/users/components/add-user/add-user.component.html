@@ -8,92 +8,229 @@
     <div class="col">
         <div widget class="card border-0 box-shadow">
             <div class="card-body widget-body">
-                <!-- <div class="p-2 flex-grow-1 bd-highlight">
-                    <a class="btn btn-info add-new" (click)="Backtolist()">
-                        <i class="fa fa-arrow-left mr-2"></i>
-                    </a>
-                </div> -->
                 <form [formGroup]="userroleForm">
-                    <div class="row">
-                        <div class="col-sm-6 mb-3">
-                            <div class="form-group">
-                                <label for="username">{{"USER_NAME" |translate}}</label>
-                                <input type="text" class="form-control" [placeholder]="'USER_NAME' |translate" formControlName="username" id="username"
-                                    >
-                                <div *ngIf="f['username'].touched && f['username'].invalid" class="alert alert-danger">
-                                    <div *ngIf="f['username'].errors && f['username'].errors['required']">username is
-                                        required.</div>
+                  <div class="row">
+                    <!-- Username field -->
+                    <div class="col-sm-6 mb-3">
+                      <div class="form-group">
+                        <label for="username">{{"USER_NAME" | translate}}</label>
+                        <input type="text" class="form-control" formControlName="username" id="username"
+                          [placeholder]="'USER_NAME' | translate">
+                        <div *ngIf="f['username'].touched && f['username'].invalid" class="alert alert-danger">
+                            <div *ngIf="f['username'].errors?.['required']">{{ "VALIDATIONS.USERNAME_REQUIRED" | translate }}</div>
+                            <div *ngIf="f['username'].errors?.['minlength']">{{ "VALIDATIONS.USERNAME_MINLENGTH" | translate }}</div>
+                        </div>
+                      </div>
+                    </div>
+              
+                    <!-- Email field -->
+                    <div class="col-sm-6 mb-3">
+                      <div class="form-group">
+                        <label for="emailAddress">{{"EMAIL" | translate}}</label>
+                        <input type="text" class="form-control" formControlName="emailAddress" id="emailAddress"
+                          [placeholder]="'EMAIL' | translate">
+                        <div *ngIf="f['emailAddress'].touched && f['emailAddress'].invalid" class="alert alert-danger">
+                            <div *ngIf="f['emailAddress'].errors?.['required']">{{ "VALIDATIONS.EMAIL_REQUIRED" | translate }}</div>
+                            <div *ngIf="f['emailAddress'].errors?.['email']">{{ "VALIDATIONS.EMAIL_INVALID" | translate }}</div>
+                        </div>
+                      </div>
+                    </div>
+              
+                    <!-- Password field -->
+                    <div class="col-sm-6 mb-3">
+                      <div class="form-group">
+                        <label for="password">{{"PASSWORD" | translate}}</label>
+                        <input type="text" class="form-control" formControlName="password" id="password"
+                          [placeholder]="'PASSWORD' | translate">
+                        <div *ngIf="f['password'].touched && f['password'].invalid" class="alert alert-danger">
+                            <div *ngIf="f['password'].errors?.['required']">{{ "VALIDATIONS.PASSWORD_REQUIRED" | translate }}</div>
+                            <div *ngIf="f['password'].errors?.['minlength']">{{ "VALIDATIONS.PASSWORD_MINLENGTH" | translate }}</div>
+                        </div>
+                      </div>
+                    </div>
+              
+              
+              
+                    <!-- IsActive checkbox -->
+                    <div class="col-sm-12 mb-3">
+                      <div class="form-check checkbox checkbox-primary" style="height: 35px;">
+                        <input class="form-check-input" id="checkbox-primary-1" type="checkbox" formControlName="isActive">
+                        <label class="form-check-label" for="checkbox-primary-1">{{"active" | translate}}</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-5">
+                    <ul ngbNav #nav9="ngbNav" [(activeId)]="HomeActive8" class="nav nav-pills nav-{{tabs}}" orientation="horizontal">
+                        <li ngbNavItem="home">
+                            <a ngbNavLink><i class="icofont icofont-ui-home"></i>{{ "PAGE_ROLES" | translate }}</a>
+                            <ng-template ngbNavContent>
+                                <div class="col-12">
+                                    <div class="table-responsive bg-white box-shadow">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{ "NAME" | translate }}</th>
+                                                    <th>
+                                                        <input (change)="checkAllCheckBox('new', $event)" type="checkbox" class="mr-2" style="margin: 0 5px;" id="selectallNew">{{ "NEW" | translate }}
+                                                    </th>
+                                                    <th>
+                                                        <input (change)="checkAllCheckBox('edit', $event)" type="checkbox" class="mr-2" style="margin: 0 5px;" id="selectalledit">{{ "EDIT" | translate }}
+                                                    </th>
+                                                    <th>
+                                                        <input (change)="checkAllCheckBox('delete', $event)" type="checkbox" class="mr-2" style="margin: 0 5px;" id="selectalldelete">{{ "DELETE" | translate }}
+                                                    </th>
+                                                    <th>
+                                                        <input (change)="checkAllCheckBox('login', $event)" type="checkbox" class="mr-2" style="margin: 0 5px;" id="selectalllogin">{{ "VIEW" | translate }}
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let userpageq of userpagesQuary; let i = index">
+
+                                                    <td class="align-middle text-truncate">{{ currentLang === 'ar' ? userpageq.systemPageNameAr : userpageq.systemPageNameEn }}</td>
+                                                    <td class="align-middle text-truncate">
+                                                        <input type="checkbox" [checked]="userpageq.new" (change)="onChecklistChange($event, i, 0, 'systemPage')" />
+                                                    </td>
+                                                    <td class="align-middle text-truncate">
+                                                        <input type="checkbox" [checked]="userpageq.edit" (change)="onChecklistChange($event, i, 1, 'systemPage')" />
+                                                    </td>
+                                                    <td class="align-middle text-truncate">
+                                                        <input type="checkbox" [checked]="userpageq.delete" (change)="onChecklistChange($event, i, 2, 'systemPage')" />
+                                                    </td>
+                                                    <td class="align-middle text-truncate">
+                                                        <input type="checkbox" [checked]="userpageq.login" (change)="onChecklistChange($event, i, 3, 'systemPage')" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 mb-3">
-                            <div class="form-group">
-                                <label for="password">{{"PASSWORD" |translate}}  </label>
-                                <input type="text" class="form-control" [placeholder]="'PASSWORD' |translate" formControlName="password" id="password"
-                                   >
-                                <div *ngIf="f['password'].touched && f['password'].invalid" class="alert alert-danger">
-                                    <div *ngIf="f['password'].errors && f['password'].errors['required']">password is
-                                        required.</div>
+                            </ng-template>
+                        </li>
+                        <li ngbNavItem="department">
+                            <a ngbNavLink><i class="icofont icofont-contacts"></i>{{ "DEPARTMENT_ROLES" | translate }}</a>
+                            <ng-template ngbNavContent>
+                                <div class="col-12">
+                                    <div class="table-responsive bg-white box-shadow">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{ "NAME" | translate }}</th>
+                                                    <th>
+                                                        <input (change)="checkAllCheckBox('department', $event)" type="checkbox" class="mr-2" style="margin: 0 5px;" id="selectalldepartment">{{ "VIEW" | translate }}
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let department of departments; let i = index">
+                                                    <td class="align-middle text-truncate">{{ currentLang === 'ar' ? department.departmentNameAr : department.departmentNameEn }}</td>
+                                                    <td class="align-middle text-truncate">
+                                                        <input type="checkbox" [checked]="department.login" (change)="onChecklistChange($event, i, 0, 'department')" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                          <div class="col-sm-6 mb-3">
-                            <div class="form-group">
-                              <label for="confirmpassword">{{ "CONFIRM_PASS" | translate }}</label>
-                              <input type="text" class="form-control" [placeholder]="'CONFIRM_PASS' | translate" formControlName="confirmPassword" id="confirmpassword">
-
-                              <div *ngIf="f['confirmPassword'].touched && !passwordsMatch" class="mt-2" >
-                                <span class="error">{{"PASSWORD_MATCH" |translate}}</span>
-                              </div>
-                            </div>
-                          </div>
+                            </ng-template>
+                        </li>
+                        <li ngbNavItem="leaves">
+                            <a ngbNavLink><i class="icofont icofont-contacts"></i>{{ "LEAVES_ROLES" | translate }}</a>
+                            <ng-template ngbNavContent>
+                                <div class="col-12">
+                                    <div class="table-responsive bg-white box-shadow">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{ "NAME" | translate }}</th>
+                                                    <th>
+                                                        <input (change)="checkAllCheckBox('leave', $event)" type="checkbox" class="mr-2" style="margin: 0 5px;" id="selectallleave">{{ "VIEW" | translate }}
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let leave of leaves; let i = index">
+                                                    <td class="align-middle text-truncate">{{ currentLang === 'ar' ? leave.leaveNameAr : leave.leaveNameEn }}</td>
+                                                    <td class="align-middle text-truncate">
+                                                        <input type="checkbox" [checked]="leave.login" (change)="onChecklistChange($event, i, 0, 'leave')" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </li>
+                        <li ngbNavItem="timetable">
+                            <a ngbNavLink><i class="icofont icofont-contacts"></i>{{ "TIMETABLE_ROLES" | translate }}</a>
+                            <ng-template ngbNavContent>
+                                <div class="col-12">
+                                    <div class="table-responsive bg-white box-shadow">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{ "NAME" | translate }}</th>
+                                                    <th>
+                                                        <input (change)="checkAllCheckBox('timeTableH', $event)" type="checkbox" class="mr-2" style="margin: 0 5px;" id="selectalltimeTableH">{{ "VIEW" | translate }}
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let timeTable of timeTables; let i = index">
+                                                    <td class="align-middle text-truncate">{{ currentLang === 'ar' ? timeTable.timeTableHNameAr : timeTable.timeTableHNameEn }}</td>
+                                                    <td class="align-middle text-truncate">
+                                                        <input type="checkbox" [checked]="timeTable.login" (change)="onChecklistChange($event, i, 0, 'timeTableH')" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </li>
+                        <li ngbNavItem="report">
+                            <a ngbNavLink><i class="icofont icofont-contacts"></i>{{ "REPORTS_ROLES" | translate }}</a>
+                            <ng-template ngbNavContent>
+                                <div class="col-12">
+                                    <div class="table-responsive bg-white box-shadow">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{ "NAME" | translate }}</th>
+                                                    <th>
+                                                        <input (change)="checkAllCheckBox('report', $event)" type="checkbox" class="mr-2" style="margin: 0 5px;" id="selectallreport">{{ "VIEW" | translate }}
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let report of reports; let i = index">
+                                                    <td class="align-middle text-truncate">{{ currentLang === 'ar' ? report.reportNameAr : report.reportNameEn }}</td>
+                                                    <td class="align-middle text-truncate">
+                                                        <input type="checkbox" [checked]="report.login" (change)="onChecklistChange($event, i, 0, 'report')" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </li>
+                    </ul>
+                    <div [ngbNavOutlet]="nav9" class="mt-4"></div>
+                </div>
+                
+                  <!-- Buttons for Submit and Clear -->
+                  <div class="row mt-5">
+                    <div class="d-flex justify-content-center gap-3">
+                      <button type="submit" class="btn btn-success mr-3" [disabled]="!userroleForm.valid" (click)="Submit()">
+                        {{"SAVE" | translate}}
+                      </button>
+                      <button class="btn btn-danger" (click)="clear()">{{"CLEAR" | translate}}</button>
                     </div>
-                    <div  class="row mt-5">
-                        <div class="col-12">
-                            <div class="table-responsive bg-white box-shadow">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>{{"NAME" |translate}}</th>
-                                            <th> <input  (change)="checkAllCheckBox('New',$event)" type="checkbox" class="mr-2"  style="margin: 0 5px;"  id="selectallNew" >{{"NEW" |translate}}</th>
-                                            <th><input (change)="checkAllCheckBox('edit',$event)" type="checkbox" class="mr-2"  style="margin: 0 5px;" id="selectalledit">{{"EDIT" |translate}}</th>
-                                            <th> <input (change)="checkAllCheckBox('delete',$event)" type="checkbox" class="mr-2"  style="margin: 0 5px;" id="selectalldelete">{{"DELETE" |translate}}</th>
-                                            <th> <input (change)="checkAllCheckBox('login',$event)" type="checkbox" class="mr-2"  style="margin: 0 5px;" id="selectalllogin">{{"VIEW" |translate}}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let userpageq of userpagesQuary; let i= index ">
-                                            <td class="align-middle text-truncate">{{userpageq.title}}</td>
-
-                                            <td class="align-middle text-truncate">
-                                                <input type="checkbox"  [checked]="userpageq.New"  (change)="onChecklistChange($event, i, 0)" />
-                                            </td>
-                                            <td class="align-middle text-truncate">
-                                                <input type="checkbox"  [checked]="userpageq.edit"  (change)="onChecklistChange($event, i, 1)" />
-                                            </td>
-                                            <td class="align-middle text-truncate">
-                                                <input type="checkbox"  [checked]="userpageq.delete"  (change)="onChecklistChange($event, i, 2)" />
-
-                                            </td>
-                                            <td class="align-middle text-truncate">
-                                                <input type="checkbox"  [checked]="userpageq.login"  (change)="onChecklistChange($event, i, 3)" />
-                                            </td>
-
-                                       </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row  mt-5">
-                        <div class="d-flex justify-content-center gap-3">
-                        <button type="submit" class="btn btn-success mr-3" [disabled]="!userroleForm.valid"
-                            (click)="SubmitAddoredit()">{{"SAVE" |translate}}</button>
-                        <button class="btn btn-danger" (click)="clear()">{{"CLEAR" |translate}}</button>
-                        </div>
-                    </div>
+                  </div>
                 </form>
-            </div>
+              </div>
+              
         </div>
 
     </div>

@@ -278,10 +278,17 @@ changePassword(id: any, data: any) {
     data
   );
 }
+/* user */
 
-
-
-
+getUsersWithPermissions() {
+  return this._HttpClient.get(this.url + `/User/GetAllUserDataForCreate`);
+}
+addUserWithPermissions(body:any){
+  return this._HttpClient.post(this.url + "/User/SaveAllUserData", body);
+}
+getUserById(id: number) {
+  return this._HttpClient.get(this.url + `/User/GetAllUserDataById/${id}`);
+}
 
 
 

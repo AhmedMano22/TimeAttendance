@@ -323,8 +323,32 @@
       "confirmButtonText": "موافق"
     },
   "TIME":"",
-  "شسيسي":"",
-  "شسيسي":"",
+  "VIEW":"عرض",
+  "CONFIRM_PASS":"تاكيد كلمة السر",
+"PASSWORD_MATCH":"يجب أن تتطابق كلمات المرور.",
+  "NAME":"الاسم",
+  "VALIDATIONS": {
+    "USERNAME_REQUIRED": "اسم المستخدم مطلوب.",
+    "USERNAME_MINLENGTH": "يجب أن يحتوي اسم المستخدم على 3 أحرف على الأقل.",
+    
+    "EMAIL_REQUIRED": "البريد الإلكتروني مطلوب.",
+    "EMAIL_INVALID": "يرجى إدخال بريد إلكتروني صالح.",
+    
+    "PASSWORD_REQUIRED": "كلمة المرور مطلوبة.",
+    "PASSWORD_MINLENGTH": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل."
+  },
+  "Create_User_Success":{
+  "title": "أحسنت",
+  "message": "تم إضافة المستخدم بنجاح ",
+  "confirmButtonText": "موافق"
+},
+"update_User_Success":{
+  "title": "أحسنت",
+  "message": "تم تعديل المستخدم بنجاح ",
+  "confirmButtonText": "موافق"
+},
+
+
   "شسيسي":"",
   "شسيسي":"",
   "شسيسي":""

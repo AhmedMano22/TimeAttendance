@@ -70,10 +70,10 @@
                           <option *ngFor="let type of Shifts" [value]="type.id">{{ getName(type) }}</option>
                         </select>
                       </div>
-                      <div class="col-6 d-flex align-items-end">
-                        <div class="form-check checkbox checkbox-primary" style="height: 35px;">
+                      <div class="col-6 d-flex align-items-end"style="gap: 10px;">
+                        <div class="form-check checkbox checkbox-primary" style="height: 35px; ">
                           <input class="form-check-input" id="checkbox-primary-1" type="checkbox" [(ngModel)]="isVacation">
-                          <label class="form-check-label" for="checkbox-primary-1"></label>
+                          <label class="form-check-label" for="checkbox-primary-1">أجازه</label>
                         </div>
                         <div>
                           <button class="btn btn-primary" type="button" (click)="addShift()">{{ "ADD_SHIFT" | translate }}</button>

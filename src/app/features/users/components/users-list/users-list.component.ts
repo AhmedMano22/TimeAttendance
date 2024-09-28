@@ -46,7 +46,7 @@ export class UsersListComponent {
       },
     });
   }
-  remove(id: any) {
+  remove2(id: any) {
     this.apiSer.deleteUser(id).subscribe({
       next: (res) => {
         console.log("Delete response", res);
@@ -77,5 +77,102 @@ export class UsersListComponent {
         });
       },
     });
+  }
+  remove(id: any) {
+    this.translate
+      .get([
+        "confirmDeleteTitle",
+        "confirmDeleteText",
+        "confirmButtonText",
+        "cancelButtonText",
+        "deleteSuccessTitle",
+        "deleteSuccessMessage",
+        "errorMessageTitle",
+        "errorMessageText",
+        "cancelMessageTitle",
+        "cancelMessageText",
+      ])
+      .subscribe((translations: any) => {
+        const swalWithBootstrapButtons = Swal.mixin({
+          buttonsStyling: true,
+        });
+
+        swalWithBootstrapButtons
+          .fire({
+            title: translations.confirmDeleteTitle,
+            text: translations.confirmDeleteText,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: translations.confirmButtonText,
+            cancelButtonText: translations.cancelButtonText,
+            reverseButtons: true,
+          })
+          .then((result: any) => {
+            if (result.isConfirmed) {
+              this.apiSer.deleteUser(id).subscribe({
+                next: (res: any) => {
+                  console.log(res);
+                
+                  if (res.result.success) {
+                    this.load();
+                    this.translate
+                      .get([
+                        "deleteSuccessTitle",
+                        "deleteSuccessMessage",
+                        "confirmButtonText",
+                      ])
+                      .subscribe((translations: any) => {
+                        swalWithBootstrapButtons.fire({
+                          title: translations.deleteSuccessTitle,
+                          text: translations.deleteSuccessMessage,
+                          icon: "success",
+                          confirmButtonText: translations.confirmButtonText,
+                        });
+                      });
+                  } else {
+                    this.translate
+                      .get([
+                        "errorMessageTitle",
+                        "errorMessageText",
+                        "confirmButtonText",
+                      ])
+                      .subscribe((translations: any) => {
+                        swalWithBootstrapButtons.fire({
+                          title: translations.errorMessageTitle,
+                          text: translations.errorMessageText,
+                          icon: "error",
+                          confirmButtonText: translations.confirmButtonText,
+                        });
+                      });
+                  }
+                },
+                error: (error) => {
+                  console.log(error);
+                  this.translate
+                    .get([
+                      "errorMessageTitle",
+                      "errorMessageText",
+                      "confirmButtonText",
+                    ])
+                    .subscribe((translations: any) => {
+                      swalWithBootstrapButtons.fire({
+                        title: translations.errorMessageTitle,
+                        text: translations.errorMessageText,
+                        icon: "error",
+                        confirmButtonText: translations.confirmButtonText,
+                      });
+                    });
+                },
+              });
+            }
+            // else if (result.dismiss === Swal.DismissReason.cancel) {
+            //   swalWithBootstrapButtons.fire(
+            //     translations.cancelMessageTitle,
+            //     translations.cancelMessageText,
+            //     "error"
+            //   );
+            // }
+          });
+      });
   }
 }
