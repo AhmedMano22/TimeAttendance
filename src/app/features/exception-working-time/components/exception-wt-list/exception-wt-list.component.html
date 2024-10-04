@@ -142,22 +142,30 @@
                   <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>
                 </div>
               </div>
-            <div class="col-md-6 col-12 mb-2">
-              <div>
-                <label class="form-label" for="validation3">{{"overTimeStart" | translate}}</label>
-                <input class="form-control" [ngxTimepicker]="overTimeStart" formControlName="overTimeStart"
-                [class.invalid]="AddForm.get('overTimeStart')?.invalid && isSubmited"
-                    [placeholder]="'overTimeStart' | translate">
-                  <ngx-material-timepicker #overTimeStart dir="ltr"></ngx-material-timepicker>
-                <div class="error"
-                  *ngIf="AddForm.get('overTimeStart')?.invalid && (AddForm.get('overTimeStart')?.dirty || isSubmited)">
-                  يجب اختيار الوقت الإضافي
+              <div class="col-md-6 col-12 mb-2">
+                <div>
+                  <label class="form-label" for="overTimeStart">{{"overTimeStart" | translate}}</label>
+                  <input class="form-control" id="overTimeStart" formControlName="overTimeStart"
+                    (blur)="formatTime('overTimeStart')" [placeholder]="'overTimeStart' | translate">
+                    <div class="error" *ngIf="AddForm.get('overTimeStart')?.hasError('invalidTime') && (AddForm.get('overTimeStart')?.dirty || isSubmited)">
+                      تنسيق الوقت غير صحيح. يرجى إدخال وقت صحيح (مثل 14:30).
+                    </div>
+                  <!-- Time Exceeded Message -->
+                  <div class="error"
+                    *ngIf="AddForm.get('overTimeStart')?.hasError('timeExceeded') && (AddForm.get('overTimeStart')?.dirty || isSubmited)">
+                    لا يمكن أن يتجاوز الوقت 23:59.
+                  </div>
+  
+                  <!-- Required Field Message -->
+                  <div class="error"
+                    *ngIf="AddForm.get('overTimeStart')?.hasError('required') && (AddForm.get('overTimeStart')?.dirty || isSubmited)">
+                    يجب اختيار الوقت الإضافي
+                  </div>
                 </div>
               </div>
-            </div>
            
           </div>
-          <div class="mb-3 row ">
+          <!-- <div class="mb-3 row ">
             <div class="col-6 mb-2">
               <div>
                 <label class="form-label" for="startSign">{{"START" | translate}}</label>
@@ -240,7 +248,138 @@
                 </div>
               </div>
             </div>
+          </div> -->
+          <div class="mb-3 row ">
+            <div class="col-6 mb-2">
+              <div>
+                <label class="form-label" for="startSign">{{"START" | translate}}</label>
+                <input class="form-control" id="startSign" formControlName="startSign" (blur)="formatTime('startSign')"
+                  [placeholder]="'START' | translate">
+                  <div class="error" *ngIf="AddForm.get('startSign')?.hasError('invalidTime') && (AddForm.get('startSign')?.dirty || isSubmited)">
+                    تنسيق الوقت غير صحيح. يرجى إدخال وقت صحيح (مثل 14:30).
+                  </div>
+                <!-- Time Exceeded Message -->
+                <div class="error"
+                  *ngIf="AddForm.get('startSign')?.hasError('timeExceeded') && (AddForm.get('startSign')?.dirty || isSubmited)">
+                  لا يمكن أن يتجاوز الوقت 23:59.
+                </div>
+
+                <!-- Required Field Message -->
+                <div class="error"
+                  *ngIf="AddForm.get('startSign')?.hasError('required') && (AddForm.get('startSign')?.dirty || isSubmited)">
+                  يجب اختيار وقت البداية
+                </div>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div>
+                <label class="form-label" for="endSign">{{"END" | translate}}</label>
+                <input class="form-control" id="endSign" formControlName="endSign" (blur)="formatTime('endSign')"
+                  [placeholder]="'END' | translate">
+                  <div class="error" *ngIf="AddForm.get('endSign')?.hasError('invalidTime') && (AddForm.get('endSign')?.dirty || isSubmited)">
+                    تنسيق الوقت غير صحيح. يرجى إدخال وقت صحيح (مثل 14:30).
+                  </div>
+                <!-- Time Exceeded Message -->
+                <div class="error"
+                  *ngIf="AddForm.get('endSign')?.hasError('timeExceeded') && (AddForm.get('endSign')?.dirty || isSubmited)">
+                  لا يمكن أن يتجاوز الوقت 23:59.
+                </div>
+
+                <!-- Required Field Message -->
+                <div class="error"
+                  *ngIf="AddForm.get('endSign')?.hasError('required') && (AddForm.get('endSign')?.dirty || isSubmited)">
+                  يجب اختيار وقت النهاية
+                </div>
+              </div>
+            </div>
           </div>
+          <div class="mb-3 row ">
+            <div class="col-6 mb-2">
+              <div>
+                <label class="form-label" for="startShift">{{"START_SHIFT" | translate}}</label>
+                <input class="form-control" id="startShift" formControlName="startShift"
+                  (blur)="formatTime('startShift')" [placeholder]="'START_SHIFT' | translate">
+                  <div class="error" *ngIf="AddForm.get('startShift')?.hasError('invalidTime') && (AddForm.get('startShift')?.dirty || isSubmited)">
+                    تنسيق الوقت غير صحيح. يرجى إدخال وقت صحيح (مثل 14:30).
+                  </div>
+                <!-- Time Exceeded Message -->
+                <div class="error"
+                  *ngIf="AddForm.get('startShift')?.hasError('timeExceeded') && (AddForm.get('startShift')?.dirty || isSubmited)">
+                  لا يمكن أن يتجاوز الوقت 23:59.
+                </div>
+
+                <!-- Required Field Message -->
+                <div class="error"
+                  *ngIf="AddForm.get('startShift')?.hasError('required') && (AddForm.get('startShift')?.dirty || isSubmited)">
+                  يجب اختيار وقت بداية الوردية
+                </div>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div>
+                <label class="form-label" for="endShift">{{"END_SHIFT" | translate}}</label>
+                <input class="form-control" id="endShift" formControlName="endShift" (blur)="formatTime('endShift')"
+                  [placeholder]="'END_SHIFT' | translate">
+
+                <!-- Time Exceeded Message -->
+                <div class="error"
+                  *ngIf="AddForm.get('endShift')?.hasError('timeExceeded') && (AddForm.get('endShift')?.dirty || isSubmited)">
+                  لا يمكن أن يتجاوز الوقت 23:59.
+                </div>
+
+                <!-- Required Field Message -->
+                <div class="error"
+                  *ngIf="AddForm.get('endShift')?.hasError('required') && (AddForm.get('endShift')?.dirty || isSubmited)">
+                  يجب اختيار وقت نهاية الوردية
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 row ">
+            <div class="col-6 mb-2">
+              <div>
+                <label class="form-label" for="earlyPermission">{{"earlyPermission" | translate}}</label>
+                <input class="form-control" id="earlyPermission" formControlName="earlyPermission"
+                  (blur)="formatTime('earlyPermission')" [placeholder]="'earlyPermission' | translate">
+                  <div class="error" *ngIf="AddForm.get('earlyPermission')?.hasError('invalidTime') && (AddForm.get('earlyPermission')?.dirty || isSubmited)">
+                    تنسيق الوقت غير صحيح. يرجى إدخال وقت صحيح (مثل 14:30).
+                  </div>
+                <!-- Time Exceeded Message -->
+                <div class="error"
+                  *ngIf="AddForm.get('earlyPermission')?.hasError('timeExceeded') && (AddForm.get('earlyPermission')?.dirty || isSubmited)">
+                  لا يمكن أن يتجاوز الوقت 23:59.
+                </div>
+
+                <!-- Required Field Message -->
+                <div class="error"
+                  *ngIf="AddForm.get('earlyPermission')?.hasError('required') && (AddForm.get('earlyPermission')?.dirty || isSubmited)">
+                  يجب اختيار وقت الإذن المبكر
+                </div>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div>
+                <label class="form-label" for="latePermission">{{"latePermission" | translate}}</label>
+                <input class="form-control" id="latePermission" formControlName="latePermission"
+                  (blur)="formatTime('latePermission')" [placeholder]="'latePermission' | translate">
+                  <div class="error" *ngIf="AddForm.get('latePermission')?.hasError('invalidTime') && (AddForm.get('latePermission')?.dirty || isSubmited)">
+                    تنسيق الوقت غير صحيح. يرجى إدخال وقت صحيح (مثل 14:30).
+                  </div>
+                <!-- Time Exceeded Message -->
+                <div class="error"
+                  *ngIf="AddForm.get('latePermission')?.hasError('timeExceeded') && (AddForm.get('latePermission')?.dirty || isSubmited)">
+                  لا يمكن أن يتجاوز الوقت 23:59.
+                </div>
+
+                <!-- Required Field Message -->
+                <div class="error"
+                  *ngIf="AddForm.get('latePermission')?.hasError('required') && (AddForm.get('latePermission')?.dirty || isSubmited)">
+                  يجب اختيار وقت الإذن المتأخر
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="row mb-3">
             <div class="col-12 ">
               <div class="form-check checkbox checkbox-primary  mb-3">
@@ -317,31 +456,50 @@
                       <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>
                     </div>
                   </div>
-                <div class="col-md-6 col-12 mb-2">
+          
+                <div class="col-12 mb-2">
                   <div>
-                    <label class="form-label" for="validation3">{{"overTimeStart" | translate}}</label>
-                    <input class="form-control" [ngxTimepicker]="overTimeStart" formControlName="overTimeStart"
-                    [class.invalid]="EditForm.get('overTimeStart')?.invalid && isEditSubmited"
-                        [placeholder]="'overTimeStart' | translate">
-                      <ngx-material-timepicker #overTimeStart dir="ltr"></ngx-material-timepicker>
+                    <label class="form-label" for="overTimeStart">{{"overTimeStart" | translate}}</label>
+                    <input class="form-control" id="overTimeStart" formControlName="overTimeStart"
+                      (blur)="EditformatTime('overTimeStart')" [placeholder]="'overTimeStart' | translate">
+                      <div class="error" *ngIf="EditForm.get('overTimeStart')?.hasError('invalidTime') && (EditForm.get('overTimeStart')?.dirty || isSubmited)">
+                        تنسيق الوقت غير صحيح. يرجى إدخال وقت صحيح (مثل 14:30).
+                      </div>
+                    <!-- Time Exceeded Message -->
                     <div class="error"
-                      *ngIf="EditForm.get('overTimeStart')?.invalid && (EditForm.get('overTimeStart')?.dirty || isEditSubmited)">
+                      *ngIf="EditForm.get('overTimeStart')?.hasError('timeExceeded') && (EditForm.get('overTimeStart')?.dirty || isSubmited)">
+                      لا يمكن أن يتجاوز الوقت 23:59.
+                    </div>
+    
+                    <!-- Required Field Message -->
+                    <div class="error"
+                      *ngIf="EditForm.get('overTimeStart')?.hasError('required') && (EditForm.get('overTimeStart')?.dirty || isSubmited)">
                       يجب اختيار الوقت الإضافي
                     </div>
                   </div>
                 </div>
+              
                
               </div>
+     
           <div class="mb-3 row ">
             <div class="col-6 mb-2">
               <div>
                 <label class="form-label" for="startSign">{{"START" | translate}}</label>
-                <input class="form-control" [ngxTimepicker]="startSign" formControlName="startSign"
-                [class.invalid]="EditForm.get('startSign')?.invalid && isEditSubmited"
-                    [placeholder]="'FROM_HOUR' | translate">
-                  <ngx-material-timepicker #startSign dir="ltr"></ngx-material-timepicker>
+                <input class="form-control" id="startSign" formControlName="startSign" (blur)="EditformatTime('startSign')"
+                  [placeholder]="'START' | translate">
+                  <div class="error" *ngIf="EditForm.get('startSign')?.hasError('invalidTime') && (EditForm.get('startSign')?.dirty || isSubmited)">
+                    تنسيق الوقت غير صحيح. يرجى إدخال وقت صحيح (مثل 14:30).
+                  </div>
+                <!-- Time Exceeded Message -->
                 <div class="error"
-                  *ngIf="EditForm.get('startSign')?.invalid && (EditForm.get('startSign')?.dirty || isEditSubmited)">
+                  *ngIf="EditForm.get('startSign')?.hasError('timeExceeded') && (EditForm.get('startSign')?.dirty || isSubmited)">
+                  لا يمكن أن يتجاوز الوقت 23:59.
+                </div>
+
+                <!-- Required Field Message -->
+                <div class="error"
+                  *ngIf="EditForm.get('startSign')?.hasError('required') && (EditForm.get('startSign')?.dirty || isSubmited)">
                   يجب اختيار وقت البداية
                 </div>
               </div>
@@ -349,12 +507,20 @@
             <div class="col-6 mb-2">
               <div>
                 <label class="form-label" for="endSign">{{"END" | translate}}</label>
-                <input class="form-control" [ngxTimepicker]="endSign" formControlName="endSign"
-                [class.invalid]="EditForm.get('endSign')?.invalid && isEditSubmited"
-                    [placeholder]="'TO_HOUR' | translate">
-                  <ngx-material-timepicker #endSign dir="ltr"></ngx-material-timepicker>
+                <input class="form-control" id="endSign" formControlName="endSign" (blur)="EditformatTime('endSign')"
+                  [placeholder]="'END' | translate">
+                  <div class="error" *ngIf="EditForm.get('endSign')?.hasError('invalidTime') && (EditForm.get('endSign')?.dirty || isSubmited)">
+                    تنسيق الوقت غير صحيح. يرجى إدخال وقت صحيح (مثل 14:30).
+                  </div>
+                <!-- Time Exceeded Message -->
                 <div class="error"
-                  *ngIf="EditForm.get('endSign')?.invalid && (EditForm.get('endSign')?.dirty || isEditSubmited)">
+                  *ngIf="EditForm.get('endSign')?.hasError('timeExceeded') && (EditForm.get('endSign')?.dirty || isSubmited)">
+                  لا يمكن أن يتجاوز الوقت 23:59.
+                </div>
+
+                <!-- Required Field Message -->
+                <div class="error"
+                  *ngIf="EditForm.get('endSign')?.hasError('required') && (EditForm.get('endSign')?.dirty || isSubmited)">
                   يجب اختيار وقت النهاية
                 </div>
               </div>
@@ -364,12 +530,20 @@
             <div class="col-6 mb-2">
               <div>
                 <label class="form-label" for="startShift">{{"START_SHIFT" | translate}}</label>
-                <input class="form-control" [ngxTimepicker]="startShift" formControlName="startShift"
-                [class.invalid]="EditForm.get('startShift')?.invalid && isEditSubmited"
-                    [placeholder]="'FROM_HOUR' | translate">
-                  <ngx-material-timepicker #startShift dir="ltr"></ngx-material-timepicker>
+                <input class="form-control" id="startShift" formControlName="startShift"
+                  (blur)="EditformatTime('startShift')" [placeholder]="'START_SHIFT' | translate">
+                  <div class="error" *ngIf="EditForm.get('startShift')?.hasError('invalidTime') && (EditForm.get('startShift')?.dirty || isSubmited)">
+                    تنسيق الوقت غير صحيح. يرجى إدخال وقت صحيح (مثل 14:30).
+                  </div>
+                <!-- Time Exceeded Message -->
                 <div class="error"
-                  *ngIf="EditForm.get('startShift')?.invalid && (EditForm.get('startShift')?.dirty || isEditSubmited)">
+                  *ngIf="EditForm.get('startShift')?.hasError('timeExceeded') && (EditForm.get('startShift')?.dirty || isSubmited)">
+                  لا يمكن أن يتجاوز الوقت 23:59.
+                </div>
+
+                <!-- Required Field Message -->
+                <div class="error"
+                  *ngIf="EditForm.get('startShift')?.hasError('required') && (EditForm.get('startShift')?.dirty || isSubmited)">
                   يجب اختيار وقت بداية الوردية
                 </div>
               </div>
@@ -377,12 +551,18 @@
             <div class="col-6 mb-2">
               <div>
                 <label class="form-label" for="endShift">{{"END_SHIFT" | translate}}</label>
-                <input class="form-control" [ngxTimepicker]="endShift" formControlName="endShift"
-                [class.invalid]="EditForm.get('endShift')?.invalid && isEditSubmited"
-                    [placeholder]="'TO_HOUR' | translate">
-                  <ngx-material-timepicker #endShift dir="ltr"></ngx-material-timepicker>
+                <input class="form-control" id="endShift" formControlName="endShift" (blur)="EditformatTime('endShift')"
+                  [placeholder]="'END_SHIFT' | translate">
+
+                <!-- Time Exceeded Message -->
                 <div class="error"
-                  *ngIf="EditForm.get('endShift')?.invalid && (EditForm.get('endShift')?.dirty || isEditSubmited)">
+                  *ngIf="EditForm.get('endShift')?.hasError('timeExceeded') && (EditForm.get('endShift')?.dirty || isSubmited)">
+                  لا يمكن أن يتجاوز الوقت 23:59.
+                </div>
+
+                <!-- Required Field Message -->
+                <div class="error"
+                  *ngIf="EditForm.get('endShift')?.hasError('required') && (EditForm.get('endShift')?.dirty || isSubmited)">
                   يجب اختيار وقت نهاية الوردية
                 </div>
               </div>
@@ -392,12 +572,20 @@
             <div class="col-6 mb-2">
               <div>
                 <label class="form-label" for="earlyPermission">{{"earlyPermission" | translate}}</label>
-                <input class="form-control" [ngxTimepicker]="earlyPermission" formControlName="earlyPermission"
-                [class.invalid]="EditForm.get('earlyPermission')?.invalid && isEditSubmited"
-                    [placeholder]="'FROM_HOUR' | translate">
-                  <ngx-material-timepicker #earlyPermission dir="ltr"></ngx-material-timepicker>
+                <input class="form-control" id="earlyPermission" formControlName="earlyPermission"
+                  (blur)="EditformatTime('earlyPermission')" [placeholder]="'earlyPermission' | translate">
+                  <div class="error" *ngIf="EditForm.get('earlyPermission')?.hasError('invalidTime') && (EditForm.get('earlyPermission')?.dirty || isSubmited)">
+                    تنسيق الوقت غير صحيح. يرجى إدخال وقت صحيح (مثل 14:30).
+                  </div>
+                <!-- Time Exceeded Message -->
                 <div class="error"
-                  *ngIf="EditForm.get('earlyPermission')?.invalid && (EditForm.get('earlyPermission')?.dirty || isEditSubmited)">
+                  *ngIf="EditForm.get('earlyPermission')?.hasError('timeExceeded') && (EditForm.get('earlyPermission')?.dirty || isSubmited)">
+                  لا يمكن أن يتجاوز الوقت 23:59.
+                </div>
+
+                <!-- Required Field Message -->
+                <div class="error"
+                  *ngIf="EditForm.get('earlyPermission')?.hasError('required') && (EditForm.get('earlyPermission')?.dirty || isSubmited)">
                   يجب اختيار وقت الإذن المبكر
                 </div>
               </div>
@@ -405,13 +593,21 @@
             <div class="col-6 mb-2">
               <div>
                 <label class="form-label" for="latePermission">{{"latePermission" | translate}}</label>
-                <input class="form-control" [ngxTimepicker]="latePermission" formControlName="latePermission"
-                [class.invalid]="EditForm.get('latePermission')?.invalid && isEditSubmited"
-                    [placeholder]="'TO_HOUR' | translate">
-                  <ngx-material-timepicker #latePermission dir="ltr"></ngx-material-timepicker>
+                <input class="form-control" id="latePermission" formControlName="latePermission"
+                  (blur)="EditformatTime('latePermission')" [placeholder]="'latePermission' | translate">
+                  <div class="error" *ngIf="EditForm.get('latePermission')?.hasError('invalidTime') && (EditForm.get('latePermission')?.dirty || isSubmited)">
+                    تنسيق الوقت غير صحيح. يرجى إدخال وقت صحيح (مثل 14:30).
+                  </div>
+                <!-- Time Exceeded Message -->
                 <div class="error"
-                  *ngIf="EditForm.get('latePermission')?.invalid && (EditForm.get('latePermission')?.dirty || isEditSubmited)">
-                  يجب اختيار وقت  الإذن المتأخر
+                  *ngIf="EditForm.get('latePermission')?.hasError('timeExceeded') && (EditForm.get('latePermission')?.dirty || isSubmited)">
+                  لا يمكن أن يتجاوز الوقت 23:59.
+                </div>
+
+                <!-- Required Field Message -->
+                <div class="error"
+                  *ngIf="EditForm.get('latePermission')?.hasError('required') && (EditForm.get('latePermission')?.dirty || isSubmited)">
+                  يجب اختيار وقت الإذن المتأخر
                 </div>
               </div>
             </div>

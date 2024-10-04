@@ -8,6 +8,7 @@ import { authUser } from "src/app/shared/interface/isAuthUser";
 import { UserInfo } from "src/app/shared/interface/user-info";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { timeValidator } from "src/app/shared/validators/custom";
 
 declare var require: any;
 const Swal = require("sweetalert2");
@@ -84,26 +85,26 @@ export class ExceptionWTListComponent {
       from: ['', Validators.required],
       to: ['', Validators.required], 
       isHour: [false], 
-      overTimeStart: ["", Validators.required], 
-      startSign: ["", Validators.required],
-      endSign: ["", Validators.required],
-      startShift: ["", Validators.required],
-      endShift: ["", Validators.required],
-      earlyPermission: ["", Validators.required],
-      latePermission: ["", Validators.required]
+      overTimeStart: ['', [Validators.required, timeValidator]],
+      startSign: ['', [Validators.required, timeValidator]],
+      endSign: ['', [Validators.required, timeValidator]],
+      startShift: ['', [Validators.required, timeValidator]],
+      endShift: ['', [Validators.required, timeValidator]],
+      earlyPermission: ['', [Validators.required, timeValidator]],
+      latePermission: ['', [Validators.required, timeValidator]]
     });
     this.EditForm = this.fb.group({
       shiftId: ['', Validators.required], 
       from: ['', Validators.required],
       to: ['', Validators.required], 
       isHour: [false], 
-      overTimeStart: ["", Validators.required], 
-      startSign: ["", Validators.required],
-      endSign: ["", Validators.required],
-      startShift: ["", Validators.required],
-      endShift: ["", Validators.required],
-      earlyPermission: ["", Validators.required],
-      latePermission: ["", Validators.required]
+      overTimeStart: ['', [Validators.required, timeValidator]],
+      startSign: ['', [Validators.required, timeValidator]],
+      endSign: ['', [Validators.required, timeValidator]],
+      startShift: ['', [Validators.required, timeValidator]],
+      endShift: ['', [Validators.required, timeValidator]],
+      earlyPermission: ['', [Validators.required, timeValidator]],
+      latePermission: ['', [Validators.required, timeValidator]]
     });
     this.loadlShifts();
   }
@@ -127,7 +128,22 @@ export class ExceptionWTListComponent {
   lmModal(content:any){
     const modalRef = this.modalService.open(content,{ size: 'xl' });
   }
-  
+  formatTime(field: string): void {
+    const value = this.AddForm.get(field)?.value;
+    if (value) {
+      const [hours, minutes] = value.split(':');
+      const formattedTime = `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
+      this.AddForm.get(field)?.setValue(formattedTime);
+    }
+  }
+  EditformatTime(field: string): void {
+    const value = this.EditForm.get(field)?.value;
+    if (value) {
+      const [hours, minutes] = value.split(':');
+      const formattedTime = `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
+      this.EditForm.get(field)?.setValue(formattedTime);
+    }
+  }
   getShiftNameByRecordId(id: number): string {
     const type = this.ListData.find(type => type.id === id);
     if (!type) return 'Unknown'; 

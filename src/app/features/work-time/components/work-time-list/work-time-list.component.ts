@@ -7,8 +7,9 @@ import { AuthService } from "src/app/features/auth/auth.service";
 import { authUser } from "src/app/shared/interface/isAuthUser";
 import { UserInfo } from "src/app/shared/interface/user-info";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/forms";
 import { DatePipe } from "@angular/common";
+import { timeValidator } from "src/app/shared/validators/custom";
 declare var require: any;
 const Swal = require("sweetalert2");
 interface WorkingTime {
@@ -80,29 +81,29 @@ export class WorkTimeListComponent {
   ngOnInit() {
     this.loading = true;
      this.load();
-     this.AddForm = this.fb.group({
-      shiftId: ['', Validators.required], 
-      date: ['', Validators.required], 
-      isHour: [false], 
-      overTimeStart: ["", Validators.required], 
-      startSign: ["", Validators.required],
-      endSign: ["", Validators.required],
-      startShift: ["", Validators.required],
-      endShift: ["", Validators.required],
-      earlyPermission: ["", Validators.required],
-      latePermission: ["", Validators.required]
+    this.AddForm = this.fb.group({
+      shiftId: ['', Validators.required],
+      date: ['', Validators.required],
+      isHour: [false],
+      overTimeStart: ['', [Validators.required, timeValidator]],
+      startSign: ['', [Validators.required, timeValidator]],
+      endSign: ['', [Validators.required, timeValidator]],
+      startShift: ['', [Validators.required, timeValidator]],
+      endShift: ['', [Validators.required, timeValidator]],
+      earlyPermission: ['', [Validators.required, timeValidator]],
+      latePermission: ['', [Validators.required, timeValidator]]
     });
     this.EditForm = this.fb.group({
-      shiftId: ['', Validators.required], 
-      date: ['', Validators.required], 
-      isHour: [false], 
-      overTimeStart: ["", Validators.required], 
-      startSign: ["", Validators.required],
-      endSign: ["", Validators.required],
-      startShift: ["", Validators.required],
-      endShift: ["", Validators.required],
-      earlyPermission: ["", Validators.required],
-      latePermission: ["", Validators.required]
+      shiftId: ['', Validators.required],
+      date: ['', Validators.required],
+      isHour: [false],
+      overTimeStart: ['', [Validators.required, timeValidator]],
+      startSign: ['', [Validators.required, timeValidator]],
+      endSign: ['', [Validators.required, timeValidator]],
+      startShift: ['', [Validators.required, timeValidator]],
+      endShift: ['', [Validators.required, timeValidator]],
+      earlyPermission: ['', [Validators.required, timeValidator]],
+      latePermission: ['', [Validators.required, timeValidator]]
     });
     this.loadlShifts();
   }
@@ -126,27 +127,46 @@ export class WorkTimeListComponent {
   lmModal(content:any){
     const modalRef = this.modalService.open(content,{ size: 'xl' });
   }
-   formatTime = (time: string): string => {
-    if (!time) return '';
+  //  formatTime = (time: string): string => {
+  //   if (!time) return '';
   
-    // Split the time into [hour:minute] and AM/PM
-    const [hourMinute, period] = time.split(' ');
-    let [hours, minutes] = hourMinute.split(':');
+  //   // Split the time into [hour:minute] and AM/PM
+  //   const [hourMinute, period] = time.split(' ');
+  //   let [hours, minutes] = hourMinute.split(':');
   
-    // Convert hours to 24-hour format
-    if (period === 'PM' && hours !== '12') {
-      hours = (parseInt(hours, 10) + 12).toString();
-    } else if (period === 'AM' && hours === '12') {
-      hours = '00';
+  //   // Convert hours to 24-hour format
+  //   if (period === 'PM' && hours !== '12') {
+  //     hours = (parseInt(hours, 10) + 12).toString();
+  //   } else if (period === 'AM' && hours === '12') {
+  //     hours = '00';
+  //   }
+  
+  //   // Ensure hours and minutes are two digits
+  //   hours = hours.padStart(2, '0');
+  //   minutes = minutes.padStart(2, '0');
+  
+  //   // Return formatted time with seconds set to 00
+  //   return `${hours}:${minutes}:00`;
+  // };
+
+
+  // Format time to HH:mm when user leaves the field
+  formatTime(field: string): void {
+    const value = this.AddForm.get(field)?.value;
+    if (value) {
+      const [hours, minutes] = value.split(':');
+      const formattedTime = `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
+      this.AddForm.get(field)?.setValue(formattedTime);
     }
-  
-    // Ensure hours and minutes are two digits
-    hours = hours.padStart(2, '0');
-    minutes = minutes.padStart(2, '0');
-  
-    // Return formatted time with seconds set to 00
-    return `${hours}:${minutes}:00`;
-  };
+  }
+  EditformatTime(field: string): void {
+    const value = this.EditForm.get(field)?.value;
+    if (value) {
+      const [hours, minutes] = value.split(':');
+      const formattedTime = `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
+      this.EditForm.get(field)?.setValue(formattedTime);
+    }
+  }
   getShiftNameByRecordId(id: number): string {
     const type = this.ListData.find(type => type.id === id);
     if (!type) return 'Unknown'; 
@@ -156,7 +176,6 @@ export class WorkTimeListComponent {
   onSubmit(modal: any) {
     this.isSubmited = true;
     if (this.AddForm.valid) {
-      console.log(this.AddForm.value);
       const formData = this.AddForm.value;
 
       const body = {
@@ -217,6 +236,8 @@ export class WorkTimeListComponent {
           });
         },
       });
+   
+   
     } else {
       this.translate
         .get("validation_sweetAlert")
