@@ -147,6 +147,33 @@
                                     </div>
                                 </ng-template>
                             </li>
+                            <li ngbNavItem="Locations">
+                                <a ngbNavLink><i class="icofont icofont-contacts"></i>{{ "LOCATIONS_ROLES" | translate }}</a>
+                                <ng-template ngbNavContent>
+                                    <div class="col-12">
+                                        <div class="table-responsive bg-white box-shadow">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{{ "NAME" | translate }}</th>
+                                                        <th>
+                                                            <input (change)="checkAllCheckBox('location', $event)" type="checkbox" class="mr-2" style="margin: 0 5px;" id="selectallleave">{{ "VIEW" | translate }}
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let location of Locations; let i = index">
+                                                        <td class="align-middle text-truncate">{{ currentLang === 'ar' ? location.locationNameAr : location.locationNameEn }}</td>
+                                                        <td class="align-middle text-truncate">
+                                                            <input type="checkbox" [checked]="location.login" (change)="onChecklistChange($event, i, 0, 'location')" />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </li>
                             <li ngbNavItem="timetable">
                                 <a ngbNavLink><i class="icofont icofont-contacts"></i>{{ "TIMETABLE_ROLES" | translate }}</a>
                                 <ng-template ngbNavContent>
@@ -358,6 +385,33 @@
                                                         <td class="align-middle text-truncate">{{ currentLang === 'ar' ? leave.leaveNameAr : leave.leaveNameEn }}</td>
                                                         <td class="align-middle text-truncate">
                                                             <input type="checkbox" onclick="return false" [checked]="leave.login" (change)="onChecklistChange($event, i, 0, 'leave')" />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </li>
+                            <li ngbNavItem="Locations">
+                                <a ngbNavLink><i class="icofont icofont-contacts"></i>{{ "LOCATIONS_ROLES" | translate }}</a>
+                                <ng-template ngbNavContent>
+                                    <div class="col-12">
+                                        <div class="table-responsive bg-white box-shadow">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{{ "NAME" | translate }}</th>
+                                                        <th>
+                                                            <input (change)="checkAllCheckBox('location', $event)" type="checkbox" onclick="return false" class="mr-2" style="margin: 0 5px;" id="selectallleave">{{ "VIEW" | translate }}
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let location of Locations; let i = index">
+                                                        <td class="align-middle text-truncate">{{ currentLang === 'ar' ? location.locationNameAr : location.locationNameEn }}</td>
+                                                        <td class="align-middle text-truncate">
+                                                            <input type="checkbox" onclick="return false" [checked]="location.login" (change)="onChecklistChange($event, i, 0, 'location')" />
                                                         </td>
                                                     </tr>
                                                 </tbody>

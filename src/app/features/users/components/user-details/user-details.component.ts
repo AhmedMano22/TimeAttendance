@@ -45,7 +45,13 @@ interface Leave {
   login: boolean;
   id: number;
 }
-
+interface location {
+  locationId: number;
+  locationNameAr: string;
+  locationNameEn: string;
+  login: boolean;
+  id: number;
+}
 interface TimeTableH {
   timeTableHId: number;
   timeTableHNameAr: string;
@@ -69,6 +75,7 @@ export class UserDetailsComponent {
   departments: Department[] = [];
   reports: Report[] = [];
   leaves: Leave[] = [];
+  Locations: location[] = [];
   timeTables: TimeTableH[] = [];
   mode: string = "";
   currentLang: string;
@@ -135,6 +142,7 @@ export class UserDetailsComponent {
     this.departments = this.userData.department;
     this.reports = this.userData.report;
     this.leaves = this.userData.leave;
+    this.Locations = this.userData.location;
     this.timeTables = this.userData.timeTableH;
   }
 
@@ -159,6 +167,10 @@ export class UserDetailsComponent {
       this.leaves.forEach(leave => {
         leave.login = isChecked;
       });
+    } else if (type === 'location') {
+      this.Locations.forEach(location => {
+        location.login = isChecked;
+      });
     } else if (type === 'timeTableH') {
       this.timeTables.forEach(timeTable => {
         timeTable.login = isChecked;
@@ -177,6 +189,8 @@ export class UserDetailsComponent {
       this.reports[index].login = value;
     } else if (type === 'leave') {
       this.leaves[index].login = value;
+    }else if (type === 'location') {
+      this.Locations[index].login = value;
     } else if (type === 'timeTableH') {
       this.timeTables[index].login = value;
     }
@@ -235,6 +249,10 @@ export class UserDetailsComponent {
         leave: this.leaves.map(leave => ({
           ...leave,
           login: leave.login // Keep the login status as is
+        })),
+        location: this.Locations.map(location => ({
+          ...location,
+          login: location.login // Keep the login status as is
         })),
         timeTableH: this.timeTables.map(timeTable => ({
           ...timeTable,
