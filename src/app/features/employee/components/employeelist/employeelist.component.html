@@ -42,11 +42,25 @@
                     <td class="text-center">{{data.nameEn}}</td>
 
                     <td class="text-center">{{data.code}}</td>
-                    <td class="text-center">{{getDepartmentNameById(data.departmentId)}}</td>
-                    <td class="text-center">{{getLocationNameById(data.locationId)}}</td>
-                    <td class="text-center">{{getJobNameById(data.jobId)}}</td>
+                
+                    <td class="text-center">
+                      {{ translate.currentLang === 'en' ? data.departmentNameEn : data.departmentNameAr }}
+                    </td>
+                    
+              
+                    <td class="text-center">
+                      {{ translate.currentLang === 'en' ? data.locationNameEn : data.locationNameAr }}
+                    </td>
+                
+                    <td class="text-center">
+                      {{ translate.currentLang === 'en' ? data.jobNameEn : data.jobNameAr }}
+                    </td>
 
-                    <td class="text-center">{{ data.active ? 'نشط' : 'غير نشط ' }}</td>
+                    <td class="text-center">
+                      {{ data.active ? ('ACTIVE' | translate) : ('INACTIVE' | translate) }}
+                    </td>
+                    
+                    
              
    
 

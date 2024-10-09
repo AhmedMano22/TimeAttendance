@@ -352,7 +352,12 @@
   "LOCATIONS_ROLES":"الموقع",
   "REPOERT_NAME":"التقرير",
   "FROM_EMPLOYEE":"من الموظف",
-    "TO_EMPLOYEE":"الي الموظف"
+    "TO_EMPLOYEE":"الي الموظف",
+      "ACTIVE": "نشط",
+  "INACTIVE": "غير نشط",
+  "Previous": "السابق",
+  "Next": "التالي",
+  "SEARCH": "بحث"
 
 
 }

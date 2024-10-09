@@ -16,8 +16,8 @@ export class ApiService {
   }
 
  /* Department */
- getDepartments() {
-  return this._HttpClient.get(this.url + "/Department/GetAll");
+ getDepartments(pageNumber?: number, pageSize?: number,Name:string='') {
+  return this._HttpClient.get(this.url + `/Department/GetAll?Name=${Name}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
 }
 addDepartment(body: any) {
   return this._HttpClient.post(this.url + "/Department/Create", body);

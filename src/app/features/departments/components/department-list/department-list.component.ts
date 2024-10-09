@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { ChangeDetectorRef, Component } from "@angular/core";
 import { slider } from "src/app/shared/data/animation/route-animations";
 import { ApiService } from "src/app/shared/services/api/api.service";
 import * as userData from "src/app/shared/data/user/user";
@@ -36,18 +36,25 @@ export class DepartmentListComponent {
     nameEn: "",
     id: 0
   }
+  searchTerm: string = "";
+  currentPage = 1;
+  itemsPerPage = 3;
+  totalItems = 0;
+  totalPages = 0;
+  pagesToShow: number[] = [];
   constructor(
     private apiSer: ApiService,
     private translate: TranslateService,
     private modalService: NgbModal,
     private authservice: AuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cdRef: ChangeDetectorRef,
   ) {
  
   }
   ngOnInit() {
     this.loading = true;
-     this.load();
+     this.load(this.currentPage,this.searchTerm);
      this.DepartmentForm = this.fb.group({
       nameAr: ['', Validators.required], 
       nameEn: ['', Validators.required], 
@@ -58,14 +65,20 @@ export class DepartmentListComponent {
     });
   }
 
-  load() {
+  load(pageNumber:number,searchTerm: string) {
     this.loading = true; // Start loading
-    this.apiSer.getDepartments().subscribe({
+    this.apiSer.getDepartments(pageNumber, this.itemsPerPage,searchTerm).subscribe({
       next: (res: any) => {
-        this.ListData = res.result;
+        this.ListData = res.result.items;
         console.log("res", res);
 
         this.loading = false; // Stop loading after data is fetched
+        this.totalItems = res.result.count;
+        this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+        console.log( this.totalPages);
+        
+        this.updatePagination();
+        this.cdRef.detectChanges();
       },
       error: (err) => {
         console.error("Failed to load requests", err);
@@ -73,7 +86,30 @@ export class DepartmentListComponent {
       },
     });
   }
+  updatePagination() {
+    const maxPages = 5;
+    const startPage = Math.max(1, this.currentPage - Math.floor(maxPages / 2));
+    const endPage = Math.min(this.totalPages, startPage + maxPages - 1);
+    this.pagesToShow = Array.from(
+      { length: endPage - startPage + 1 },
+      (_, i) => startPage + i
+    );
+  }
 
+  setPage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.load(page,this.searchTerm);
+    }
+  }
+  onSearch() {
+    this.currentPage = 1; // Reset to the first page
+    this.load(this.currentPage,this.searchTerm); // Load with the search term
+  }
+  clearSearch() {
+    this.searchTerm = '';
+    this.load(1,this.searchTerm); // Load all data when the search is cleared
+  }
   lmModal(content:any){
     const modalRef = this.modalService.open(content,{ size: 'lg' });
   }
@@ -88,7 +124,8 @@ export class DepartmentListComponent {
           console.log(res);
         
           if (res.success == true) {
-            this.load();
+            this.load(1,this.searchTerm);
+            this.setPage(1);
             this.DepartmentForm.reset();
             this.isSubmited = false;
             modal.dismiss();
@@ -176,7 +213,7 @@ export class DepartmentListComponent {
                   console.log(res);
               
                   if (res.success) {
-                    this.load();
+                    this.load(1,this.searchTerm);
                     this.translate
                       .get([
                         "deleteSuccessTitle",
@@ -272,7 +309,9 @@ export class DepartmentListComponent {
         next: (res: any) => {
           console.log("Update response:", res);
           if (res.success == true) {
-            this.load();
+            // this.load();
+            this.load(this.currentPage,this.searchTerm);
+            this.updatePagination();
             modal.dismiss();
             this.translate
               .get("update_Depart_Success")
@@ -322,4 +361,6 @@ export class DepartmentListComponent {
         });
     }
   }
+
+
 }

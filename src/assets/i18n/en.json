@@ -193,5 +193,7 @@
   "leavesTypeId": "Leaves Type",
   "leavesVacId": "Holiday Type",
   "cutVal": "Cut Value",
-  "leavesRuleId": "leaves Rule"
+  "leavesRuleId": "leaves Rule",
+  "ACTIVE": "Active",
+  "INACTIVE": "Inactive"
 }

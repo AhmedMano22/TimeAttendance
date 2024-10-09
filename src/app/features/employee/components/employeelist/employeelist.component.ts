@@ -59,7 +59,7 @@ export class EmployeelistComponent {
   currentLang: string;
   constructor(
     private apiSer: ApiService,
-    private translate: TranslateService,
+    public translate: TranslateService,
     private modalService: NgbModal,
     private authservice: AuthService,
     private fb: FormBuilder
@@ -98,9 +98,7 @@ export class EmployeelistComponent {
       jobId: ['', Validators.required], 
       note: ['', Validators.required], 
     });
-    this.loadlDepartments();
-    this.loadlLocations();
-    this.loadlJobs();
+
   }
 
   load() {
@@ -426,45 +424,10 @@ export class EmployeelistComponent {
 
 
 
-  loadlDepartments(){
-    this.apiSer.getDepartments().subscribe((res:any) => {
-      if (res.success) {
-        this.Departments = res.result;
-      }
-    });
-  }
-  loadlLocations(){
-    this.apiSer.getLocations().subscribe((res:any) => {
-      if (res.success) {
-        this.Locations = res.result;
-      }
-    });
-  } 
-  loadlJobs(){
-    this.apiSer.getJobs().subscribe((res:any) => {
-      if (res.success) {
-        this.Jobs = res.result;
-      }
-    });
-  }
   getName(type: any): string {
     return this.currentLang === 'ar' ? type.nameAr : type.nameEn;
   }
 
-  getDepartmentNameById(id: number): string {
-    const type = this.Departments.find(type => type.id === id);
-    if (!type) return 'Unknown'; 
-    return this.currentLang === 'ar' ? type.nameAr : type.nameEn;
-  }
-  getLocationNameById(id: number): string {
-    const type = this.Locations.find(type => type.id === id);
-    if (!type) return 'Unknown'; 
-    return this.currentLang === 'ar' ? type.nameAr : type.nameEn;
-  }
-  getJobNameById(id: number): string {
-    const type = this.Jobs.find(type => type.id === id);
-    if (!type) return 'Unknown'; 
-    return this.currentLang === 'ar' ? type.nameAr : type.nameEn;
-  }
+
 }
 
