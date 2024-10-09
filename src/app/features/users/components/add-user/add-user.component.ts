@@ -42,7 +42,13 @@ interface Leave {
   login: boolean;
   id: number;
 }
-
+interface location {
+  locationId: number;
+  locationNameAr: string;
+  locationNameEn: string;
+  login: boolean;
+  id: number;
+}
 interface TimeTableH {
   timeTableHId: number;
   timeTableHNameAr: string;
@@ -69,6 +75,7 @@ export class AddUserComponent {
   reports: Report[] = [];
   leaves: Leave[] = [];
   timeTables: TimeTableH[] = [];
+  Locations: location[] = [];
   mode: string = "";
   currentLang: string;
   constructor(
@@ -142,6 +149,14 @@ export class AddUserComponent {
       login: leave.login,
       id: leave.id
   }));
+      // Initialize location
+      this.Locations = this.userData.location.map((leave: any) => ({
+        locationId: leave.locationId,
+        locationNameAr: leave.locationNameAr,
+        locationNameEn: leave.locationNameEn,
+        login: leave.login,
+        id: leave.id
+    }));
     // Initialize time tables
     this.timeTables = this.userData.timeTableH.map((timeTable: any) => ({
       timeTableHId: timeTable.timeTableHId,
@@ -174,7 +189,11 @@ export class AddUserComponent {
       this.leaves.forEach(leave => {
         leave.login = isChecked;
       });
-    } else if (type === 'timeTableH') {
+    } else if (type === 'location') {
+      this.Locations.forEach(location => {
+        location.login = isChecked;
+      });
+    }else if (type === 'timeTableH') {
       this.timeTables.forEach(timeTable => {
         timeTable.login = isChecked;
       });
@@ -192,6 +211,8 @@ export class AddUserComponent {
       this.reports[index].login = value;
     } else if (type === 'leave') {
       this.leaves[index].login = value;
+    }else if (type === 'location') {
+      this.Locations[index].login = value;
     } else if (type === 'timeTableH') {
       this.timeTables[index].login = value;
     }
@@ -250,6 +271,10 @@ export class AddUserComponent {
         leave: this.leaves.map(leave => ({
           ...leave,
           login: leave.login // Keep the login status as is
+        })),
+        location: this.Locations.map(location => ({
+          ...location,
+          login: location.login // Keep the login status as is
         })),
         timeTableH: this.timeTables.map(timeTable => ({
           ...timeTable,

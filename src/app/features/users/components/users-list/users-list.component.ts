@@ -35,7 +35,7 @@ export class UsersListComponent {
     this.loading = true; // Start loading
     this.apiSer.getUsers().subscribe({
       next: (res: any) => {
-        this.ListData = res.result;
+        this.ListData = res.result.items;
         console.log("res", res);
 
         this.loading = false; // Stop loading after data is fetched
