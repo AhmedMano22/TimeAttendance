@@ -290,7 +290,10 @@ getUserById(id: number) {
   return this._HttpClient.get(this.url + `/User/GetAllUserDataById/${id}`);
 }
 
-
+/* reports */
+getReports() {
+  return this._HttpClient.get(this.url + "/Report/GetAll");
+}
 
 
 

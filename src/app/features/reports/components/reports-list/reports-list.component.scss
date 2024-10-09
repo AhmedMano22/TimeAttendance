@@ -1,0 +1,14 @@
+.action-buttons{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  
+    .success{
+        background-color: #7DC006;
+        color:#fff ;
+    }
+    .danger{
+        background-color: #E52727;
+        color:#fff ;
+    }
+}

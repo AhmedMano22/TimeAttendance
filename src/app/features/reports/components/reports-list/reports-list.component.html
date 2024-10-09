@@ -1,21 +1,116 @@
 <app-breadcrumb [title]="'REPORTS_LIST' | translate" [items]="['REPORTS' | translate]" [active_item]="'REPORTS_LIST' | translate"></app-breadcrumb>
 <div class="container-fluid list-products">
     <div class="row">
-        <div class="col-sm-12">
-        <div class="card">
-        <div class="card-header pb-0">
-
-        </div>
-        <div class="card-body"style="min-height: 400px;
-        display: flex;
-        align-items: center;
-        justify-content: center;">
-            <div class="table-responsive product-table">
-                <h3 class="text-center">{{"NO_REPORTS" |translate}}</h3>
-      
+        <div class="col-12">
+            <div class="card">
+              
+                <div class="card-body"style="min-height: 400px;">
+                    <form [formGroup]="AddForm" (ngSubmit)="onSubmit()">
+                   
+                          <!-- Existing Form Control -->
+                          <div class="row mb-3">
+                            <div class="col-12">
+                                <div class="row mb-3">
+                                    <div class="col">
+                                    <div>
+                                        <label class="form-label" for="validationCustom0">{{"REPOERT_NAME" | translate}}</label>
+                                        <select class="form-select" id="validationCustom0" formControlName="reportId">
+                                        <option selected disabled value="">{{"REPOERT_NAME" | translate}}</option>
+                                        <option *ngFor="let type of Reports" [value]="type.id">{{ getName(type) }}</option>
+                                        </select>
+                                     
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row ">
+                                    <div class="col-md-6 col-12">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="start">{{"FROM" |translate}}</label>
+                                        <input class="form-control digits" id="start" name="start" formControlName="From"
+                                        placeholder="yyyy-mm-dd"
+                                        [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3">
+                                        <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                                     
+                                    </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="end">{{"TO" |translate}}</label>
+                                        <input class="form-control digits" id="end" formControlName="To" name="end"
+                                     
+                                        [value]="selectedDate | date:'dd/MM/yyyy'" placeholder="yyyy-mm-dd" [owlDateTimeTrigger]="dt4"
+                                        [owlDateTime]="dt4">
+                                  
+                                        <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row ">
+                                    <div class="col-md-6 col-12">
+                                    <div class="mb-3">
+                                        <label for="fromEmployee">{{"FROM_EMPLOYEE" | translate}}</label>
+                                        <input type="text" class="form-control" formControlName="fromEmployee" id="fromEmployee"
+                                          [placeholder]="'FROM_EMPLOYEE' | translate">
+                                     
+                                    </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                    <div class="mb-3">
+                                        <label for="toEmployee">{{"TO_EMPLOYEE" | translate}}</label>
+                                        <input type="text" class="form-control" formControlName="toEmployee" id="toEmployee"
+                                          [placeholder]="'TO_EMPLOYEE' | translate">
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                    <div>
+                                        <label class="form-label" for="validationCustom1">{{"LOCATION" | translate}}</label>
+                                        <select class="form-select" id="validationCustom1" formControlName="LocationId">
+                                        <option selected disabled value="">{{"LOCATION" | translate}}</option>
+                                        <option *ngFor="let type of LocationsList" [value]="type.id">{{ getName(type) }}</option>
+                                        </select>
+                                   
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                    <div>
+                                        <label class="form-label" for="DEPAERTMENT">{{"DEPAERTMENT" | translate}}</label>
+                                        <select class="form-select" id="DEPAERTMENT" formControlName="DepartmentId">
+                                        <option selected disabled value="">{{"DEPAERTMENT" | translate}}</option>
+                                        <option *ngFor="let type of DepartmentsList" [value]="type.id">{{ getName(type) }}</option>
+                                        </select>
+                                   
+                                    </div>
+                                    </div>
+                                </div>
+                              
+                                <div class="row mb-3">
+                                    <div class="col">
+                                    <div>
+                                        <label class="form-label" for="JOB">{{"JOB" | translate}}</label>
+                                        <select class="form-select" id="JOB" formControlName="JobId">
+                                        <option selected disabled value="">{{"JOB" | translate}}</option>
+                                        <option *ngFor="let type of JobsList" [value]="type.id">{{ getName(type) }}</option>
+                                        </select>
+                                   
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <!-- Modal Footer with Action Buttons -->
+                        <div class=" action-buttons">
+               
+                          <button class="btn success" type="submit">Pdf / xlsx</button>
+                          <button class="btn  danger" (click)="clear()" type="button"    > {{"DELETE" |translate}}</button>
+                        </div>
+                      </form>
+                </div>
             </div>
-        </div>
-        </div>
         </div>
     </div>
 </div>

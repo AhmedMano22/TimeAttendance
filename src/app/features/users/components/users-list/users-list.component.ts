@@ -28,7 +28,7 @@ export class UsersListComponent {
   ngOnInit() {
     this.loading = true;
 
-    this.load();
+    this.load();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
   }
  
   load() {
@@ -46,7 +46,7 @@ export class UsersListComponent {
       },
     });
   }
-  remove2(id: any) {
+  remove2(id: any) {              
     this.apiSer.deleteUser(id).subscribe({
       next: (res) => {
         console.log("Delete response", res);

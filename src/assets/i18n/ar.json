@@ -350,8 +350,9 @@
 
 
   "LOCATIONS_ROLES":"الموقع",
-  "شسيسي":"",
-  "شسيسي":""
+  "REPOERT_NAME":"التقرير",
+  "FROM_EMPLOYEE":"من الموظف",
+    "TO_EMPLOYEE":"الي الموظف"
 
 
 }
