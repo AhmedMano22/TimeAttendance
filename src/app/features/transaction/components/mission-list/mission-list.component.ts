@@ -57,7 +57,7 @@ export class MissionListComponent {
   }
   constructor(
     private apiSer: ApiService,
-    private translate: TranslateService,
+    public translate: TranslateService,
     private modalService: NgbModal,
     private authservice: AuthService,
     private fb: FormBuilder
