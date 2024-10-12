@@ -16,7 +16,7 @@ export class ApiService {
   }
 
  /* Department */
- getDepartments(pageNumber?: number, pageSize?: number,Name:string='') {
+ getDepartments(pageNumber: any='', pageSize: any='',Name:string='') {
   return this._HttpClient.get(this.url + `/Department/GetAll?Name=${Name}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
 }
 addDepartment(body: any) {
@@ -32,8 +32,8 @@ UpdateDepartment( body: any) {
   return this._HttpClient.post(this.url + `/Department/Update`, body);
 }
 /* Employee */
-getEmployee() {
-  return this._HttpClient.get(this.url + "/Employee/GetAll");
+getEmployee(pageNumber: any='', pageSize: any='',Name:string='') {
+  return this._HttpClient.get(this.url + `/Employee/GetAll?Name=${Name}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
 }
 addEmployee(body: any) {
   return this._HttpClient.post(this.url + "/Employee/Create", body);
