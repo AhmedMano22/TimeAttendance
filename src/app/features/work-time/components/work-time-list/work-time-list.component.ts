@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { ChangeDetectorRef, Component } from "@angular/core";
 import { slider } from "src/app/shared/data/animation/route-animations";
 import { ApiService } from "src/app/shared/services/api/api.service";
 import * as userData from "src/app/shared/data/user/user";
@@ -63,13 +63,20 @@ export class WorkTimeListComponent {
     latePermission: "",
     id: 0
   }
+  searchTerm: string = "";
+  currentPage = 1;
+  itemsPerPage = 3;
+  totalItems = 0;
+  totalPages = 0;
+  pagesToShow: number[] = [];
   constructor(
     private apiSer: ApiService,
     private translate: TranslateService,
     private modalService: NgbModal,
     private authservice: AuthService,
     private fb: FormBuilder,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private cdRef: ChangeDetectorRef,
   ) {
     this.currentLang = localStorage.getItem('app-lang') ?? 'ar';
     this.translate.onLangChange.subscribe((event) => {
@@ -80,7 +87,7 @@ export class WorkTimeListComponent {
   }
   ngOnInit() {
     this.loading = true;
-     this.load();
+     this.load(this.currentPage,this.searchTerm);
     this.AddForm = this.fb.group({
       shiftId: ['', Validators.required],
       date: ['', Validators.required],
@@ -108,13 +115,18 @@ export class WorkTimeListComponent {
     this.loadlShifts();
   }
 
-  load() {
+  load(pageNumber:number,searchTerm: string) {
     this.loading = true; // Start loading
-    this.apiSer.getWorkTime().subscribe({
+    this.apiSer.getWorkTime(pageNumber, this.itemsPerPage,searchTerm).subscribe({
       next: (res: any) => {
-        this.ListData = res.result;
+        this.ListData = res.result.items;
         console.log("res", res);
-
+        this.totalItems = res.result.count;
+        this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+        console.log( this.totalPages);
+        
+        this.updatePagination();
+        this.cdRef.detectChanges();
         this.loading = false; // Stop loading after data is fetched
       },
       error: (err) => {
@@ -123,7 +135,22 @@ export class WorkTimeListComponent {
       },
     });
   }
+  updatePagination() {
+    const maxPages = 5;
+    const startPage = Math.max(1, this.currentPage - Math.floor(maxPages / 2));
+    const endPage = Math.min(this.totalPages, startPage + maxPages - 1);
+    this.pagesToShow = Array.from(
+      { length: endPage - startPage + 1 },
+      (_, i) => startPage + i
+    );
+  }
 
+  setPage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.load(page,this.searchTerm);
+    }
+  }
   lmModal(content:any){
     const modalRef = this.modalService.open(content,{ size: 'xl' });
   }
@@ -175,6 +202,7 @@ export class WorkTimeListComponent {
   
   onSubmit(modal: any) {
     this.isSubmited = true;
+    console.log(this.AddForm.value);
     if (this.AddForm.valid) {
       const formData = this.AddForm.value;
 
@@ -196,9 +224,12 @@ export class WorkTimeListComponent {
           console.log(res);
         
           if (res.success == true) {
-            this.load();
+            this.load(1,this.searchTerm);
+            this.setPage(1);
             this.AddForm.reset();
-            this.AddForm.reset({ shiftId: "" });
+         
+            this.AddForm.get('shiftId')?.setValue('');
+            this.AddForm.get('isHour')?.setValue(false);
             this.isSubmited = false;
             modal.dismiss();
             this.translate
@@ -287,7 +318,7 @@ export class WorkTimeListComponent {
                   console.log(res);
               
                   if (res.success) {
-                    this.load();
+                    this.load(1,this.searchTerm);
                     this.translate
                       .get([
                         "deleteSuccessTitle",
@@ -408,7 +439,8 @@ export class WorkTimeListComponent {
         next: (res: any) => {
           console.log("Update response:", res);
           if (res.success == true) {
-            this.load();
+            this.load(this.currentPage,this.searchTerm);
+            this.updatePagination();
             modal.dismiss();
             this.translate
               .get("update_worktime_Success")
@@ -465,7 +497,7 @@ export class WorkTimeListComponent {
   loadlShifts(){
     this.apiSer.getShifts().subscribe((res:any) => {
       if (res.success) {
-        this.Shifts = res.result;
+        this.Shifts = res.result.items;
       }
     });
   }

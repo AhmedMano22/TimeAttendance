@@ -25,3 +25,23 @@
     font-size: 16px;
     margin: 5px !important;
   }
+  .search-container {
+    position: relative;
+    margin-right: 1rem;
+    .clear-btn {
+      position: absolute;
+      padding: 10px;
+      top: 50%;
+      left: 1px;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      color: #aaa;
+  
+      &:hover {
+        color: #000;
+      }
+    }
+  }

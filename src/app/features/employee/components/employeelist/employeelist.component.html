@@ -61,10 +61,10 @@
                 <ng-container *ngFor="let data of ListData; let i = index">
                   <tr>
                     <td class="text-center">{{i + 1}}</td>
-                    <td class="text-center">{{data.nameAr}}</td>
-                    <td class="text-center">{{data.nameEn}}</td>
+                    <td class="text-center">{{data.userSurname}}</td>
+                    <td class="text-center">{{data.userName}}</td>
 
-                    <td class="text-center">{{data.code}}</td>
+                    <td class="text-center">{{data.userUserName}}</td>
                 
                     <td class="text-center">
                       {{ translate.currentLang === 'en' ? data.departmentNameEn : data.departmentNameAr }}
@@ -106,7 +106,7 @@
             <p class="text-center"> {{"NO_CONTENT" |translate}}</p>
           </div>
         </div>
-        <div class="card-footer">
+        <div class="card-footer border-top-0">
           <!-- Pagination bar controls -->
           <div class="d-flex justify-content-center align-items-center mt-3 mb-3">
             <nav aria-label="Page navigation ng-star-inserted" *ngIf="totalPages > 1">
@@ -272,6 +272,21 @@
             <div class="row mb-3">
               <div class=" col-12 mb-2">
                 <div>
+                  <label class="form-label">{{"PASSWORD" | translate}}</label>
+                  <input class="form-control mt-2" type="text" formControlName="password"
+                    [class.invalid]="AddForm.get('password')?.invalid && isSubmited"
+                    [placeholder]="'PASSWORD' | translate">
+                  <div class="error"
+                    *ngIf="AddForm.get('password')?.invalid && (AddForm.get('password')?.dirty || isSubmited)">
+                    كلمة المرور مطلوبة
+                  </div>
+                </div>
+              </div>
+         
+            </div>
+            <div class="row mb-3">
+              <div class=" col-12 mb-2">
+                <div>
                   <label class="form-label">{{"NOTE" | translate}}</label>
                   <textarea class="form-control" placeholder="أدخل الملاحظات هنا...." formControlName="note"
                   [class.invalid]="AddForm.get('note')?.invalid && isSubmited"  rows="5"></textarea>
@@ -425,6 +440,7 @@
                 </div>
               </div>
             </div>
+        
             <div class="row mb-3">
               <div class=" col-12 mb-2">
                 <div>

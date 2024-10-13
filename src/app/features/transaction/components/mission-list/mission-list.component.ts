@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { ChangeDetectorRef, Component } from "@angular/core";
 import { slider } from "src/app/shared/data/animation/route-animations";
 import { ApiService } from "src/app/shared/services/api/api.service";
 import * as userData from "src/app/shared/data/user/user";
@@ -55,12 +55,19 @@ export class MissionListComponent {
     leaveNameEn: "",
     id: 0
   }
+  searchTerm: string = "";
+  currentPage = 1;
+  itemsPerPage = 2;
+  totalItems = 0;
+  totalPages = 0;
+  pagesToShow: number[] = [];
   constructor(
     private apiSer: ApiService,
     public translate: TranslateService,
     private modalService: NgbModal,
     private authservice: AuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cdRef: ChangeDetectorRef,
   ) {
     this.currentLang = localStorage.getItem('app-lang') ?? 'ar';
     this.translate.onLangChange.subscribe((event) => {
@@ -72,7 +79,7 @@ export class MissionListComponent {
   }
   ngOnInit() {
     this.loading = true;
-     this.load();
+    this.load(this.currentPage);
      this.loadEmployes();
      this.loadLeaves();
      this.AddForm = this.fb.group({
@@ -94,7 +101,7 @@ export class MissionListComponent {
 loadEmployes(){
     this.apiSer.getEmployee().subscribe((res:any) => {
       if (res.success) {
-        this.EmployesList = res.result;
+        this.EmployesList = res.result.items;
       }
     });
 }
@@ -108,7 +115,7 @@ getEmpolyeNameById(id: number): string {
 loadLeaves(){
   this.apiSer.getLeaves(2).subscribe((res:any) => {
     if (res.success) {
-      this.LeavesList = res.result;
+      this.LeavesList = res.result.items;
     }
   });
 }
@@ -120,13 +127,21 @@ return this.currentLang === 'ar' ? type.nameAr : type.nameEn;
 getName(type: any): string {
   return this.currentLang === 'ar' ? type.nameAr : type.nameEn;
 }
-  load() {
+getEmployeeName(type: any): string {
+  return this.currentLang === 'ar' ? type.userSurname : type.userName;
+}
+  load(pageNumber:any) {
     this.loading = true; // Start loading
-    this.apiSer.getTransactions(2).subscribe({
+    this.apiSer.getTransactions(2,'',pageNumber, this.itemsPerPage).subscribe({
       next: (res: any) => {
-        this.ListData = res.result;
+        this.ListData = res.result.items;
         console.log("res", res);
-
+        this.totalItems = res.result.count;
+        this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+        console.log( this.totalPages);
+        
+        this.updatePagination();
+        this.cdRef.detectChanges();
         this.loading = false; // Stop loading after data is fetched
       },
       error: (err) => {
@@ -135,7 +150,22 @@ getName(type: any): string {
       },
     });
   }
+  updatePagination() {
+    const maxPages = 5;
+    const startPage = Math.max(1, this.currentPage - Math.floor(maxPages / 2));
+    const endPage = Math.min(this.totalPages, startPage + maxPages - 1);
+    this.pagesToShow = Array.from(
+      { length: endPage - startPage + 1 },
+      (_, i) => startPage + i
+    );
+  }
 
+  setPage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.load(page);
+    }
+  }
   lmModal(content:any){
     const modalRef = this.modalService.open(content,{ size: 'lg' });
   }
@@ -157,8 +187,11 @@ getName(type: any): string {
         next: (res: any) => {
           console.log(res);
           if (res.success == true) {
-            this.load();
+            this.load(1);
+            this.setPage(1);
             this.AddForm.reset();
+            this.AddForm.get('employeeId')?.setValue('');
+            this.AddForm.get('leaveId')?.setValue('');
             this.isSubmited = false;
             modal.dismiss();
             this.translate
@@ -245,7 +278,7 @@ getName(type: any): string {
                   console.log(res);
               
                   if (res.success) {
-                    this.load();
+                    this.load(1);
                     this.translate
                       .get([
                         "deleteSuccessTitle",
@@ -355,7 +388,8 @@ getName(type: any): string {
         next: (res: any) => {
           console.log("Update response:", res);
           if (res.success == true) {
-            this.load();
+            this.load(this.currentPage);
+            this.updatePagination();
             modal.dismiss();
             this.translate
               .get("Edit_transaction_Success")

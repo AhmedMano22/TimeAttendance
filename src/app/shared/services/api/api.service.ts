@@ -54,8 +54,8 @@ UpdateEmployee( body: any) {
 GetAllPublicHolidaysType(){
   return this._HttpClient.get(this.url + "/PublicHoliday/GetAllPublicHolidaysType");
 }
-getPublicHoliday() {
-  return this._HttpClient.get(this.url + "/PublicHoliday/GetAll");
+getPublicHoliday(pageNumber: any='', pageSize: any='',Name:string='') {
+  return this._HttpClient.get(this.url + `/PublicHoliday/GetAll?Name=${Name}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
 }
 addPublicHoliday(body: any) {
   return this._HttpClient.post(this.url + "/PublicHoliday/Create", body);
@@ -70,8 +70,8 @@ UpdatePublicHoliday( body: any) {
   return this._HttpClient.post(this.url + `/PublicHoliday/Update`, body);
 }
 /* Work Time */
-getWorkTime() {
-  return this._HttpClient.get(this.url + "/WorkingTime/GetAll");
+getWorkTime(pageNumber: any='', pageSize: any='',Name:string='') {
+  return this._HttpClient.get(this.url + `/WorkingTime/GetAll?Name=${Name}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
 }
 addWorkTime(body: any) {
   return this._HttpClient.post(this.url + "/WorkingTime/Create", body);
@@ -87,8 +87,8 @@ UpdateWorkTime( body: any) {
 }
 
 /* Time Table */
-getAllTimeTable() {
-  return this._HttpClient.get(this.url + "/TimeTableH/GetAll");
+getAllTimeTable(pageNumber: any='', pageSize: any='',Name:string='') {
+  return this._HttpClient.get(this.url + `/TimeTableH/GetAll?Name=${Name}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
 }
 addTimeTable(body: any) {
   return this._HttpClient.post(this.url + "/TimeTableH/SaveAllTimeTableData", body);
@@ -101,8 +101,8 @@ getTimeTableByID(id: number) {
 }
 /* End Time Table */
 /* Exception Work Time */
-getExceptionWorkTime() {
-  return this._HttpClient.get(this.url + "/ExceptionWorkingTime/GetAll");
+getExceptionWorkTime(pageNumber: any='', pageSize: any='',Name:string='') {
+  return this._HttpClient.get(this.url + `/ExceptionWorkingTime/GetAll?Name=${Name}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
 }
 addExceptionWorkingTime(body: any) {
   return this._HttpClient.post(this.url + "/ExceptionWorkingTime/Create", body);
@@ -118,9 +118,10 @@ UpdateExceptionWorkingTime( body: any) {
 }
 
  /* JOBS */
- getJobs() {
-  return this._HttpClient.get(this.url + "/Job/GetAll");
+ getJobs(pageNumber: any='', pageSize: any='',Name:string='') {
+    return this._HttpClient.get(this.url + `/Job/GetAll?Name=${Name}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
 }
+
 addJob(body: any) {
   return this._HttpClient.post(this.url + "/Job/Create", body);
 }
@@ -135,8 +136,9 @@ UpdateJob( body: any) {
 }
 
  /* Location */
- getLocations() {
-  return this._HttpClient.get(this.url + "/Location/GetAll");
+ getLocations(pageNumber: any='', pageSize: any='',Name:string='') {
+
+  return this._HttpClient.get(this.url + `/Location/GetAll?Name=${Name}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
 }
 addLocation(body: any) {
   return this._HttpClient.post(this.url + "/Location/Create", body);
@@ -154,8 +156,8 @@ UpdateLocation( body: any) {
 
 
  /* Shift */
- getShifts() {
-  return this._HttpClient.get(this.url + "/Shift/GetAll");
+ getShifts(pageNumber: any='', pageSize: any='',Name:string='') {
+  return this._HttpClient.get(this.url + `/Shift/GetAll?Name=${Name}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
 }
 addShift(body: any) {
   return this._HttpClient.post(this.url + "/Shift/Create", body);
@@ -172,7 +174,7 @@ UpdateShift( body: any) {
 
 
 /* transactions */
-getTransactions(leavesTypeId?: number, TransactionStatusId?: string) {
+getTransactions(leavesTypeId?: number, TransactionStatusId?: string,pageNumber: any='', pageSize: any='') {
   let params = new HttpParams();
   
   // Append parameters if they are provided
@@ -182,6 +184,13 @@ getTransactions(leavesTypeId?: number, TransactionStatusId?: string) {
   
   if (TransactionStatusId) {
     params = params.append('TransactionStatusId', TransactionStatusId.toString());
+  }
+  if (pageNumber) {
+    params = params.append('PageNumber', pageNumber.toString());
+  }
+
+  if (pageSize) {
+    params = params.append('PageSize', pageSize.toString());
   }
   
   return this._HttpClient.get(this.url + "/Transaction/GetAll", { params });
@@ -206,7 +215,7 @@ UpdateTransaction( body: any) {
 //  getLeaves() {
 //   return this._HttpClient.get(this.url + "/Leave/GetAll");
 // }
-getLeaves(leavesTypeId?: number, name?: string) {
+getLeaves(leavesTypeId?: any,pageNumber: any='', pageSize: any='',Name:string='') {
   let params = new HttpParams();
   
   // Append parameters if they are provided
@@ -214,10 +223,16 @@ getLeaves(leavesTypeId?: number, name?: string) {
     params = params.append('LeavesTypeId', leavesTypeId.toString());
   }
   
-  if (name) {
-    params = params.append('Name', name);
+  if (Name) {
+    params = params.append('Name', Name);
   }
-  
+  if (pageNumber) {
+    params = params.append('PageNumber', pageNumber.toString());
+  }
+
+  if (pageSize) {
+    params = params.append('PageSize', pageSize.toString());
+  }
   return this._HttpClient.get(this.url + "/Leave/GetAll", { params });
 }
 
@@ -249,8 +264,8 @@ GetAllLeaveVaces() {
 }
 
 /* users */
-getUsers() {
-  return this._HttpClient.get(this.url + `/User/GetAll`);
+getUsers(pageNumber: any='', pageSize: any='',Name:string='') {
+  return this._HttpClient.get(this.url + `/User/GetAll?Name=${Name}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
 }
 getuserpermissionbyid(id: number) {
   return this._HttpClient.get(

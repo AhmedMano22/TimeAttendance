@@ -115,12 +115,12 @@ export class EditTimeTableComponent {
   }
   loadlShifts(){
     this.apiSer.getShifts().subscribe((res:any) => {
-      this.Shifts = res.result;
+      this.Shifts = res.result.items;
     });
   }
   loadlgetEmployees(){
     this.apiSer.getEmployee().subscribe((res:any) => {
-      this.Employees = res.result;
+      this.Employees = res.result.items;
     });
   }
   
@@ -132,7 +132,7 @@ export class EditTimeTableComponent {
   getEmployeNameByRecordId(id: number): string {
     const employee = this.Employees.find(employee => employee.id === id);
     if (!employee) return 'Unknown';
-    return this.currentLang === 'ar' ? employee.nameAr : employee.nameEn;
+    return this.currentLang === 'ar' ? employee.userSurname : employee.userName;
   }
   removeShift(index: number) {
     this.ListData.splice(index, 1); // Remove the selected shift from the list

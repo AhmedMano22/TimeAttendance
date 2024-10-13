@@ -21,7 +21,6 @@ interface Employee {
   departmentId: number;
   locationId: number;
   jobId: number;
-
   id: number;
 }
 @Component({
@@ -54,7 +53,7 @@ export class EmployeelistComponent {
     departmentId: 0,
     locationId: 0,
     jobId: 0,
-    id: 0
+    id: 0,
   }
   currentLang: string;
   searchTerm: string = "";
@@ -81,12 +80,16 @@ export class EmployeelistComponent {
   ngOnInit() {
     this.loading = true;
      this.load(this.currentPage,this.searchTerm);
+     this.loadLocations();
+     this.loadDepartments();
+     this.loadJobs()
      this.AddForm = this.fb.group({
       nameAr: ['', Validators.required], 
       nameEn: ['', Validators.required], 
       code: ['', Validators.required], 
       managerCode: [null], 
       email: ['', Validators.required], 
+      password: ['', Validators.required], 
       active: [false], 
       departmentId: ['', Validators.required], 
       locationId: ['', Validators.required], 
@@ -99,6 +102,7 @@ export class EmployeelistComponent {
       code: ['', Validators.required], 
       managerCode: [null], 
       email: ['', Validators.required], 
+      password: ['', Validators.required], 
       active: [false], 
       departmentId: ['', Validators.required], 
       locationId: ['', Validators.required], 
@@ -175,7 +179,8 @@ export class EmployeelistComponent {
           active: formData.active,
           departmentId: +formData.departmentId,
           locationId: +formData.locationId,
-          jobId: +formData.jobId
+          jobId: +formData.jobId,
+          password: formData.password
       }
       console.log("body",body);
       
@@ -361,6 +366,7 @@ export class EmployeelistComponent {
             departmentId: res.result.departmentId,
             locationId: res.result.locationId,
             jobId: res.result.jobId,
+        
             id: res.result.id,
            
           };
@@ -375,6 +381,7 @@ export class EmployeelistComponent {
             departmentId: this.employee.departmentId,
             locationId: this.employee.locationId,
             jobId: this.employee.jobId,
+        
           });
         }
       },
@@ -459,7 +466,28 @@ export class EmployeelistComponent {
     }
   }
 
-
+  loadLocations(){
+    this.apiSer.getLocations().subscribe((res:any) => {
+      if (res.success) {
+        this.Locations = res.result.items;
+      }
+    });
+  }
+  loadDepartments(){
+    this.apiSer.getDepartments().subscribe((res:any) => {
+      if (res.success) {
+        this.Departments = res.result.items;
+      }
+    });
+  }
+  loadJobs(){
+    this.apiSer.getJobs().subscribe((res:any) => {
+      if (res.success) {
+        this.Jobs = res.result.items;
+      }
+    });
+  }
+ 
 
 
   getName(type: any): string {

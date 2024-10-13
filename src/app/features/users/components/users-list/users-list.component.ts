@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { ChangeDetectorRef, Component } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { AuthService } from "src/app/features/auth/auth.service";
 import { authUser } from "src/app/shared/interface/isAuthUser";
@@ -17,27 +17,38 @@ export class UsersListComponent {
   ListData: any[] = [];
   subscriptionType: string[];
   item: boolean = false;
-
+  searchTerm: string = "";
+  currentPage = 1;
+  itemsPerPage = 3;
+  totalItems = 0;
+  totalPages = 0;
+  pagesToShow: number[] = [];
   constructor(
     private apiSer: ApiService,
     private translate: TranslateService,
-    private authservice: AuthService
+    private authservice: AuthService,
+    private cdRef: ChangeDetectorRef,
   ) {
    
   }
   ngOnInit() {
     this.loading = true;
 
-    this.load();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+    this.load(this.currentPage,this.searchTerm);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
   }
  
-  load() {
+  load(pageNumber:number,searchTerm: string) {
     this.loading = true; // Start loading
-    this.apiSer.getUsers().subscribe({
+    this.apiSer.getUsers(pageNumber, this.itemsPerPage,searchTerm).subscribe({
       next: (res: any) => {
         this.ListData = res.result.items;
         console.log("res", res);
-
+        this.totalItems = res.result.count;
+        this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+        console.log( this.totalPages);
+        
+        this.updatePagination();
+        this.cdRef.detectChanges();
         this.loading = false; // Stop loading after data is fetched
       },
       error: (err) => {
@@ -46,38 +57,31 @@ export class UsersListComponent {
       },
     });
   }
-  remove2(id: any) {              
-    this.apiSer.deleteUser(id).subscribe({
-      next: (res) => {
-        console.log("Delete response", res);
-        this.load();
-        this.translate
-          .get("userdeletesweetAlert")
-          .subscribe((translations: any) => {
-            Swal.fire({
-              title: translations.title,
-              text: translations.message,
-              icon: "success",
-              confirmButtonText: translations.confirmButtonText,
-            }).then((result: any) => {
-              if (result.isConfirmed) {
-                this.load();
-              }
-            });
-          });
-      },
-      error: (err) => {console.error("Delete failed", err)
-        this.translate.get("errorMessage").subscribe((translations: any) => {
-          Swal.fire({
-            title: translations.title,
-            text: translations.message,
-            icon: "error",
-            confirmButtonText: translations.confirmButtonText,
-          });
-        });
-      },
-    });
+  updatePagination() {
+    const maxPages = 5;
+    const startPage = Math.max(1, this.currentPage - Math.floor(maxPages / 2));
+    const endPage = Math.min(this.totalPages, startPage + maxPages - 1);
+    this.pagesToShow = Array.from(
+      { length: endPage - startPage + 1 },
+      (_, i) => startPage + i
+    );
   }
+
+  setPage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.load(page,this.searchTerm);
+    }
+  }
+  onSearch() {
+    this.currentPage = 1; // Reset to the first page
+    this.load(this.currentPage,this.searchTerm); // Load with the search term
+  }
+  clearSearch() {
+    this.searchTerm = '';
+    this.load(1,this.searchTerm); // Load all data when the search is cleared
+  }
+
   remove(id: any) {
     this.translate
       .get([
@@ -114,7 +118,7 @@ export class UsersListComponent {
                   console.log(res);
                 
                   if (res.result.success) {
-                    this.load();
+                    this.load(1,this.searchTerm);
                     this.translate
                       .get([
                         "deleteSuccessTitle",

@@ -60,12 +60,12 @@ export class AddTimeTableComponent {
   }
   loadlShifts(){
     this.apiSer.getShifts().subscribe((res:any) => {
-      this.Shifts = res.result;
+      this.Shifts = res.result.items;
     });
   }
   loadlgetEmployees(){
     this.apiSer.getEmployee().subscribe((res:any) => {
-      this.Employees = res.result;
+      this.Employees = res.result.items;
     });
   }
   

@@ -57,7 +57,7 @@ export class ReportsListComponent {
 loadReports(){
   this.apiSer.getReports().subscribe((res:any) => {
     if (res.success) {
-      this.Reports = res.result;
+      this.Reports = res.result.items;
     }
   });
 }
@@ -65,7 +65,7 @@ loadReports(){
 loadLocations(){
   this.apiSer.getLocations().subscribe((res:any) => {
     if (res.success) {
-      this.LocationsList = res.result;
+      this.LocationsList = res.result.items;
     }
   });
 }
@@ -79,7 +79,7 @@ loadDepartments(){
 loadJobs(){
   this.apiSer.getJobs().subscribe((res:any) => {
     if (res.success) {
-      this.JobsList = res.result;
+      this.JobsList = res.result.items;
     }
   });
 }
