@@ -22,6 +22,10 @@ interface Transaction {
   leaveNameEn: string;
   id: number;
 }
+interface City {
+  name: string;
+  code: string;
+}
 @Component({
   selector: 'app-vacation-list',
   templateUrl: './vacation-list.component.html',
@@ -61,6 +65,7 @@ export class VacationListComponent {
   totalItems = 0;
   totalPages = 0;
   pagesToShow: number[] = [];
+
   constructor(
     private apiSer: ApiService,
     public translate: TranslateService,
@@ -97,6 +102,7 @@ export class VacationListComponent {
       note: ["", Validators.required],
 
     });
+
   }
 loadEmployes(){
     this.apiSer.getEmployee().subscribe((res:any) => {

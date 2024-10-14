@@ -1,3 +1,5 @@
+
+
 <app-breadcrumb [title]="'REPORTS_LIST' | translate" [items]="['REPORTS' | translate]" [active_item]="'REPORTS_LIST' | translate"></app-breadcrumb>
 <div class="container-fluid list-products">
     <div class="row">
@@ -5,7 +7,7 @@
             <div class="card">
               
                 <div class="card-body"style="min-height: 400px;">
-                    <form [formGroup]="AddForm" (ngSubmit)="onSubmit()">
+                    <form [formGroup]="AddForm"(ngSubmit)="onSubmit(submitType)">
                    
                           <!-- Existing Form Control -->
                           <div class="row mb-3">
@@ -26,7 +28,7 @@
                                     <div class="col-md-6 col-12">
                                     <div class="mb-3">
                                         <label class="form-label" for="start">{{"FROM" |translate}}</label>
-                                        <input class="form-control digits" id="start" name="start" formControlName="From"
+                                        <input [(ngModel)]="FromDate" class="form-control digits" id="start" name="start" formControlName="From"
                                         placeholder="yyyy-mm-dd"
                                         [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3">
                                         <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
@@ -36,7 +38,7 @@
                                     <div class="col-md-6 col-12">
                                     <div class="mb-3">
                                         <label class="form-label" for="end">{{"TO" |translate}}</label>
-                                        <input class="form-control digits" id="end" formControlName="To" name="end"
+                                        <input [(ngModel)]="ToDate" class="form-control digits" id="end" formControlName="To" name="end"
                                      
                                         [value]="selectedDate | date:'dd/MM/yyyy'" placeholder="yyyy-mm-dd" [owlDateTimeTrigger]="dt4"
                                         [owlDateTime]="dt4">
@@ -104,8 +106,8 @@
                     
                         <!-- Modal Footer with Action Buttons -->
                         <div class=" action-buttons">
-               
-                          <button class="btn success" type="submit">Pdf / xlsx</button>
+                          <button type="submit" class="btn success" (click)="submitType = 'XLS'">XLS</button>
+                          <button type="submit" class="btn success" (click)="submitType = 'PDF'">PDF</button>
                           <button class="btn  danger" (click)="clear()" type="button"    > {{"DELETE" |translate}}</button>
                         </div>
                       </form>

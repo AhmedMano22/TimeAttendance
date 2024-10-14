@@ -11,8 +11,8 @@ import { VacationListComponent } from './components/vacation-list/vacation-list.
 import { MissionListComponent } from './components/mission-list/mission-list.component';
 import { TransactionComponent } from './transaction.component';
 import { PermissionListComponent } from './components/permission-list/permission-list.component';
-
-
+import { DropdownFilterOptions } from 'primeng/dropdown';
+import { DropdownModule } from 'primeng/dropdown';
 @NgModule({
   declarations: [
     TransactionComponent,
@@ -29,6 +29,8 @@ import { PermissionListComponent } from './components/permission-list/permission
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     TimepickerModule.forRoot(),
+    DropdownModule,
+    
   ]
 })
 export class TransactionModule { }
