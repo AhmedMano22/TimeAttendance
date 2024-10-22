@@ -120,8 +120,8 @@ options: any[] = [];
   ngOnInit() {
     this.loading = true;
      this.load(this.currentPage);
-    //  this.loadEmployes();
-    //  this.loadLeaves();
+      this.loadEmployes();
+      this.loadLeaves();
      this.AddForm = this.fb.group({
       employeeId: ['', Validators.required], 
       leaveId: ['', Validators.required], 
@@ -140,15 +140,14 @@ options: any[] = [];
 
   }
 
+
 loadEmployes(){
-    this.apiSer.GetMyDataAndAllMyEmployee().subscribe((res:any) => {
-      if (res.success) {
-        this.EmployesList = res.result.items;
-      }
-    });
+  this.apiSer.GetMyDataAndAllMyEmployee().subscribe((res:any) => {
+    if (res.success) {
+      this.EmployesList = res.result.items;
+    }
+  });
 }
-
-
 /* Leaves */
 loadLeaves(){
   this.apiSer.getLeaves(1).subscribe((res:any) => {

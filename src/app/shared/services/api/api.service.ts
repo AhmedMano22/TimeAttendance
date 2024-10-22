@@ -220,7 +220,7 @@ GetAllMyTransactions(leavesTypeId?: number, TransactionStatusId?: string,pageNum
   return this._HttpClient.get(this.url + "/Transaction/GetAllMyTransactions", { params });
 }
 
-GetAllTransactionToMyEmployee(leavesTypeId?: any, TransactionStatusId?: string,pageNumber: any='', pageSize: any='') {
+GetAllTransactionToMyEmployee(leavesTypeId?: any, TransactionStatusId?: any,pageNumber: any='', pageSize: any='') {
   let params = new HttpParams();
   
   // Append parameters if they are provided

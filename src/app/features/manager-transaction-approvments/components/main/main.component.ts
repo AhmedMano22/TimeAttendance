@@ -112,17 +112,17 @@ getEmployeeName(type: any): string {
 }
   load(pageNumber:any) {
     this.loading = true; // Start loading
-    this.apiSer.GetAllTransactionToMyEmployee('','',pageNumber, this.itemsPerPage).subscribe({
+    this.apiSer.GetAllTransactionToMyEmployee('',1,pageNumber, this.itemsPerPage).subscribe({
       next: (res: any) => {
         // this.ListData = res.result.items;
-        this.ListData = res.result.items.filter((item: any) => item.transactionStatusId === 1);
+        this.ListData = res.result.items;
         console.log("res", this.ListData);
-        // this.totalItems = res.result.count;
-        // this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
-        // console.log( this.totalPages);
+        this.totalItems = res.result.count;
+        this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+        console.log( this.totalPages);
         
-        // this.updatePagination();
-        // this.cdRef.detectChanges();
+        this.updatePagination();
+        this.cdRef.detectChanges();
         this.loading = false; // Stop loading after data is fetched
       },
       error: (err) => {
@@ -147,56 +147,104 @@ getEmployeeName(type: any): string {
       this.load(page);
     }
   }
-  accept(id:any){
-    const body =     {
-      id: id,
-      transactionStatusId: 2,
-      reason: ""
-    }
-    console.log("body",body);
-    this.apiSer.ChangeStatus(body).subscribe({
-      next: (res: any) => {
-        console.log(res);
-        if (res.success == true) {
-          this.load(1);
-          this.setPage(1);
-     
-          this.translate
-            .get("Accept_Success")
-            .subscribe((translations: any) => {
-              Swal.fire({
-                title: translations.title,
-                text: translations.message,
-                icon: "success",
-                confirmButtonText: translations.confirmButtonText,
-              });
-            });
-        } else {
-          this.translate
-            .get("errorMessage")
-            .subscribe((translations: any) => {
-              Swal.fire({
-                title: translations.title,
-                text: translations.message,
-                icon: "error",
-                confirmButtonText: translations.confirmButtonText,
-              });
-            });
-        }
-      },
-      error: (error) => {
-        console.log(error);
-        this.translate.get("errorMessage").subscribe((translations: any) => {
-          Swal.fire({
-            title: translations.title,
-            text: translations.message,
-            icon: "error",
-            confirmButtonText: translations.confirmButtonText,
-          });
+
+  accept(id: any) {
+    this.translate
+      .get([
+        "confirmAcceptTitle",
+        "confirmAcceptText",
+        "confirmButtonText",
+        "cancelButtonText",
+        "acceptSuccessTitle",
+        "acceptSuccessMessage",
+        "errorMessageTitle",
+        "errorMessageText"
+      ])
+      .subscribe((translations: any) => {
+        const swalWithBootstrapButtons = Swal.mixin({
+          buttonsStyling: true,
         });
-      },
-    });
+  
+        swalWithBootstrapButtons
+          .fire({
+            title: translations.confirmAcceptTitle,
+            text: translations.confirmAcceptText,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: translations.confirmButtonText,
+            cancelButtonText: translations.cancelButtonText,
+            reverseButtons: true,
+          })
+          .then((result: any) => {
+            if (result.isConfirmed) {
+              const body = {
+                id: id,
+                transactionStatusId: 2,
+                reason: ""
+              };
+              console.log("body", body);
+              
+              this.apiSer.ChangeStatus(body).subscribe({
+                next: (res: any) => {
+                  console.log(res);
+                  if (res.success == true) {
+                    this.load(1);
+                    this.setPage(1);
+                    
+                    this.translate
+                      .get([
+                        "acceptSuccessTitle",
+                        "acceptSuccessMessage",
+                        "confirmButtonText"
+                      ])
+                      .subscribe((translations: any) => {
+                        swalWithBootstrapButtons.fire({
+                          title: translations.acceptSuccessTitle,
+                          text: translations.acceptSuccessMessage,
+                          icon: "success",
+                          confirmButtonText: translations.confirmButtonText,
+                        });
+                      });
+                  } else {
+                    this.translate
+                      .get([
+                        "errorMessageTitle",
+                        "errorMessageText",
+                        "confirmButtonText"
+                      ])
+                      .subscribe((translations: any) => {
+                        swalWithBootstrapButtons.fire({
+                          title: translations.errorMessageTitle,
+                          text: translations.errorMessageText,
+                          icon: "error",
+                          confirmButtonText: translations.confirmButtonText,
+                        });
+                      });
+                  }
+                },
+                error: (error) => {
+                  console.log(error);
+                  this.translate
+                    .get([
+                      "errorMessageTitle",
+                      "errorMessageText",
+                      "confirmButtonText"
+                    ])
+                    .subscribe((translations: any) => {
+                      swalWithBootstrapButtons.fire({
+                        title: translations.errorMessageTitle,
+                        text: translations.errorMessageText,
+                        icon: "error",
+                        confirmButtonText: translations.confirmButtonText,
+                      });
+                    });
+                },
+              });
+            }
+          });
+      });
   }
+  
   Deny(content: any,id:any){
     const modalRef = this.modalService.open(content, { size: "lg" });
     this.transactionID = id;
@@ -271,4 +319,6 @@ getEmployeeName(type: any): string {
         });
     }
   }
+
+ 
 }
