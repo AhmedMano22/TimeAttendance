@@ -25,3 +25,18 @@
     font-size: 16px;
     margin: 5px !important;
   }
+
+  ::ng-deep .ngx-dropdown-container .ngx-dropdown-button {
+    text-align: start !important;
+  }
+  ::ng-deep  .ngx-dropdown-container .ngx-dropdown-button .nsdicon-angle-down{
+    float: left !important;
+  }
+  ::ng-deep .ngx-dropdown-container .ngx-dropdown-list-container .search-container label{
+    text-align: start !important;
+    width: 100% !important;
+  }
+  // .ngx-dropdown-container .ngx-dropdown-list-containe.search-container label{
+    
+  // }
+  

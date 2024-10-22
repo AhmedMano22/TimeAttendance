@@ -5,7 +5,7 @@ import * as userData from "src/app/shared/data/user/user";
 import { TranslateService } from "@ngx-translate/core";
 import { AuthService } from "src/app/features/auth/auth.service";
 import { authUser } from "src/app/shared/interface/isAuthUser";
-import { UserInfo } from "src/app/shared/interface/user-info";
+import { LoginResponse, UserInfo } from "src/app/shared/interface/user-info";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 declare var require: any;
@@ -62,6 +62,7 @@ export class EmployeelistComponent {
   totalItems = 0;
   totalPages = 0;
   pagesToShow: number[] = [];
+  user: LoginResponse | null = null;
   constructor(
     private apiSer: ApiService,
     public translate: TranslateService,
@@ -75,6 +76,10 @@ export class EmployeelistComponent {
       this.currentLang = event.lang;
       console.log("lang",this.currentLang);
       
+    });
+    this.authservice.user$.subscribe((userData) => {
+      this.user = userData;
+      console.log("user",this.user);
     });
   }
   ngOnInit() {
@@ -102,7 +107,7 @@ export class EmployeelistComponent {
       code: ['', Validators.required], 
       managerCode: [null], 
       email: ['', Validators.required], 
-      password: ['', Validators.required], 
+      password: [''], 
       active: [false], 
       departmentId: ['', Validators.required], 
       locationId: ['', Validators.required], 

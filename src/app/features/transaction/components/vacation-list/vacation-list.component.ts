@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component } from "@angular/core";
 import { slider } from "src/app/shared/data/animation/route-animations";
 import { ApiService } from "src/app/shared/services/api/api.service";
 import * as userData from "src/app/shared/data/user/user";
@@ -31,7 +31,7 @@ interface City {
   templateUrl: './vacation-list.component.html',
   styleUrls: ['./vacation-list.component.scss']
 })
-export class VacationListComponent {
+export class VacationListComponent implements AfterViewInit{
 
   subscriptions = ["Lawyer", "Normal", "Admin", "Translator"];
   
@@ -65,7 +65,70 @@ export class VacationListComponent {
   totalItems = 0;
   totalPages = 0;
   pagesToShow: number[] = [];
+/////////////////////
+singleSelect: any = [];
+ config = {
+  displayKey: "name",
+  search: true,
+  limitTo: 0,
+  height: "250px",
+  enableSelectAll: true,
+  placeholder:''
+};
 
+// options = [
+//   {
+//     _id: "5a66d6c31d5e4e36c7711b7a",
+//     index: 0,
+//     balance: "$2,806.37",
+//     picture: "http://placehold.it/32x32",
+//     name: "Burns Dalton",
+//   },
+//   {
+//     _id: "5a66d6c3657e60c6073a2d22",
+//     index: 1,
+//     balance: "$2,984.98",
+//     picture: "http://placehold.it/32x32",
+//     name: "Mcintyre Lawson",
+//   },
+//   {
+//     _id: "5a66d6c376be165a5a7fae33",
+//     index: 2,
+//     balance: "$2,794.16",
+//     picture: "http://placehold.it/32x32",
+//     name: "Amie Franklin",
+//   },
+//   {
+//     _id: "5a66d6c3f7854b6b4d96333b",
+//     index: 3,
+//     balance: "$2,537.14",
+//     picture: "http://placehold.it/32x32",
+//     name: "Jocelyn Horton",
+//   },
+//   {
+//     _id: "5a66d6c31f967d4f3e9d84e9",
+//     index: 4,
+//     balance: "$2,141.42",
+//     picture: "http://placehold.it/32x32",
+//     name: "Fischer Erickson",
+//   },
+//   {
+//     _id: "5a66d6c34cfa8cddefb31602",
+//     index: 5,
+//     balance: "$1,398.60",
+//     picture: "http://placehold.it/32x32",
+//     name: "Medina Underwood",
+//   },
+//   {
+//     _id: "5a66d6c3d727c450794226de",
+//     index: 6,
+//     balance: "$3,915.65",
+//     picture: "http://placehold.it/32x32",
+//     name: "Goldie Barber",
+//   },
+// ];
+resetOption: any;
+options: any[] = [];
   constructor(
     private apiSer: ApiService,
     public translate: TranslateService,
@@ -77,16 +140,39 @@ export class VacationListComponent {
     this.currentLang = localStorage.getItem('app-lang') ?? 'ar';
     this.translate.onLangChange.subscribe((event) => {
       this.currentLang = event.lang;
+      this.updateSearchLabel();
       console.log("lang",this.currentLang);
-      
+      this.config = {
+        displayKey: "name",
+        search: true,
+        limitTo: 0,
+        height: "250px",
+        enableSelectAll: true,
+        placeholder: this.currentLang === 'ar' ? 'اختر' : 'Select'
+      };
+      this.loadEmployes();
+      this.loadLeaves();
+  
     });
-    
+ 
+  }
+  ngAfterViewInit() {
+    this.updateSearchLabel();  // Update search label after the component is initialized
+  }
+
+  updateSearchLabel() {
+    // Use querySelector or Angular Renderer2 to find and modify the label
+    const searchLabel = document.querySelector('.ngx-dropdown-container .nsdicon-search');
+    if (searchLabel) {
+      searchLabel.innerHTML = this.currentLang === 'ar' ? 'بحث...' : 'Search...';
+    }
+    this.cdRef.detectChanges();  // Ensure the changes are detected
   }
   ngOnInit() {
     this.loading = true;
      this.load(this.currentPage);
-     this.loadEmployes();
-     this.loadLeaves();
+    //  this.loadEmployes();
+    //  this.loadLeaves();
      this.AddForm = this.fb.group({
       employeeId: ['', Validators.required], 
       leaveId: ['', Validators.required], 
@@ -104,10 +190,23 @@ export class VacationListComponent {
     });
 
   }
+
 loadEmployes(){
     this.apiSer.getEmployee().subscribe((res:any) => {
       if (res.success) {
         this.EmployesList = res.result.items;
+        // this.options = this.EmployesList.map((employee: any) => {
+        //   return {
+        //     _id: employee.id, 
+        //     name: this.currentLang === 'ar' 
+        //            ? `${employee.userSurname}` 
+        //            : `${employee.userName}`, // Choose userSurname if Arabic, else userName
+        //     job: employee.jobNameAr, 
+        //     department: employee.departmentNameAr,
+        //     location: employee.locationNameAr,
+        //   };
+        // });
+        
       }
     });
 }
@@ -436,6 +535,10 @@ getEmployeeName(type: any): string {
           });
         });
     }
+  }
+
+  searchChange($event:any) {
+    console.log($event);
   }
 }
 

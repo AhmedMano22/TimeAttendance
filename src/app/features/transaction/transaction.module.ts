@@ -13,6 +13,7 @@ import { TransactionComponent } from './transaction.component';
 import { PermissionListComponent } from './components/permission-list/permission-list.component';
 import { DropdownFilterOptions } from 'primeng/dropdown';
 import { DropdownModule } from 'primeng/dropdown';
+// import { SelectDropDownModule } from 'ngx-select-dropdown'
 @NgModule({
   declarations: [
     TransactionComponent,
@@ -30,6 +31,7 @@ import { DropdownModule } from 'primeng/dropdown';
     OwlNativeDateTimeModule,
     TimepickerModule.forRoot(),
     DropdownModule,
+    // SelectDropDownModule
     
   ]
 })

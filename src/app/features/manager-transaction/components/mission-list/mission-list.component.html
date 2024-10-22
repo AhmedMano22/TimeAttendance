@@ -1,0 +1,308 @@
+
+<app-breadcrumb
+  [title]="'Mis_LIST' | translate"
+  [items]="['LEAVES' | translate]"
+  [active_item]="'Mis_LIST' | translate"
+></app-breadcrumb>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header pb-0" >
+          <button class="btn btn-primary text-center" (click)="lmModal(lmcontent)"
+            type="button">
+            {{ 'ADD_Mission' | translate }}
+          </button>
+        </div>
+        <div class="card-body d-flex align-items-center justify-content-center" style="min-height: 300px;"
+         >
+          <div class=" w-100  position-absolute  d-flex align-items-center" style="z-index:0;">
+            <app-spinner *ngIf="loading" class="d-block mx-auto"></app-spinner>
+          </div>
+          <div class="table-responsive w-100" *ngIf="!loading">
+            <table class="table table-hover " *ngIf="ListData.length > 0">
+              <thead>
+                <tr>
+                  <th scope="col" class="text-center">#</th>
+                  <th scope="col" class="text-center">{{"EMPLOYE" |translate}}</th>
+                  <th scope="col" class="text-center">{{"LEAVE" |translate}}</th>
+                  <th scope="col" class="text-center">{{"DATE_FROM" |translate}}</th>
+                  <th scope="col" class="text-center">{{"DATE_TO" |translate}}</th>
+                  <th scope="col" class="text-center">{{"ACTIONS" |translate}}</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <ng-container *ngFor="let data of ListData; let i = index">
+                  <tr>
+                    <td class="text-center">{{i + 1}}</td>
+             
+                    <td class="text-center">
+                      {{ translate.currentLang === 'en' ? data.employeeUserName : data.employeeUserSurname }}
+                    </td>
+            
+                    <td class="text-center">
+                      {{ translate.currentLang === 'en' ? data.leaveNameEn : data.leaveNameAr }}
+                    </td>
+                    <td class="text-center">{{data.from | date:'yyyy-MM-dd'}}</td>
+                    <td class="text-center">{{data.to | date:'yyyy-MM-dd'}}</td>
+               
+             
+
+                    <td class="d-flex gap-1 action-buttons justify-content-center">
+                      <button class="btn  success" type="button" (click)="EditModal(Editcontent,data.id)" >
+                        {{"EDIT" |translate}}</button>
+                      <button class="btn  danger" type="button" 
+                        (click)="delete(data.id)"> {{"DELETE" |translate}}</button>
+                    </td>
+
+                  </tr>
+
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="ListData.length == 0 && !loading " class="noInquires">
+            <p class="text-center"> {{"NO_CONTENT" |translate}}</p>
+          </div>
+        </div>
+        <div class="card-footer border-top-0">
+          <!-- Pagination bar controls -->
+          <div class="d-flex justify-content-center align-items-center mt-3 mb-3">
+            <nav aria-label="Page navigation ng-star-inserted" *ngIf="totalPages > 1">
+              <ul class="pagination pagination-primary">
+                <li class="page-item previous" [class.disabled]="currentPage === 1">
+                  <a
+                    class="page-link"
+                    href="javascript:void(0)"
+                    (click)="setPage(currentPage - 1)"
+                    tabindex="-1">
+                    {{ "Previous" | translate }}
+                  </a>
+                </li>
+                <li
+                  class="page-item"
+                  *ngFor="let page of pagesToShow"
+                  [class.active]="currentPage === page">
+                  <a
+                    class="page-link"
+                    href="javascript:void(0)"
+                    (click)="setPage(page)"
+                    >{{ page }}</a
+                  >
+                </li>
+                <li
+                  class="page-item next"
+                  [class.disabled]="currentPage === totalPages">
+                  <a
+                    class="page-link"
+                    href="javascript:void(0)"
+                    (click)="setPage(currentPage + 1)">
+                    {{ "Next" | translate }}
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+     </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #lmcontent let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title ">{{ 'ADD_Mission' | translate }}</h4>
+      <button type="button" class="btn-close" aria-label="Close"
+          (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <form [formGroup]="AddForm" (ngSubmit)="onSubmit(modal)">
+    <div class="modal-body">
+      <!-- Existing Form Control -->
+      <div class="row mb-3">
+        <div class="col-12">
+            <div class="row mb-3">
+                <div class="col">
+                <div>
+                    <label class="form-label" for="validationCustom0">{{"EMPLOYE" | translate}}</label>
+                    <select class="form-select" id="validationCustom0" formControlName="employeeId">
+                    <option selected disabled value="">{{"EMPLOYE" | translate}}</option>
+                    <option *ngFor="let type of EmployesList" [value]="type.id">{{ getEmployeeName(type) }}</option>
+                    </select>
+                    <div class="error"
+                    *ngIf="AddForm.get('employeeId')?.invalid && (AddForm.get('employeeId')?.dirty || isSubmited)">
+                    يجب اختيار الموظف
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                <div>
+                    <label class="form-label" for="validationCustom1">{{"LEAVE" | translate}}</label>
+                    <select class="form-select" id="validationCustom1" formControlName="leaveId">
+                    <option selected disabled value="">{{"LEAVE" | translate}}</option>
+                    <option *ngFor="let type of LeavesList" [value]="type.id">{{ getName(type) }}</option>
+                    </select>
+                    <div class="error"
+                    *ngIf="AddForm.get('leaveId')?.invalid && (AddForm.get('leaveId')?.dirty || isSubmited)">
+                    يجب اختيار المؤثر
+                    </div>
+                </div>
+                </div>
+            </div>
+        
+            <div class="mb-3 row ">
+                <div class="col-md-6 col-12">
+                <div class="mb-3">
+                    <label class="form-label" for="start">{{"FROM" |translate}}</label>
+                    <input class="form-control digits" id="start" name="start" formControlName="From"
+                    [class.invalid]="AddForm.get('From')?.invalid && isSubmited" placeholder="yyyy-mm-dd"
+                    [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3">
+                    <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                    <div class="error"
+                    *ngIf="AddForm.get('From')?.invalid && (AddForm.get('From')?.dirty || isSubmited)">
+                    يجب إدخال تاريخ البداية 
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-6 col-12">
+                <div class="mb-3">
+                    <label class="form-label" for="end">{{"TO" |translate}}</label>
+                    <input class="form-control digits" id="end" formControlName="To" name="end"
+                    [class.invalid]="AddForm.get('To')?.invalid && isSubmited"
+                    [value]="selectedDate | date:'dd/MM/yyyy'" placeholder="yyyy-mm-dd" [owlDateTimeTrigger]="dt4"
+                    [owlDateTime]="dt4">
+                    <div class="error"
+                    *ngIf="AddForm.get('To')?.invalid && (AddForm.get('To')?.dirty || isSubmited)">
+                    يجب إدخال تاريخ النهاية 
+                    </div>
+                    <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>
+                </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class=" col-12 mb-2">
+                <div>
+                    <label class="form-label">{{"NOTE" | translate}}</label>
+                    <textarea class="form-control" placeholder="أدخل الملاحظات هنا...." formControlName="note"
+                    [class.invalid]="AddForm.get('note')?.invalid && isSubmited"  rows="5"></textarea>
+                
+                    <div class="error"
+                    *ngIf="AddForm.get('note')?.invalid && (AddForm.get('note')?.dirty || isSubmited)">
+                    يجب إدخال الملاحظات
+                    </div>
+                </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+  </div>
+    <!-- Modal Footer with Action Buttons -->
+    <div class="modal-footer action-buttons">
+      <button class="btn btn-primary" type="button" aria-label="Close"
+        (click)="modal.dismiss('Cross click')">{{"CLOSE" | translate}}</button>
+      <button class="btn success" type="submit">{{"SAVE" | translate}}</button>
+    </div>
+  </form>
+  
+</ng-template>
+<ng-template #Editcontent let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title ">{{ 'EDIT_Mission' | translate }}</h4>
+      <button type="button" class="btn-close" aria-label="Close"
+          (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <form [formGroup]="EditForm" (ngSubmit)="onSubmitEdit(modal)">
+    <div class="modal-body">
+        <!-- Existing Form Control -->
+        <div class="row mb-3">
+          <div class="col-12">
+              <div class="row mb-3">
+                  <div class="col">
+                  <div>
+                      <label class="form-label" for="validationCustom0">{{"EMPLOYE" | translate}}</label>
+                      <select class="form-select" id="validationCustom0" formControlName="employeeId">
+                      <option selected disabled value="">{{"EMPLOYE" | translate}}</option>
+                      <option *ngFor="let type of EmployesList" [value]="type.id">{{ getEmployeeName(type) }}</option>
+                      </select>
+                      <div class="error"
+                      *ngIf="EditForm.get('employeeId')?.invalid && (EditForm.get('employeeId')?.dirty || isEditSubmited)">
+                      يجب اختيار الموظف
+                      </div>
+                  </div>
+                  </div>
+              </div>
+              <div class="row mb-3">
+                  <div class="col">
+                  <div>
+                      <label class="form-label" for="validationCustom1">{{"LEAVE" | translate}}</label>
+                      <select class="form-select" id="validationCustom1" formControlName="leaveId">
+                      <option selected disabled value="">{{"LEAVE" | translate}}</option>
+                      <option *ngFor="let type of LeavesList" [value]="type.id">{{ getName(type) }}</option>
+                      </select>
+                      <div class="error"
+                      *ngIf="EditForm.get('leaveId')?.invalid && (EditForm.get('leaveId')?.dirty || isEditSubmited)">
+                      يجب اختيار المؤثر
+                      </div>
+                  </div>
+                  </div>
+              </div>
+          
+              <div class="mb-3 row ">
+                  <div class="col-md-6 col-12">
+                  <div class="mb-3">
+                      <label class="form-label" for="start">{{"FROM" |translate}}</label>
+                      <input class="form-control digits" id="start" name="start" formControlName="From"
+                      [class.invalid]="EditForm.get('From')?.invalid && isEditSubmited" placeholder="yyyy-mm-dd"
+                      [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3">
+                      <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                      <div class="error"
+                      *ngIf="EditForm.get('From')?.invalid && (EditForm.get('From')?.dirty || isEditSubmited)">
+                      يجب إدخال تاريخ البداية 
+                      </div>
+                  </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                  <div class="mb-3">
+                      <label class="form-label" for="end">{{"TO" |translate}}</label>
+                      <input class="form-control digits" id="end" formControlName="To" name="end"
+                      [class.invalid]="EditForm.get('To')?.invalid && isEditSubmited"
+                      [value]="selectedDate | date:'dd/MM/yyyy'" placeholder="yyyy-mm-dd" [owlDateTimeTrigger]="dt4"
+                      [owlDateTime]="dt4">
+                      <div class="error"
+                      *ngIf="EditForm.get('To')?.invalid && (EditForm.get('To')?.dirty || isEditSubmited)">
+                      يجب إدخال تاريخ النهاية 
+                      </div>
+                      <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>
+                  </div>
+                  </div>
+              </div>
+              <div class="row mb-3">
+                  <div class=" col-12 mb-2">
+                  <div>
+                      <label class="form-label">{{"NOTE" | translate}}</label>
+                      <textarea class="form-control" placeholder="أدخل الملاحظات هنا...." formControlName="note"
+                      [class.invalid]="EditForm.get('note')?.invalid && isEditSubmited"  rows="5"></textarea>
+                  
+                      <div class="error"
+                      *ngIf="EditForm.get('note')?.invalid && (EditForm.get('note')?.dirty || isEditSubmited)">
+                      يجب إدخال الملاحظات
+                      </div>
+                  </div>
+                  </div>
+                  
+              </div>
+          </div>
+      </div>
+    </div>
+    <!-- Modal Footer with Action Buttons -->
+    <div class="modal-footer action-buttons">
+      <button class="btn btn-primary" type="button" aria-label="Close"
+        (click)="modal.dismiss('Cross click')">{{"CLOSE" | translate}}</button>
+      <button class="btn success" type="submit">{{"SAVE" | translate}}</button>
+    </div>
+  </form>
+  
+</ng-template>

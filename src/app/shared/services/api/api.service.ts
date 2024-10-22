@@ -35,6 +35,9 @@ UpdateDepartment( body: any) {
 getEmployee(pageNumber: any='', pageSize: any='',Name:string='') {
   return this._HttpClient.get(this.url + `/Employee/GetAll?Name=${Name}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
 }
+GetMyDataAndAllMyEmployee(pageNumber: any='', pageSize: any='',Name:string='') {
+  return this._HttpClient.get(this.url + `/Employee/GetMyDataAndAllMyEmployee?Name=${Name}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
+}
 addEmployee(body: any) {
   return this._HttpClient.post(this.url + "/Employee/Create", body);
 }
@@ -195,9 +198,55 @@ getTransactions(leavesTypeId?: number, TransactionStatusId?: string,pageNumber: 
   
   return this._HttpClient.get(this.url + "/Transaction/GetAll", { params });
 }
+GetAllMyTransactions(leavesTypeId?: number, TransactionStatusId?: string,pageNumber: any='', pageSize: any='') {
+  let params = new HttpParams();
+  
+  // Append parameters if they are provided
+  if (leavesTypeId) {
+    params = params.append('LeavesTypeId', leavesTypeId.toString());
+  }
+  
+  if (TransactionStatusId) {
+    params = params.append('TransactionStatusId', TransactionStatusId.toString());
+  }
+  if (pageNumber) {
+    params = params.append('PageNumber', pageNumber.toString());
+  }
+
+  if (pageSize) {
+    params = params.append('PageSize', pageSize.toString());
+  }
+  
+  return this._HttpClient.get(this.url + "/Transaction/GetAllMyTransactions", { params });
+}
+
+GetAllTransactionToMyEmployee(leavesTypeId?: any, TransactionStatusId?: string,pageNumber: any='', pageSize: any='') {
+  let params = new HttpParams();
+  
+  // Append parameters if they are provided
+  if (leavesTypeId) {
+    params = params.append('LeavesTypeId', leavesTypeId.toString());
+  }
+  
+  if (TransactionStatusId) {
+    params = params.append('TransactionStatusId', TransactionStatusId.toString());
+  }
+  if (pageNumber) {
+    params = params.append('PageNumber', pageNumber.toString());
+  }
+
+  if (pageSize) {
+    params = params.append('PageSize', pageSize.toString());
+  }
+  
+  return this._HttpClient.get(this.url + "/Transaction/GetAllTransactionToMyEmployee", { params });
+}
 //  getTransactions() {
 //   return this._HttpClient.get(this.url + "/Transaction/GetAll");
 // }
+ChangeStatus(body: any) {
+  return this._HttpClient.post(this.url + "/Transaction/ChangeStatus", body);
+}
 addTransaction(body: any) {
   return this._HttpClient.post(this.url + "/Transaction/Create", body);
 }

@@ -79,6 +79,27 @@ const routes: Routes = [
       ),
   },
   {
+    path: "EmployeeTransaction",
+    loadChildren: () =>
+      import("./features/employee-transaction/employee-transaction.module").then(
+        (m) => m.EmployeeTransactionModule
+      ),
+  },
+  {
+    path: "ManagerTransaction",
+    loadChildren: () =>
+      import("./features/manager-transaction/manager-transaction.module").then(
+        (m) => m.ManagerTransactionModule
+      ),
+  },
+  {
+    path: "ManagerTransactionApprovments",
+    loadChildren: () =>
+      import("./features/manager-transaction-approvments/manager-transaction-approvments.module").then(
+        (m) => m.ManagerTransactionApprovmentsModule
+      ),
+  },
+  {
     path: "Jobs",
     loadChildren: () =>
       import("./features/jobs/jobs.module").then(

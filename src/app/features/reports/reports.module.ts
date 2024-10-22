@@ -9,7 +9,7 @@ import { ReportDetailsComponent } from './components/report-details/report-detai
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
-
+// import { SelectDropDownModule } from 'ngx-select-dropdown'
 
 @NgModule({
   declarations: [
@@ -24,6 +24,7 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
     NgxMaterialTimepickerModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    // SelectDropDownModule,
     TimepickerModule.forRoot(),
   ]
 })

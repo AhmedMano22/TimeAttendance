@@ -22,7 +22,7 @@ import { ToastrModule } from "ngx-toastr";
 import { NgxIntlTelInputModule } from "ngx-intl-tel-input";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { TokenInterceptorService } from "./shared/interceptor/token-interceptor.service";
-
+// import { SelectDropDownModule } from 'ngx-select-dropdown'
 
 @NgModule({
   declarations: [AppComponent, ButtonsComponent, LoginComponent],
@@ -40,7 +40,8 @@ import { TokenInterceptorService } from "./shared/interceptor/token-interceptor.
     BrowserAnimationsModule,
     LightboxModule,
     ToastrModule.forRoot(),
-    NgxIntlTelInputModule
+    NgxIntlTelInputModule,
+    // SelectDropDownModule
   ],
   providers: [AdminGuard, {
     provide: HTTP_INTERCEPTORS,

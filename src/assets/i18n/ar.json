@@ -123,11 +123,12 @@
 "EDIT_TIMETABLE":"تعديل جدول العمل",
   "TIMETABLE_DETAILS":"تفاصيل الجدول",
   "RegisterLeaves":"تسجيل المؤثرات",
+  "RegisterLeavesForEmployee":"تسجيل المؤثرات",
   "Vac_LIST":"سجل الاجازات",
   "Mis_LIST":"سجل المامؤريات",
   "Per_LIST":"سجل الاذون",
-
-
+"RegisterLeavesForManager":"مؤثرات المدير",
+"APPROVMENT":"الموافقات",
   "ADD_SHIFT":"إضافة وردية",
   "EDIT_SHIFT":"تعديل وردية",
   "Create_Shift_Success":{
@@ -216,9 +217,21 @@
     "message": "تم إضافة المؤثر بنجاح ",
     "confirmButtonText": "موافق"
   },
+  "ACCEPT":"قبول",
+  "DENY":"رفض",
   "update_Leave_Success":{
   "title": "أحسنت",
   "message": "تم تعديل المؤثر بنجاح ",
+  "confirmButtonText": "موافق"
+},
+"Accept_Success":{
+  "title": "أحسنت",
+  "message": "تم القبول بنجاح ",
+  "confirmButtonText": "موافق"
+},
+"reject_Success":{
+  "title": "أحسنت",
+  "message": "تم الرفض بنجاح ",
   "confirmButtonText": "موافق"
 },
   "CODE":"الكود",
@@ -357,7 +370,9 @@
   "INACTIVE": "غير نشط",
   "Previous": "السابق",
   "Next": "التالي",
-  "SEARCH": "بحث"
+  "SEARCH": "بحث",
+  "REASON":"السبب",
+  "REASON_HERE":"ادخل السبب"
 
 
 }

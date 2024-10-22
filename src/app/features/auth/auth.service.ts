@@ -3,13 +3,15 @@ import { Injectable } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { BehaviorSubject } from "rxjs";
+import { LoginResponse } from "src/app/shared/interface/user-info";
 import { ApiService } from "src/app/shared/services/api/api.service";
 import Swal from "sweetalert2";
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
-  userSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  userSubject: BehaviorSubject<any> = new BehaviorSubject<LoginResponse | null>(null);
+
   public user$ = this.userSubject.asObservable();
   payload = JSON.parse(localStorage.getItem("user") || "{}");
   constructor(
@@ -36,8 +38,8 @@ export class AuthService {
         console.log(res);
         if (res.success) {
           localStorage.setItem("userToken", res.result.accessToken);
-          this.userSubject.next(res);
-          localStorage.setItem("user", JSON.stringify(res));
+          this.userSubject.next(res.result);
+          localStorage.setItem("user", JSON.stringify(res.result));
           this.router.navigate(["/"]);
           this.translate.get("LoginSuccess").subscribe((translations: any) => {
             Swal.fire({

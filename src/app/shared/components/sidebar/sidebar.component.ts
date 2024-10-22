@@ -3,6 +3,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { LayoutService } from '../../services/layout/layout.service';
 import { Menu, NavService } from '../../services/nav.service';
 import { EyasNavService } from '../../services/eyas-nav.service';
+import { AuthService } from 'src/app/features/auth/auth.service';
+import { LoginResponse } from '../../interface/user-info';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,7 +12,8 @@ import { EyasNavService } from '../../services/eyas-nav.service';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-  
+  userRole:string= '';
+  user: LoginResponse ;
   public menuItems: Menu[] = [];
   public myBtnIdClicked: boolean = false
   public margin: any = 0;
@@ -18,7 +21,7 @@ export class SidebarComponent implements OnInit {
   public leftArrowNone: boolean = true;
   public rightArrowNone: boolean = false;
 
-  constructor(private eyasNavService: EyasNavService, private router:Router,private layout: LayoutService) {
+  constructor(private eyasNavService: EyasNavService, private router:Router,private layout: LayoutService,  private authservice: AuthService,) {
     this.eyasNavService.items.subscribe(menuItems => {
       this.menuItems = menuItems;
       this.router.events.subscribe((event) => {
@@ -50,8 +53,32 @@ export class SidebarComponent implements OnInit {
         }
       });
     });
+    this.authservice.user$.subscribe((userData) => {
+      this.user = userData;
+      this.userRole = this.user.role;
+     // console.log("user",this.user);
+    });
+     // Get the user role from the auth service
+    this.filterMenuItemsByRole();
    }
+   filterMenuItemsByRole() {
+    if (this.userRole === 'Employee') {
+      this.menuItems = this.menuItems.filter(item => item.title === 'RegisterLeavesForEmployee');
+    }else if (this.userRole === 'Manager') {
+      this.menuItems = this.menuItems.filter(item => 
+        item.title === 'RegisterLeavesForManager' || item.title === 'APPROVMENT'
+      );
+    } else if (this.userRole === 'Admin') {
 
+      this.menuItems = this.menuItems.filter(item => 
+        item.title !== 'RegisterLeavesForEmployee' &&
+        item.title !== 'RegisterLeavesForManager' &&
+        item.title !== 'APPROVMENT'
+      );
+    }
+    
+  
+  }
    close(){
     if(this.width < 992){
       document.querySelector('.sidebar-wrapper')?.classList.add('close_icon')
@@ -128,4 +155,5 @@ export class SidebarComponent implements OnInit {
   
   ngOnInit(): void {
   }
+
 }

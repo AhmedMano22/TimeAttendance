@@ -110,7 +110,59 @@ export class EyasNavService {
         },
       ],
     },
-
+    {
+      title: "RegisterLeavesForEmployee",
+      icon: "widgets",
+      type: "sub",
+      active: false,
+      children: [
+        {
+          path: "/EmployeeTransaction/Vacation-List",
+          title: "Vac_LIST",
+          type: "link",
+        },
+        {
+          path: "/EmployeeTransaction/Mission-List",
+          title: "Mis_LIST",
+          type: "link",
+        },
+        {
+          path: "/EmployeeTransaction/Permission-List",
+          title: "Per_LIST",
+          type: "link",
+        },
+      ],
+    },
+    {
+      title: "RegisterLeavesForManager",
+      icon: "widgets",
+      type: "sub",
+      active: false,
+      children: [
+        {
+          path: "/ManagerTransaction/Vacation-List",
+          title: "Vac_LIST",
+          type: "link",
+        },
+        {
+          path: "/ManagerTransaction/Mission-List",
+          title: "Mis_LIST",
+          type: "link",
+        },
+        {
+          path: "/ManagerTransaction/Permission-List",
+          title: "Per_LIST",
+          type: "link",
+        },
+      ],
+    },
+    {
+      title: "APPROVMENT",
+      icon: "charts",
+      type: "link",
+      active: false,
+      path: "/ManagerTransactionApprovments/main",
+    },
     {
       title: "PUBLICHOLIDAY",
       icon: "widgets",

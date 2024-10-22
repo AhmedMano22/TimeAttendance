@@ -15,3 +15,24 @@ export interface UserInfo {
   CompEdit: boolean | null;
   CompDelete: boolean | null;
 }
+export interface LoginResponse {
+
+    accessToken: string;
+    encryptedAccessToken: string;
+    expireInSeconds: number;
+    userId: number;
+    role: string;
+    userSystemPage: SystemPage[];
+
+}
+
+export interface SystemPage {
+  systemPageId: number;
+  systemPageNameAr: string;
+  systemPageNameEn: string;
+  new: boolean;
+  edit: boolean;
+  delete: boolean;
+  login: boolean;
+  id: number;
+}
