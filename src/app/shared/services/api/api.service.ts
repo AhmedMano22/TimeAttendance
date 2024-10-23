@@ -6,6 +6,7 @@ import { Injectable } from "@angular/core";
 })
 export class ApiService {
   url: string = "http://65.108.96.96:1899/api";
+  //url: string = "http://172.25.11.12:12000/api";
   constructor(private _HttpClient: HttpClient) {}
 
   /* login */
