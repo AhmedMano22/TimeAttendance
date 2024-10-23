@@ -108,13 +108,18 @@ export class ChangePasswordComponent {
   }
   onSubmit() {
     console.log("Form Values on Submit:", this.form.value);
+    const { oldpassword, password } = this.form.value;
     let obj = {
-      password: this.form.get("password")?.value,
+ 
+        currentPassword: oldpassword,
+        newPassword: password
     };
-    this.apiSer.changePassword(this.User.UsId, obj).subscribe(
+    console.log("obj",obj);
+    this.apiSer.ChangePassword(obj).subscribe(
       (res: any) => {
         console.log("response", res);
-        if (res.IsSuccessStatusCode) {
+        if (res.success) {
+          this.form.reset()
           this.translate
             .get("changepasssweetAlert")
             .subscribe((translations: any) => {
@@ -123,16 +128,40 @@ export class ChangePasswordComponent {
                 text: translations.message,
                 icon: "success",
                 confirmButtonText: translations.confirmButtonText,
-              }).then((result: any) => {
-                if (result.isConfirmed) {
-                  this.route.navigate(["/users/users-list"]);
-                }
-              });
+              })
             });
         }
       },
       (error) => {
-        console.error("Error updating announce", error);
+        console.error("Error updating announce",error.error.error.message);
+        console.error("Error updating announce",error );
+        if( error.error.error.message === "Incorrect password."){
+          console.log("message");
+          
+          this.translate
+          .get('passowrdinccorect')
+          .subscribe((translations: any) => {
+            Swal.fire({
+              title: translations.title,
+              text: translations.message,
+              icon: 'error',
+              confirmButtonText: translations.confirmButtonText,
+            })
+          });
+        }else{
+          console.log("error");
+          this.translate
+          .get("errorMessage")
+          .subscribe((translations: any) => {
+            Swal.fire({
+              title: translations.title,
+              text: translations.message,
+              icon: "error",
+              confirmButtonText: translations.confirmButtonText,
+            });
+          });
+        }
+       
       }
     );
   }

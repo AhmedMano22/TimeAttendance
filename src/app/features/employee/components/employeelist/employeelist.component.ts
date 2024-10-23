@@ -7,7 +7,8 @@ import { AuthService } from "src/app/features/auth/auth.service";
 import { authUser } from "src/app/shared/interface/isAuthUser";
 import { LoginResponse, UserInfo } from "src/app/shared/interface/user-info";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { map, Observable, startWith } from "rxjs";
 declare var require: any;
 const Swal = require("sweetalert2");
 interface Employee {
@@ -63,6 +64,8 @@ export class EmployeelistComponent {
   totalPages = 0;
   pagesToShow: number[] = [];
   user: LoginResponse | null = null;
+  searchPlaceholder: string = '';
+  noEntriesFoundLabel: string = '';
   constructor(
     private apiSer: ApiService,
     public translate: TranslateService,
@@ -75,7 +78,11 @@ export class EmployeelistComponent {
     this.translate.onLangChange.subscribe((event) => {
       this.currentLang = event.lang;
       console.log("lang",this.currentLang);
-      
+      this.setTextBasedOnLanguage(this.currentLang);
+
+      this.translate.onLangChange.subscribe((event) => {
+        this.setTextBasedOnLanguage(event.lang);
+      });
     });
     this.authservice.user$.subscribe((userData) => {
       this.user = userData;
@@ -114,6 +121,11 @@ export class EmployeelistComponent {
       jobId: ['', Validators.required], 
       note: ['', Validators.required], 
     });
+
+    this.filteredBanks = this.bankFilterCtrl.valueChanges.pipe(
+      startWith(''),
+      map(value => this.filterBanks(value))
+    );
 
   }
 
@@ -498,7 +510,69 @@ export class EmployeelistComponent {
   getName(type: any): string {
     return this.currentLang === 'ar' ? type.nameAr : type.nameEn;
   }
-
-
+  bankCtrl = new FormControl();
+  bankFilterCtrl = new FormControl();
+  filteredBanks: Observable<any[]>;
+  banks = [
+    { name: 'Bank of America' },
+    { name: 'Wells Fargo' },
+    { name: 'Chase' },
+    { name: 'Citibank' },
+    { name: 'Capital One' }
+  ];
+  private filterBanks(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.banks.filter(bank => bank.name.toLowerCase().includes(filterValue));
+  }
+  private setTextBasedOnLanguage(lang: string) {
+    if (lang === 'ar') {
+      this.searchPlaceholder = 'بحث'; // Arabic for "Search"
+      this.noEntriesFoundLabel = 'لم يتم العثور على نتائج'; // Arabic for "No options found"
+    } else {
+      this.searchPlaceholder = 'Search'; // Default to English
+      this.noEntriesFoundLabel = 'No options found'; // English
+    }
+  }
+  ResetPassword(id:any){
+    console.log("user is",id);
+ 
+    let obj = {
+      userId: id,
+  };
+    this.apiSer.ResetPassword(obj).subscribe(
+      (res: any) => {
+        console.log("response", res);
+        if (res.success) {
+          this.translate
+            .get("resetpasssweetAlert")
+            .subscribe((translations: any) => {
+              Swal.fire({
+                title: translations.title,
+                text: translations.message,
+                icon: "success",
+                confirmButtonText: translations.confirmButtonText,
+              })
+            });
+        }
+      },
+      (error) => {
+ 
+          console.log("error");
+          this.translate
+          .get("errorMessage")
+          .subscribe((translations: any) => {
+            Swal.fire({
+              title: translations.title,
+              text: translations.message,
+              icon: "error",
+              confirmButtonText: translations.confirmButtonText,
+            });
+          });
+        
+       
+      }
+    );
+    
+  }
 }
 

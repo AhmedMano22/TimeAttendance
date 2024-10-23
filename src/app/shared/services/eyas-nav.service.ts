@@ -298,7 +298,19 @@ export class EyasNavService {
         { path: "/users/users-list", title: "USERS_LIST", type: "link" },
       ],
     },
-  
+    {
+      title: "SETTINGS",
+      icon: "samplepage",
+      type: "sub",
+      active: false,
+      children: [
+        {
+          path: "/setting/change-password",
+          title: "CHANGE_PASS",
+          type: "link",
+        },
+      ],
+    },
   ];
 
   items = new BehaviorSubject<Menu[]>(this.MENUITEMS);

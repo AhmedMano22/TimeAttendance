@@ -179,4 +179,45 @@ export class UsersListComponent {
           });
       });
   }
+  ResetPassword(id:any){
+    console.log("user is",id);
+ 
+    let obj = {
+      userId: id,
+  };
+    this.apiSer.ResetPassword(obj).subscribe(
+      (res: any) => {
+        console.log("response", res);
+        if (res.success) {
+          this.translate
+            .get("resetpasssweetAlert")
+            .subscribe((translations: any) => {
+              Swal.fire({
+                title: translations.title,
+                text: translations.message,
+                icon: "success",
+                confirmButtonText: translations.confirmButtonText,
+              })
+            });
+        }
+      },
+      (error) => {
+ 
+          console.log("error");
+          this.translate
+          .get("errorMessage")
+          .subscribe((translations: any) => {
+            Swal.fire({
+              title: translations.title,
+              text: translations.message,
+              icon: "error",
+              confirmButtonText: translations.confirmButtonText,
+            });
+          });
+        
+       
+      }
+    );
+    
+  }
 }

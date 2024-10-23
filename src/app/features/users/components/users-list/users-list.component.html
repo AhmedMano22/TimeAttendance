@@ -28,7 +28,7 @@
                 <tr>
                   <th scope="col" class="text-center">#</th>
                   <th scope="col" class="text-center">{{"USER_NAME" |translate}}</th>
-                  <th scope="col" class="text-center">{{"ACTIONS" |translate}}</th>
+                  <th scope="col" class="text-center" style="min-width: 520px;">{{"ACTIONS" |translate}}</th>
                 </tr>
               </thead>
               <tbody>
@@ -38,6 +38,8 @@
                     <td class="text-center">{{ i + 1 }}</td> 
                     <td class="text-center">{{data.userName}}</td>
                  <td class="d-flex gap-1 action-buttons justify-content-center" >
+                  <button class="btn  btn-primary" type="button"  (click)="ResetPassword(data.id)" >
+                    {{"RESET_PASSWORD" |translate}}</button>
                   <button class="btn  btn-primary" type="button"   [routerLink]="['/users/User-details', data.id]"
                   [queryParams]="{mode: 'view'}"> {{"ACTIONS" |translate}}</button>
                   <button class="btn  success" type="button" [routerLink]="['/users/User-details', data.id]" [queryParams]="{mode: 'edit'}"> {{"EDIT" |translate}}</button>

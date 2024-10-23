@@ -322,6 +322,12 @@ getuserpermissionbyid(id: number) {
     this.url + `/UserRole/GetUserSystemPageFull/${id}`
   );
 }
+ChangePassword(data: any) {
+  return this._HttpClient.post(this.url + `/User/ChangePassword`, data);
+}
+ResetPassword(UserID: any) {
+  return this._HttpClient.post(this.url + `/User/ResetPassword`, UserID);
+}
 edituserpermission(Id: number, data: any) {
   return this._HttpClient.put(
     this.url + `/UserRole/UpdateUserPermission/${Id}`,

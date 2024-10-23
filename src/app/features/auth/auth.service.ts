@@ -53,11 +53,27 @@ export class AuthService {
         }
       },
       error: (errors) => {
-        Swal.fire({
-          icon: "error",
-          title: "Sorry...",
-          text: errors.error,
-        });
+        if ( errors.error.error.details === "Invalid user name or password") {
+          this.translate
+            .get("phoneorpassowrdinccorect")
+            .subscribe((translations: any) => {
+              Swal.fire({
+                title: translations.title,
+                text: translations.message,
+                icon: "error",
+                confirmButtonText: translations.confirmButtonText,
+              })
+            });
+        } else {
+          this.translate.get("errorMessage").subscribe((translations: any) => {
+            Swal.fire({
+              title: translations.title,
+              text: translations.message,
+              icon: "error",
+              confirmButtonText: translations.confirmButtonText,
+            })
+          });
+        }
         console.error("Error occurred while submitting form:", errors);
       },
     });

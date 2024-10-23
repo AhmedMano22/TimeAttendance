@@ -377,7 +377,33 @@
   "confirmAcceptTitle": "هل أنت متأكد؟",
   "confirmAcceptText": "بمجرد القبول، سيتم تنفيذ الطلب!",
   "acceptSuccessTitle": "تم القبول!",
-  "acceptSuccessMessage": "تم قبول طلبك بنجاح."
+  "acceptSuccessMessage": "تم قبول طلبك بنجاح.",
+  "SETTINGS": "الإعدادات",
+  "CHANGE_PASS":"تغيير كلمة السر",
+  "OLDPASSWORD":"كلمة السر القديمة",
+  "OLDPASSWORD_INCORRECT":"كلمة السر القديمة غير صحيحة",
+  "changepasssweetAlert":{
+  "title": "أحسنت",
+  "message": "تم تغيير كلمة السر بنجاح",
+  "confirmButtonText": "موافق"
+},
+"resetpasssweetAlert":{
+  "title": "أحسنت",
+  "message": "  تم إعادة تعيين كلمة السر بنجاح وأصبحت 12345678",
+  "confirmButtonText": "موافق"
+},
+"passowrdinccorect": {
+  "title": "عذرا",
+  "message": " كلمة المرور غير صحيخة برجاء التاكد",
+  "confirmButtonText": "موافق"
+},
+"SUBMIT":"حفظ",
+"RESET_PASSWORD":"إعادة تعيين كلمة المرور",
+"phoneorpassowrdinccorect": {
+  "title": "عذرا",
+  "message": "البريد الإلكتروني او كلمة المرور غير صحيخة برجاء التاكد",
+  "confirmButtonText": "موافق"
+}
 
 
 

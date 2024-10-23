@@ -33,11 +33,29 @@
               <button class="btn btn-outline-primary" type="button" (click)="onSearch()">
                 <i class="fa fa-search"></i>
               </button>
+              <!-- <mat-form-field>
+                <mat-select [formControl]="bankCtrl" placeholder="Bank">
+                  <mat-option>
+                 
+                    <ngx-mat-select-search 
+                      [formControl]="bankFilterCtrl" 
+                      [placeholderLabel]="searchPlaceholder"
+                      [noEntriesFoundLabel]="noEntriesFoundLabel">
+                    </ngx-mat-select-search>
+                  </mat-option>
+                  <mat-option *ngFor="let bank of filteredBanks | async" [value]="bank">
+                    {{bank.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field> -->
+              
             </div>
           </div>
         </div>
         <div class="card-body d-flex align-items-center justify-content-center" style="min-height: 300px;"
          >
+       
+        
           <div class=" w-100  position-absolute  d-flex align-items-center" style="z-index:0;">
             <app-spinner *ngIf="loading" class="d-block mx-auto"></app-spinner>
           </div>
@@ -53,7 +71,7 @@
                   <th scope="col" class="text-center">{{"LOCATION" |translate}}</th>
                   <th scope="col" class="text-center">{{"JOB" |translate}}</th>
                   <th scope="col" class="text-center">{{"STATUS" |translate}}</th>
-                  <th scope="col" class="text-center">{{"ACTIONS" |translate}}</th>
+                  <th scope="col" class="text-center" style="min-width: 420px;">{{"ACTIONS" |translate}}</th>
                 </tr>
               </thead>
               <tbody>
@@ -88,8 +106,8 @@
    
 
                     <td class="d-flex gap-1 action-buttons justify-content-center">
-                      <!-- <button class="btn  btn-primary" type="button"  >
-                        {{"ACTIONS" |translate}}</button> -->
+                      <button class="btn  btn-primary" type="button"  (click)="ResetPassword(data.userId)" >
+                        {{"RESET_PASSWORD" |translate}}</button>
                       <button class="btn  success" type="button" (click)="EditModal(Editcontent,data.id)" >
                         {{"EDIT" |translate}}</button>
                       <button class="btn  danger" type="button" 

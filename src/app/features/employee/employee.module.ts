@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { EmployeelistComponent } from './components/employeelist/employeelist.component';
 
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,10 @@ import { EmployeelistComponent } from './components/employeelist/employeelist.co
     NgxIntlTelInputModule,
     FormsModule,
     NgxMaterialTimepickerModule,
+    NgxMatSelectSearchModule,
+    MatSelectModule
+
+
   ]
 })
 export class employeeModule { }

@@ -238,3 +238,6 @@ ngx-intl-tel-input input[disabled] {
   justify-content: center !important;
 }
 
+::ng-deep  .mat-select-search-clear{
+  display: none !important;
+}

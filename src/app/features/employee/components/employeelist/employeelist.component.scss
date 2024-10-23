@@ -45,3 +45,7 @@
       }
     }
   }
+  ::ng-deep .mdc-icon-button {
+    display: none !important;
+  }
+  
