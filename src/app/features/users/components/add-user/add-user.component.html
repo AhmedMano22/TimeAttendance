@@ -179,7 +179,7 @@
                                                 <tr *ngFor="let location of Locations; let i = index">
                                                     <td class="align-middle text-truncate">{{ currentLang === 'ar' ? location.locationNameAr : location.locationNameEn }}</td>
                                                     <td class="align-middle text-truncate">
-                                                        <input type="checkbox" onclick="return false" [checked]="location.login" (change)="onChecklistChange($event, i, 0, 'location')" />
+                                                        <input type="checkbox"  [checked]="location.login" (change)="onChecklistChange($event, i, 0, 'location')" />
                                                     </td>
                                                 </tr>
                                             </tbody>
