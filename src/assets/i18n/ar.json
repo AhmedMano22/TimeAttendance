@@ -394,7 +394,7 @@
 },
 "passowrdinccorect": {
   "title": "عذرا",
-  "message": " كلمة المرور غير صحيخة برجاء التاكد",
+  "message": " كلمة المرور القديمة غير صحيخة برجاء التاكد",
   "confirmButtonText": "موافق"
 },
 "SUBMIT":"حفظ",

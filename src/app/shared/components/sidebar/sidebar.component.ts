@@ -63,10 +63,12 @@ export class SidebarComponent implements OnInit {
    }
    filterMenuItemsByRole() {
     if (this.userRole === 'Employee') {
-      this.menuItems = this.menuItems.filter(item => item.title === 'RegisterLeavesForEmployee');
+      this.menuItems = this.menuItems.filter(item => 
+        item.title === 'RegisterLeavesForEmployee' || item.title === 'SETTINGS'
+      );
     }else if (this.userRole === 'Manager') {
       this.menuItems = this.menuItems.filter(item => 
-        item.title === 'RegisterLeavesForManager' || item.title === 'APPROVMENT'
+        item.title === 'RegisterLeavesForManager' || item.title === 'APPROVMENT' || item.title === 'SETTINGS'
       );
     } else if (this.userRole === 'Admin') {
 
