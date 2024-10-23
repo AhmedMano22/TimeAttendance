@@ -373,7 +373,12 @@
   "Next": "التالي",
   "SEARCH": "بحث",
   "REASON":"السبب",
-  "REASON_HERE":"ادخل السبب"
+  "REASON_HERE":"ادخل السبب",
+  "confirmAcceptTitle": "هل أنت متأكد؟",
+  "confirmAcceptText": "بمجرد القبول، سيتم تنفيذ الطلب!",
+  "acceptSuccessTitle": "تم القبول!",
+  "acceptSuccessMessage": "تم قبول طلبك بنجاح."
+
 
 
 }

@@ -61,7 +61,7 @@ export class VacationListComponent {
   }
   searchTerm: string = "";
   currentPage = 1;
-  itemsPerPage = 2;
+  itemsPerPage = 5;
   totalItems = 0;
   totalPages = 0;
   pagesToShow: number[] = [];
@@ -120,8 +120,8 @@ options: any[] = [];
   ngOnInit() {
     this.loading = true;
      this.load(this.currentPage);
-    //  this.loadEmployes();
-    //  this.loadLeaves();
+      this.loadEmployes();
+      this.loadLeaves();
      this.AddForm = this.fb.group({
       employeeId: ['', Validators.required], 
       leaveId: ['', Validators.required], 

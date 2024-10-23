@@ -171,8 +171,8 @@ options: any[] = [];
   ngOnInit() {
     this.loading = true;
      this.load(this.currentPage);
-    //  this.loadEmployes();
-    //  this.loadLeaves();
+      this.loadEmployes();
+      this.loadLeaves();
      this.AddForm = this.fb.group({
       employeeId: ['', Validators.required], 
       leaveId: ['', Validators.required], 
