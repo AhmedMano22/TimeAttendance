@@ -7,7 +7,8 @@ import { AuthService } from "src/app/features/auth/auth.service";
 import { authUser } from "src/app/shared/interface/isAuthUser";
 import { UserInfo } from "src/app/shared/interface/user-info";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { map, Observable, startWith } from "rxjs";
 declare var require: any;
 const Swal = require("sweetalert2");
 interface Transaction {
@@ -31,7 +32,7 @@ interface City {
   templateUrl: './vacation-list.component.html',
   styleUrls: ['./vacation-list.component.scss']
 })
-export class VacationListComponent {
+export class VacationListComponent implements AfterViewInit{
 
   subscriptions = ["Lawyer", "Normal", "Admin", "Translator"];
   
@@ -78,6 +79,11 @@ singleSelect: any = [];
 
 resetOption: any;
 options: any[] = [];
+employeesList: any[] = []; 
+employeeFilterCtrl = new FormControl();
+filteredEmployees: Observable<any[]>; 
+searchPlaceholder: string = '';
+noEntriesFoundLabel: string = '';
   constructor(
     private apiSer: ApiService,
     public translate: TranslateService,
@@ -87,23 +93,18 @@ options: any[] = [];
     private cdRef: ChangeDetectorRef,
   ) {
     this.currentLang = localStorage.getItem('app-lang') ?? 'ar';
+    
     this.translate.onLangChange.subscribe((event) => {
       this.currentLang = event.lang;
-      this.updateSearchLabel();
-      console.log("lang",this.currentLang);
-      this.config = {
-        displayKey: "name",
-        search: true,
-        limitTo: 0,
-        height: "250px",
-        enableSelectAll: true,
-        placeholder: this.currentLang === 'ar' ? 'اختر' : 'Select'
-      };
       this.loadEmployes();
       this.loadLeaves();
-  
+      this.setTextBasedOnLanguage(this.currentLang);
+      this.updateSearchLabel();
     });
- 
+    this.filteredEmployees = this.employeeFilterCtrl.valueChanges.pipe(
+      startWith(''),
+      map(value => this.filterEmployees(value))
+    );
   }
   ngAfterViewInit() {
     this.updateSearchLabel();  // Update search label after the component is initialized
@@ -476,6 +477,24 @@ getEmployeeName(type: any): string {
 
   searchChange($event:any) {
     console.log($event);
+  }
+
+   // Filter employees based on search input
+ private filterEmployees(value: string): any[] {
+  const filterValue = value.toLowerCase();
+  return this.EmployesList.filter(employee =>
+    (`${employee.userName} ${employee.userSurname}`).toLowerCase().includes(filterValue)
+  );
+}
+ 
+  private setTextBasedOnLanguage(lang: string) {
+    if (lang === 'ar') {
+      this.searchPlaceholder = 'بحث'; // Arabic for "Search"
+      this.noEntriesFoundLabel = 'لم يتم العثور على نتائج'; // Arabic for "No options found"
+    } else {
+      this.searchPlaceholder = 'Search'; // Default to English
+      this.noEntriesFoundLabel = 'No options found'; // English
+    }
   }
 }
 

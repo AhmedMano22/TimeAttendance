@@ -13,6 +13,11 @@ import { TransactionComponent } from './transaction.component';
 import { PermissionListComponent } from './components/permission-list/permission-list.component';
 import { DropdownFilterOptions } from 'primeng/dropdown';
 import { DropdownModule } from 'primeng/dropdown';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { MatSelectModule } from '@angular/material/select';
+
+
+
 // import { SelectDropDownModule } from 'ngx-select-dropdown'
 @NgModule({
   declarations: [
@@ -32,6 +37,10 @@ import { DropdownModule } from 'primeng/dropdown';
     TimepickerModule.forRoot(),
     DropdownModule,
     // SelectDropDownModule
+    NgxMatSelectSearchModule,
+    MatSelectModule,
+
+    
     
   ]
 })

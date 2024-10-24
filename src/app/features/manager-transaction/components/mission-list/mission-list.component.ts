@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component } from "@angular/core";
 import { slider } from "src/app/shared/data/animation/route-animations";
 import { ApiService } from "src/app/shared/services/api/api.service";
 import * as userData from "src/app/shared/data/user/user";
@@ -7,7 +7,8 @@ import { AuthService } from "src/app/features/auth/auth.service";
 import { authUser } from "src/app/shared/interface/isAuthUser";
 import { UserInfo } from "src/app/shared/interface/user-info";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { map, Observable, startWith } from "rxjs";
 declare var require: any;
 const Swal = require("sweetalert2");
 interface Transaction {
@@ -27,7 +28,7 @@ interface Transaction {
   templateUrl: './mission-list.component.html',
   styleUrls: ['./mission-list.component.scss']
 })
-export class MissionListComponent {
+export class MissionListComponent implements AfterViewInit{
 
   subscriptions = ["Lawyer", "Normal", "Admin", "Translator"];
   
@@ -61,6 +62,11 @@ export class MissionListComponent {
   totalItems = 0;
   totalPages = 0;
   pagesToShow: number[] = [];
+  employeesList: any[] = []; 
+employeeFilterCtrl = new FormControl();
+filteredEmployees: Observable<any[]>; 
+searchPlaceholder: string = '';
+noEntriesFoundLabel: string = '';
   constructor(
     private apiSer: ApiService,
     public translate: TranslateService,
@@ -68,14 +74,32 @@ export class MissionListComponent {
     private authservice: AuthService,
     private fb: FormBuilder,
     private cdRef: ChangeDetectorRef,
-  ) {
+  )  {
     this.currentLang = localStorage.getItem('app-lang') ?? 'ar';
+    
     this.translate.onLangChange.subscribe((event) => {
       this.currentLang = event.lang;
-      console.log("lang",this.currentLang);
-      
+      this.loadEmployes();
+      this.loadLeaves();
+      this.setTextBasedOnLanguage(this.currentLang);
+      this.updateSearchLabel();
     });
-    
+    this.filteredEmployees = this.employeeFilterCtrl.valueChanges.pipe(
+      startWith(''),
+      map(value => this.filterEmployees(value))
+    );
+  }
+  ngAfterViewInit() {
+    this.updateSearchLabel();  // Update search label after the component is initialized
+  }
+
+  updateSearchLabel() {
+    // Use querySelector or Angular Renderer2 to find and modify the label
+    const searchLabel = document.querySelector('.ngx-dropdown-container .nsdicon-search');
+    if (searchLabel) {
+      searchLabel.innerHTML = this.currentLang === 'ar' ? 'بحث...' : 'Search...';
+    }
+    this.cdRef.detectChanges();  // Ensure the changes are detected
   }
   ngOnInit() {
     this.loading = true;
@@ -437,6 +461,23 @@ getEmployeeName(type: any): string {
             confirmButtonText: translations.confirmButtonText,
           });
         });
+    }
+  }
+     // Filter employees based on search input
+ private filterEmployees(value: string): any[] {
+  const filterValue = value.toLowerCase();
+  return this.EmployesList.filter(employee =>
+    (`${employee.userName} ${employee.userSurname}`).toLowerCase().includes(filterValue)
+  );
+}
+ 
+  private setTextBasedOnLanguage(lang: string) {
+    if (lang === 'ar') {
+      this.searchPlaceholder = 'بحث'; // Arabic for "Search"
+      this.noEntriesFoundLabel = 'لم يتم العثور على نتائج'; // Arabic for "No options found"
+    } else {
+      this.searchPlaceholder = 'Search'; // Default to English
+      this.noEntriesFoundLabel = 'No options found'; // English
     }
   }
 }

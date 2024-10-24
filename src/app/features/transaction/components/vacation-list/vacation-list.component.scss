@@ -39,4 +39,14 @@
   // .ngx-dropdown-container .ngx-dropdown-list-containe.search-container label{
     
   // }
-  
+  ::ng-deep .cdk-overlay-pane {
+ 
+    background: rgb(255, 255, 255) !important;
+    border-bottom: 1px solid black !important;
+  }
+  ::ng-deep .mat-select-search-input{
+    background-color: #fff !important;
+  }
+  ::ng-deep .mdc-icon-button {
+    display: none !important;
+  }

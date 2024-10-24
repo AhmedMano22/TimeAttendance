@@ -13,7 +13,8 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 import { DropdownModule } from 'primeng/dropdown';
 import { SharedModule } from 'src/app/shared/shared.module';
-
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     OwlNativeDateTimeModule,
     TimepickerModule.forRoot(),
     DropdownModule,
+    NgxMatSelectSearchModule,
+    MatSelectModule,
   ]
 })
 export class ManagerTransactionModule { }
