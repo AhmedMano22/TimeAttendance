@@ -85,7 +85,7 @@ export class TimeTableListComponent {
 
   load(pageNumber:number,searchTerm: string) {
     this.loading = true; // Start loading
-    this.apiSer.getAllTimeTable(pageNumber, this.itemsPerPage,searchTerm).subscribe({
+    this.apiSer.getAllTimeTableByuser(pageNumber, this.itemsPerPage,searchTerm).subscribe({
       next: (res: any) => {
         this.ListData = res.result.items;
         console.log("res", res);

@@ -158,7 +158,7 @@ getEmpolyeNameById(id: number): string {
 
 /* Leaves */
 loadLeaves(){
-  this.apiSer.getLeaves(2).subscribe((res:any) => {
+  this.apiSer.getLeavesByuser(2).subscribe((res:any) => {
     if (res.success) {
       this.LeavesList = res.result.items;
     }

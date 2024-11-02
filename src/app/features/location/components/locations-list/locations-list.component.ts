@@ -87,7 +87,7 @@ export class LocationsListComponent {
 
   load(pageNumber:number,searchTerm: string) {
     this.loading = true; // Start loading
-    this.apiSer.getLocations(pageNumber, this.itemsPerPage,searchTerm).subscribe({
+    this.apiSer.getLocationsByuser(pageNumber, this.itemsPerPage,searchTerm).subscribe({
       next: (res: any) => {
         this.ListData = res.result.items;
         console.log("res", res);

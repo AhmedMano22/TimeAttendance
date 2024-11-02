@@ -15,8 +15,43 @@ export class ApiService {
       this.url + `/TokenAuth/Authenticate`,body
     );
   }
+ 
+/* All UserId GET */
+ getDepartmentsByuser(pageNumber: any='', pageSize: any='',Name:string='') {
+  return this._HttpClient.get(this.url + `/UserDepartment/GetAllByUserId?Name=${Name}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
+}
+getLocationsByuser(pageNumber: any='', pageSize: any='',Name:string='') {
+  return this._HttpClient.get(this.url + `/UserLocation/GetAllByUserId?Name=${Name}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
+}
+getReportsByuser(pageNumber: any='', pageSize: any='',Name:string='') {
+  return this._HttpClient.get(this.url + `/UserReport/GetAllByUserId?Name=${Name}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
+}
+ 
+getAllTimeTableByuser(pageNumber: any='', pageSize: any='',Name:string='') {
+  return this._HttpClient.get(this.url + `/UserTimeTableH/GetAllByUserId?Name=${Name}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
+}
 
- /* Department */
+getLeavesByuser(leavesTypeId?: any,pageNumber: any='', pageSize: any='',Name:string='') {
+  let params = new HttpParams();
+  
+  // Append parameters if they are provided
+  if (leavesTypeId) {
+    params = params.append('LeavesTypeId', leavesTypeId.toString());
+  }
+  
+  if (Name) {
+    params = params.append('Name', Name);
+  }
+  if (pageNumber) {
+    params = params.append('PageNumber', pageNumber.toString());
+  }
+
+  if (pageSize) {
+    params = params.append('PageSize', pageSize.toString());
+  }
+  return this._HttpClient.get(this.url + "/UserLeave/GetAllByUserId", { params });
+}
+/* Department */
  getDepartments(pageNumber: any='', pageSize: any='',Name:string='') {
   return this._HttpClient.get(this.url + `/Department/GetAll?Name=${Name}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
 }

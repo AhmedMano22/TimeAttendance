@@ -86,7 +86,7 @@ export class DepartmentListComponent {
   }
   load(pageNumber:number,searchTerm: string) {
     this.loading = true; // Start loading
-    this.apiSer.getDepartments(pageNumber, this.itemsPerPage,searchTerm).subscribe({
+    this.apiSer.getDepartmentsByuser(pageNumber, this.itemsPerPage,searchTerm).subscribe({
       next: (res: any) => {
         this.ListData = res.result.items;
         console.log("res", res);

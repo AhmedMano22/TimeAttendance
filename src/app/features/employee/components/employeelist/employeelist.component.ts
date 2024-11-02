@@ -500,14 +500,14 @@ export class EmployeelistComponent {
   }
 
   loadLocations(){
-    this.apiSer.getLocations().subscribe((res:any) => {
+    this.apiSer.getLocationsByuser().subscribe((res:any) => {
       if (res.success) {
         this.Locations = res.result.items;
       }
     });
   }
   loadDepartments(){
-    this.apiSer.getDepartments().subscribe((res:any) => {
+    this.apiSer.getDepartmentsByuser().subscribe((res:any) => {
       if (res.success) {
         this.Departments = res.result.items;
       }

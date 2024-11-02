@@ -224,7 +224,7 @@ loadEmployes(){
 
 /* Leaves */
 loadLeaves(){
-  this.apiSer.getLeaves(1).subscribe((res:any) => {
+  this.apiSer.getLeavesByuser(1).subscribe((res:any) => {
     if (res.success) {
       this.LeavesList = res.result.items;
     }

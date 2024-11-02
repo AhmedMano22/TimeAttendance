@@ -181,14 +181,14 @@ loadReports(){
 }
 /* Locations */
 loadLocations(){
-  this.apiSer.getLocations().subscribe((res:any) => {
+  this.apiSer.getLocationsByuser().subscribe((res:any) => {
     if (res.success) {
       this.LocationsList = res.result.items;
     }
   });
 }
 loadDepartments(){
-  this.apiSer.getDepartments().subscribe((res:any) => {
+  this.apiSer.getDepartmentsByuser().subscribe((res:any) => {
     if (res.success) {
       this.DepartmentsList = res.result.items;
     }
