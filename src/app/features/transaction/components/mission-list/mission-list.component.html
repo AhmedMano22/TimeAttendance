@@ -5,14 +5,15 @@
 ></app-breadcrumb>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-12">
-      <div class="card">
-        <div class="card-header pb-0" >
-          <button class="btn btn-primary text-center" (click)="lmModal(lmcontent)"
-            type="button">
-            {{ 'ADD_Mission' | translate }}
-          </button>
-        </div>
+    <div class="col-sm-12" *ngIf="employeePermissions">
+      <div class="mb-3" *ngIf="employeePermissions.login == true && employeePermissions.new == true ">
+        <button class="btn btn-primary text-center" (click)="lmModal(lmcontent)"
+        type="button">
+        {{ 'ADD_Mission' | translate }}
+      </button>
+      </div>
+      <div class="card" *ngIf="employeePermissions.login == true">
+      
         <div class="card-body d-flex align-items-center justify-content-center" style="min-height: 300px;"
          >
           <div class=" w-100  position-absolute  d-flex align-items-center" style="z-index:0;">
@@ -27,7 +28,7 @@
                   <th scope="col" class="text-center">{{"LEAVE" |translate}}</th>
                   <th scope="col" class="text-center">{{"DATE_FROM" |translate}}</th>
                   <th scope="col" class="text-center">{{"DATE_TO" |translate}}</th>
-                  <th scope="col" class="text-center">{{"ACTIONS" |translate}}</th>
+                  <th scope="col" class="text-center" *ngIf="employeePermissions.edit || employeePermissions.delete">{{"ACTIONS" |translate}}</th>
                 </tr>
               </thead>
               <tbody>
@@ -49,10 +50,10 @@
              
 
                     <td class="d-flex gap-1 action-buttons justify-content-center">
-                      <button class="btn  success" type="button" (click)="EditModal(Editcontent,data.id)" >
+                      <button class="btn  success" type="button" *ngIf="employeePermissions.edit == true" (click)="EditModal(Editcontent,data.id)" >
                         {{"EDIT" |translate}}</button>
                       <button class="btn  danger" type="button" 
-                        (click)="delete(data.id)"> {{"DELETE" |translate}}</button>
+                        (click)="delete(data.id)" *ngIf="employeePermissions.delete == true"> {{"DELETE" |translate}}</button>
                     </td>
 
                   </tr>
@@ -104,6 +105,12 @@
             </nav>
           </div>
      </div>
+      </div>
+      <div class="card" *ngIf="employeePermissions.login == false ">
+        <div class="card-body d-flex align-items-center justify-content-center" style="min-height: 300px;"
+        >
+        <h4 class="text-center fw-bold"> {{"NOT_AUTH" |translate}}</h4>
+      </div>
       </div>
     </div>
   </div>

@@ -9,6 +9,7 @@ import { LoginResponse, UserInfo } from "src/app/shared/interface/user-info";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { map, Observable, startWith } from "rxjs";
+import { SystemPage } from "src/app/shared/interface/systempage";
 declare var require: any;
 const Swal = require("sweetalert2");
 interface Employee {
@@ -63,9 +64,10 @@ export class EmployeelistComponent {
   totalItems = 0;
   totalPages = 0;
   pagesToShow: number[] = [];
-  user: LoginResponse | null = null;
+  user: LoginResponse ;
   searchPlaceholder: string = '';
   noEntriesFoundLabel: string = '';
+  employeePermissions: SystemPage | null = null;
   constructor(
     private apiSer: ApiService,
     public translate: TranslateService,
@@ -86,7 +88,7 @@ export class EmployeelistComponent {
     });
     this.authservice.user$.subscribe((userData) => {
       this.user = userData;
-      console.log("user",this.user);
+      console.log("user",this.user); 
     });
   }
   ngOnInit() {
@@ -126,7 +128,21 @@ export class EmployeelistComponent {
       startWith(''),
       map(value => this.filterBanks(value))
     );
+    this.UserPageAuthnticated();
+  }
 
+  UserPageAuthnticated() {
+    this.apiSer.getUserById(this.user.userId).subscribe({
+      next: (response:any) => {
+        this.employeePermissions = response.result.systemPage.find(
+          (page:any) => page.systemPageId === 5
+        ) || null;
+        console.log("employeePermissions",this.employeePermissions);
+      },
+      error: (error) => {
+        console.error('Error fetching user data:', error);
+      }
+    });
   }
 
   load(pageNumber:number,searchTerm: string) {

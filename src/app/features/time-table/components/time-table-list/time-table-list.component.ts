@@ -6,6 +6,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { AuthService } from "src/app/features/auth/auth.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { SystemPage, LoginResponse } from "src/app/shared/interface/user-info";
 declare var require: any;
 const Swal = require("sweetalert2");
 interface Shift {
@@ -40,6 +41,8 @@ export class TimeTableListComponent {
   totalItems = 0;
   totalPages = 0;
   pagesToShow: number[] = [];
+  employeePermissions: SystemPage | null = null;
+  user: LoginResponse ;
   constructor(
     private apiSer: ApiService,
     private translate: TranslateService,
@@ -48,7 +51,10 @@ export class TimeTableListComponent {
     private fb: FormBuilder,
     private cdRef: ChangeDetectorRef,
   ) {
- 
+    this.authservice.user$.subscribe((userData) => {
+      this.user = userData;
+      console.log("user",this.user); 
+    });
   }
   ngOnInit() {
     this.loading = true;
@@ -60,6 +66,20 @@ export class TimeTableListComponent {
     this.EditshiftForm = this.fb.group({
       nameAr: ['', Validators.required], 
       nameEn: ['', Validators.required], 
+    });
+    this.UserPageAuthnticated();
+  }
+  UserPageAuthnticated() {
+    this.apiSer.getUserById(this.user.userId).subscribe({
+      next: (response:any) => {
+        this.employeePermissions = response.result.systemPage.find(
+          (page:any) => page.systemPageId === 10
+        ) || null;
+        console.log("employeePermissions",this.employeePermissions);
+      },
+      error: (error) => {
+        console.error('Error fetching user data:', error);
+      }
     });
   }
 

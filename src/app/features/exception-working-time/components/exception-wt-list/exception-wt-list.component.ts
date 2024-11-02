@@ -5,7 +5,7 @@ import * as userData from "src/app/shared/data/user/user";
 import { TranslateService } from "@ngx-translate/core";
 import { AuthService } from "src/app/features/auth/auth.service";
 import { authUser } from "src/app/shared/interface/isAuthUser";
-import { UserInfo } from "src/app/shared/interface/user-info";
+import { LoginResponse, SystemPage, UserInfo } from "src/app/shared/interface/user-info";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { timeValidator } from "src/app/shared/validators/custom";
@@ -69,6 +69,8 @@ export class ExceptionWTListComponent {
   totalItems = 0;
   totalPages = 0;
   pagesToShow: number[] = [];
+  employeePermissions: SystemPage | null = null;
+user: LoginResponse ;
   constructor(
     private apiSer: ApiService,
     private translate: TranslateService,
@@ -81,7 +83,10 @@ export class ExceptionWTListComponent {
     this.translate.onLangChange.subscribe((event) => {
       this.currentLang = event.lang;
       console.log("lang",this.currentLang);
-      
+    });
+    this.authservice.user$.subscribe((userData) => {
+      this.user = userData;
+      console.log("user",this.user); 
     });
   }
   ngOnInit() {
@@ -114,6 +119,20 @@ export class ExceptionWTListComponent {
       latePermission: ['', [Validators.required, timeValidator]]
     });
     this.loadlShifts();
+    this.UserPageAuthnticated();
+  }
+  UserPageAuthnticated() {
+    this.apiSer.getUserById(this.user.userId).subscribe({
+      next: (response:any) => {
+        this.employeePermissions = response.result.systemPage.find(
+          (page:any) => page.systemPageId === 17
+        ) || null;
+        console.log("employeePermissions",this.employeePermissions);
+      },
+      error: (error) => {
+        console.error('Error fetching user data:', error);
+      }
+    });
   }
 
   load(pageNumber:number,searchTerm: string) {

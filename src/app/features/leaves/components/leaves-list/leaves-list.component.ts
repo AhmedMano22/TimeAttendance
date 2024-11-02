@@ -5,7 +5,7 @@ import * as userData from "src/app/shared/data/user/user";
 import { TranslateService } from "@ngx-translate/core";
 import { AuthService } from "src/app/features/auth/auth.service";
 import { authUser } from "src/app/shared/interface/isAuthUser";
-import { UserInfo } from "src/app/shared/interface/user-info";
+import { LoginResponse, SystemPage, UserInfo } from "src/app/shared/interface/user-info";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 declare var require: any;
@@ -74,6 +74,8 @@ export class LeavesListComponent {
   totalItems = 0;
   totalPages = 0;
   pagesToShow: number[] = [];
+  employeePermissions: SystemPage | null = null;
+  user: LoginResponse ;
   constructor(
     private apiSer: ApiService,
     private translate: TranslateService,
@@ -85,8 +87,11 @@ export class LeavesListComponent {
     this.currentLang = localStorage.getItem('app-lang') ?? 'ar';
     this.translate.onLangChange.subscribe((event) => {
       this.currentLang = event.lang;
-      console.log("lang",this.currentLang);
-      
+      console.log("lang",this.currentLang); 
+    });
+    this.authservice.user$.subscribe((userData) => {
+      this.user = userData;
+      console.log("user",this.user); 
     });
   }
   ngOnInit() {
@@ -118,6 +123,20 @@ export class LeavesListComponent {
       leavesVacId: ['', Validators.required], 
       cutVal: ['', Validators.required], 
       leavesRuleId: ['', Validators.required], 
+    });
+    this.UserPageAuthnticated();
+  }
+  UserPageAuthnticated() {
+    this.apiSer.getUserById(this.user.userId).subscribe({
+      next: (response:any) => {
+        this.employeePermissions = response.result.systemPage.find(
+          (page:any) => page.systemPageId === 11
+        ) || null;
+        console.log("employeePermissions",this.employeePermissions);
+      },
+      error: (error) => {
+        console.error('Error fetching user data:', error);
+      }
     });
   }
   loadlLeavesTypes(){

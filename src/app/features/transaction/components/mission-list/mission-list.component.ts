@@ -5,7 +5,7 @@ import * as userData from "src/app/shared/data/user/user";
 import { TranslateService } from "@ngx-translate/core";
 import { AuthService } from "src/app/features/auth/auth.service";
 import { authUser } from "src/app/shared/interface/isAuthUser";
-import { UserInfo } from "src/app/shared/interface/user-info";
+import { LoginResponse, SystemPage, UserInfo } from "src/app/shared/interface/user-info";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { map, Observable, startWith } from "rxjs";
@@ -67,6 +67,8 @@ employeeFilterCtrl = new FormControl();
 filteredEmployees: Observable<any[]>; 
 searchPlaceholder: string = '';
 noEntriesFoundLabel: string = '';
+employeePermissions: SystemPage | null = null;
+user: LoginResponse ;
   constructor(
     private apiSer: ApiService,
     public translate: TranslateService,
@@ -88,6 +90,10 @@ noEntriesFoundLabel: string = '';
       startWith(''),
       map(value => this.filterEmployees(value))
     );
+    this.authservice.user$.subscribe((userData) => {
+      this.user = userData;
+      console.log("user",this.user); 
+    });
   }
   ngAfterViewInit() {
     this.updateSearchLabel();  // Update search label after the component is initialized
@@ -120,6 +126,21 @@ noEntriesFoundLabel: string = '';
       To: ["", Validators.required],
       note: ["", Validators.required],
 
+    });
+ 
+    this.UserPageAuthnticated();
+  }
+  UserPageAuthnticated() {
+    this.apiSer.getUserById(this.user.userId).subscribe({
+      next: (response:any) => {
+        this.employeePermissions = response.result.systemPage.find(
+          (page:any) => page.systemPageId === 13
+        ) || null;
+        console.log("employeePermissions",this.employeePermissions);
+      },
+      error: (error) => {
+        console.error('Error fetching user data:', error);
+      }
     });
   }
 loadEmployes(){

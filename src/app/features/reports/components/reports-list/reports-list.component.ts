@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/features/auth/auth.service';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { DatePipe } from '@angular/common';
+import { SystemPage, LoginResponse } from 'src/app/shared/interface/user-info';
 // import { SelectDropDownService } from "ngx-select-dropdown";
 
 @Component({
@@ -118,6 +119,8 @@ resetOption: any;
   LocationsList: any[] = [];
   DepartmentsList: any[] = [];
   JobsList: any[] = [];
+  employeePermissions: SystemPage | null = null;
+user: LoginResponse ;
   constructor(
     private apiSer: ApiService,
     private translate: TranslateService,
@@ -130,9 +133,11 @@ resetOption: any;
     this.translate.onLangChange.subscribe((event) => {
       this.currentLang = event.lang;
       console.log("lang",this.currentLang);
-      
     });
-    
+    this.authservice.user$.subscribe((userData) => {
+      this.user = userData;
+      console.log("user",this.user); 
+    });
   }
   ngOnInit() {
 
@@ -151,6 +156,20 @@ resetOption: any;
       toEmployee: [""],
     });
 
+    this.UserPageAuthnticated();
+  }
+  UserPageAuthnticated() {
+    this.apiSer.getUserById(this.user.userId).subscribe({
+      next: (response:any) => {
+        this.employeePermissions = response.result.systemPage.find(
+          (page:any) => page.systemPageId === 18
+        ) || null;
+        console.log("employeePermissions",this.employeePermissions);
+      },
+      error: (error) => {
+        console.error('Error fetching user data:', error);
+      }
+    });
   }
 
 loadReports(){

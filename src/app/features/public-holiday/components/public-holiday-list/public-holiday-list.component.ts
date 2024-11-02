@@ -5,7 +5,7 @@ import * as userData from "src/app/shared/data/user/user";
 import { TranslateService } from "@ngx-translate/core";
 import { AuthService } from "src/app/features/auth/auth.service";
 import { authUser } from "src/app/shared/interface/isAuthUser";
-import { UserInfo } from "src/app/shared/interface/user-info";
+import { LoginResponse, SystemPage, UserInfo } from "src/app/shared/interface/user-info";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 declare var require: any;
@@ -56,6 +56,8 @@ export class PublicHolidayListComponent {
   totalItems = 0;
   totalPages = 0;
   pagesToShow: number[] = [];
+  employeePermissions: SystemPage | null = null;
+user: LoginResponse ;
   constructor(
     private apiSer: ApiService,
     private translate: TranslateService,
@@ -70,7 +72,10 @@ export class PublicHolidayListComponent {
       console.log("lang",this.currentLang);
       
     });
-    
+    this.authservice.user$.subscribe((userData) => {
+      this.user = userData;
+      console.log("user",this.user); 
+    });
   }
   ngOnInit() {
     this.loading = true;
@@ -90,6 +95,20 @@ export class PublicHolidayListComponent {
       To: ["", Validators.required],
       Type: ["", Validators.required],
 
+    });
+    this.UserPageAuthnticated();
+  }
+  UserPageAuthnticated() {
+    this.apiSer.getUserById(this.user.userId).subscribe({
+      next: (response:any) => {
+        this.employeePermissions = response.result.systemPage.find(
+          (page:any) => page.systemPageId === 15
+        ) || null;
+        console.log("employeePermissions",this.employeePermissions);
+      },
+      error: (error) => {
+        console.error('Error fetching user data:', error);
+      }
     });
   }
 loadHilodayTypes(){

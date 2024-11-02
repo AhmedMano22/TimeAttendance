@@ -5,9 +5,10 @@ import * as userData from "src/app/shared/data/user/user";
 import { TranslateService } from "@ngx-translate/core";
 import { AuthService } from "src/app/features/auth/auth.service";
 import { authUser } from "src/app/shared/interface/isAuthUser";
-import { UserInfo } from "src/app/shared/interface/user-info";
+import { LoginResponse, UserInfo } from "src/app/shared/interface/user-info";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { SystemPage } from "src/app/shared/interface/systempage";
 declare var require: any;
 const Swal = require("sweetalert2");
 interface Job {
@@ -42,6 +43,8 @@ export class LocationsListComponent {
   totalItems = 0;
   totalPages = 0;
   pagesToShow: number[] = [];
+  employeePermissions: SystemPage | null = null;
+  user: LoginResponse ;
   constructor(
     private apiSer: ApiService,
     private translate: TranslateService,
@@ -50,7 +53,10 @@ export class LocationsListComponent {
     private fb: FormBuilder,
     private cdRef: ChangeDetectorRef,
   ) {
- 
+    this.authservice.user$.subscribe((userData) => {
+      this.user = userData;
+      console.log("user",this.user); 
+    });
   }
   ngOnInit() {
     this.loading = true;
@@ -62,6 +68,20 @@ export class LocationsListComponent {
     this.EditJobForm = this.fb.group({
       nameAr: ['', Validators.required], 
       nameEn: ['', Validators.required], 
+    });
+    this.UserPageAuthnticated();
+  }
+  UserPageAuthnticated() {
+    this.apiSer.getUserById(this.user.userId).subscribe({
+      next: (response:any) => {
+        this.employeePermissions = response.result.systemPage.find(
+          (page:any) => page.systemPageId === 8
+        ) || null;
+        console.log("employeePermissions",this.employeePermissions);
+      },
+      error: (error) => {
+        console.error('Error fetching user data:', error);
+      }
     });
   }
 
