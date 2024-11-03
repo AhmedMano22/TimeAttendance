@@ -173,9 +173,10 @@ user: LoginResponse ;
   }
 
 loadReports(){
-  this.apiSer.getReports().subscribe((res:any) => {
+  this.apiSer.getReportsByuser().subscribe((res:any) => {
     if (res.success) {
-      this.Reports = res.result;
+      console.log(res.result)
+      this.Reports = res.result.items;
     }
   });
 }
@@ -254,7 +255,7 @@ getAllList(Type:string){
   // this.Fdate= this.FromDate.toString().substring(0,4)+this.FromDate.toString().substring(5,7)+this.FromDate.toString().substring(8,10);
   // this.Tdate= this.ToDate.toString().substring(0,4)+this.ToDate.toString().substring(5,7)+this.ToDate.toString().substring(8,10);
 
-  window.open("http://172.25.11.12:12300/?flage="+ this.reportId +"&System="+Type+"&Department="+this.departmentId+"&Job="+this.jobId+"&LocationID="+this.locationId+"&EmpCode="+this.fromEmployee+"&EmpCode1="+this.toEmployee+"&fdate="+this.formattedFromDate+"&tdate="+this.formattedToDate,"_self");
+  window.open("http://172.25.11.12:12300/?flage="+ this.reportId +"&System="+Type+"&Department="+this.departmentId+"&Job="+this.jobId+"&LocationID="+this.locationId+"&EmpCode="+this.fromEmployee+"&EmpCode1="+this.toEmployee+"&fdate="+this.formattedFromDate+"&tdate="+this.formattedToDate+"Userid="+this.user.userId,"_self");
 
   this.ngOnInit();
 
