@@ -13,10 +13,8 @@
                   <p class="font-roboto text-center" style="font-size: 0.7rem;">{{ "OWNERS_COUNT" | translate }}</p>
                   <h4
                       class="mb-0 counter text-center"
-                      [CountTo]="dashboard.Owner"
-                      [from]="0"
-                      [duration]="1"
-                  ></h4>
+                    
+                  > {{Data.result.item1}}</h4>
                 </div>
                 <svg-icon src="assets/svgIcon/newUser.svg"></svg-icon>
             </div>
@@ -47,10 +45,8 @@
                 <p class="font-roboto text-center" style="font-size: 0.7rem;">{{ "UNITS_COUNT" | translate }}</p>
                 <h4
                     class="mb-0 counter text-center"
-                    [CountTo]="dashboard.Unit"
-                    [from]="0"
-                    [duration]="1"
-                ></h4>
+                    
+                >  {{Data.result.item2}}</h4>
               </div>
               <svg-icon src="assets/svgIcon/newUser.svg"></svg-icon>
           </div>
@@ -87,7 +83,7 @@
                       </div>
                       <div class="media-body">
                         <h6 class="text-center m-0" style="font-size: 15px;">{{"SERVICES2" | translate}}</h6>
-                        <h5 class="text-center">{{dashboard.Service}}</h5>
+                        <h5 class="text-center">{{Data.result.item3}}</h5>
                       </div>
                     </div>
                     <div class="icon-bg">
@@ -104,7 +100,7 @@
                         </div>
                         <div class="media-body">
                           <h6 class="text-center m-0" style="font-size: 15px;">{{"PENDING_BOOKINGS" | translate}}</h6>
-                          <h5 class="text-center">{{dashboard.PendingSerice}}</h5>
+                          <h5 class="text-center">{{Data.result.item4}}</h5>
                         </div>
                       </div>
                       <div class="icon-bg">
@@ -121,7 +117,7 @@
                       </div>
                       <div class="media-body">
                         <h6 class="text-center m-0" style="font-size: 15px;">{{"PENDING_ORDERS" | translate}}</h6>
-                        <h5 class="text-center">{{dashboard.PendingRequet}}</h5>
+                        <h5 class="text-center">{{Data.result.item5}}</h5>
                       </div>
                     </div>
                     <div class="icon-bg">

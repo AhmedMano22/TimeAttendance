@@ -12,6 +12,8 @@ import { ApiService } from "src/app/shared/services/api/api.service";
   styleUrls: ["./sys-admin.component.scss"],
 })
 export class SysAdminComponent {
+  Data:any
+
   dashboard: DashboardStats = {
     Owner: 12,
     Unit: 10,
@@ -32,7 +34,22 @@ export class SysAdminComponent {
   ngOnInit(): void {
     this.loading = true;
   
-    // this.load();
+    setInterval(() => {
+       
+      this.apiser.GetDashboard().subscribe((res:any) => {
+        if (res.success) {
+         this.Data=res;
+          console.log(res.result.item1);
+        }
+      });  
+      
+      
+      }, 1000)
+    
+  
+  
+
+   
   }
 
  

@@ -60,7 +60,7 @@ export class EmployeelistComponent {
   currentLang: string;
   searchTerm: string = "";
   currentPage = 1;
-  itemsPerPage = 3;
+  itemsPerPage = 10;
   totalItems = 0;
   totalPages = 0;
   pagesToShow: number[] = [];
@@ -507,7 +507,7 @@ export class EmployeelistComponent {
     });
   }
   loadDepartments(){
-    this.apiSer.getDepartmentsByuser().subscribe((res:any) => {
+    this.apiSer.getDepartments().subscribe((res:any) => {
       if (res.success) {
         this.Departments = res.result.items;
       }

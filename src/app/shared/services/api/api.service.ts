@@ -16,6 +16,11 @@ export class ApiService {
     );
   }
  
+  /* DashBoard */
+  GetDashboard() {
+    return this._HttpClient.get(this.url + `/StoredProcedure/GetStatistics`);
+  }
+  
 /* All UserId GET */
  getDepartmentsByuser(pageNumber: any='', pageSize: any='',Name:string='') {
   return this._HttpClient.get(this.url + `/UserDepartment/GetAllByUserId?Name=${Name}&pageNumber=${pageNumber}&pageSize=${pageSize}`);

@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import * as feather from 'feather-icons';
 import { slider } from 'src/app/shared/data/animation/route-animations';
+import { ApiService } from 'src/app/shared/services/api/api.service';
 import { EyasNavService } from 'src/app/shared/services/eyas-nav.service';
 import { LayoutService } from 'src/app/shared/services/layout/layout.service';
 
@@ -12,6 +13,7 @@ import { LayoutService } from 'src/app/shared/services/layout/layout.service';
   animations: [slider]
 })
 export class DashboardComponent implements OnInit {
+  Data:any
   footerDark: boolean;
   footerLight: boolean;
   footerFix: boolean;
@@ -22,9 +24,17 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     public eyasNavService: EyasNavService,
+    private apiSer: ApiService,
     public layout: LayoutService,
     public route: ActivatedRoute
   ) {
+   
+    this.apiSer.GetDashboard().subscribe((res:any) => {
+      if (res.success) {
+       this.Data=res;
+       // console.log(res.item1);
+      }
+    });
   }
 
   @HostListener('window:resize', ['$event'])
