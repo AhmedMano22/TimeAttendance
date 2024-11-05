@@ -108,7 +108,7 @@ export class EmployeelistComponent {
       departmentId: ['', Validators.required], 
       locationId: ['', Validators.required], 
       jobId: ['', Validators.required], 
-      note: ['', Validators.required], 
+      note: [''], 
     });
     this.EditForm = this.fb.group({
       nameAr: ['', Validators.required], 

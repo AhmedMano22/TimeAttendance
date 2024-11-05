@@ -288,7 +288,13 @@ export class EyasNavService {
       active: false,
       path: "/reports/reports-list",
     },
-
+    {
+      title: "MONTH_CALC",
+      icon: "charts",
+      type: "link",
+      active: false,
+      path: "/MonthCalc/main",
+    },
     {
       title: "ACCOUNTS_RULES",
       icon: "users",

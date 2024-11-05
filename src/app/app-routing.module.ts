@@ -141,6 +141,11 @@ const routes: Routes = [
       import("./features/reports/reports.module").then((m) => m.ReportsModule),
   },
   {
+    path: "MonthCalc",
+    loadChildren: () =>
+      import("./features/month-calc/month-calc.module").then((m) => m.MonthCalcModule),
+  },
+  {
     path: "Leaves",
     loadChildren: () =>
       import("./features/leaves/leaves.module").then(

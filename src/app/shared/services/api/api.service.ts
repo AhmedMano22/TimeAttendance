@@ -362,6 +362,9 @@ getuserpermissionbyid(id: number) {
     this.url + `/UserRole/GetUserSystemPageFull/${id}`
   );
 }
+CalcMonth(data: any) {
+  return this._HttpClient.post(this.url + `/StoredProcedure/CalculateTotals`, data);
+}
 ChangePassword(data: any) {
   return this._HttpClient.post(this.url + `/User/ChangePassword`, data);
 }

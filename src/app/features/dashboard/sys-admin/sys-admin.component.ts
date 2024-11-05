@@ -39,7 +39,7 @@ export class SysAdminComponent {
       this.apiser.GetDashboard().subscribe((res:any) => {
         if (res.success) {
          this.Data=res;
-          console.log(res.result.item1);
+        // console.log(res.result.item1);
         }
       });  
       
