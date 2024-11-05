@@ -410,7 +410,8 @@
   "confirmButtonText": "موافق"
 },
 "NOT_AUTH":"غير مصرح لك بمشاهدة محتوى هذه الصفحة",
-"MONTH_CALC":"حساب الشهر"
+"MONTH_CALC":"حساب الشهر",
+"MONTH_CALC_LIST":"قائمة حساب الشهر " 
 
 
 
