@@ -1,3 +1,15 @@
 <app-loader></app-loader>
 <app-tap-to-top></app-tap-to-top>
+<div *ngIf="(loadingService.loading$ | async)" class="spinner-overlay">
+    <div class="lds-roller" >
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+  </div>
 <router-outlet></router-outlet>

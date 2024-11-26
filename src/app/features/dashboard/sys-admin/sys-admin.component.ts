@@ -32,19 +32,22 @@ export class SysAdminComponent {
   
   }
   ngOnInit(): void {
-    this.loading = true;
-  
-    setInterval(() => {
+   // this.loading = true;
+    this.apiser.GetDashboard().subscribe((res:any) => {
+      if (res.success) {
+       this.Data=res;
+      }
+    }); 
+    // setInterval(() => {
        
-      this.apiser.GetDashboard().subscribe((res:any) => {
-        if (res.success) {
-         this.Data=res;
-        // console.log(res.result.item1);
-        }
-      });  
+    //   this.apiser.GetDashboard().subscribe((res:any) => {
+    //     if (res.success) {
+    //      this.Data=res;
+    //     }
+    //   });  
       
       
-      }, 1000)
+    //   }, 1000)
     
   
   

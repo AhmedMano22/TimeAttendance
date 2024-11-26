@@ -2,6 +2,7 @@ import { Component, HostBinding, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { delay, map, withLatestFrom } from 'rxjs';
+import { LoadinService } from './shared/services/loadin.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,7 @@ export class AppComponent {
     this.animationsDisabled = !this.animationsDisabled;
   }
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
-    private loader: LoadingBarService) {
+    private loader: LoadingBarService,public loadingService: LoadinService) {
     
   }
 

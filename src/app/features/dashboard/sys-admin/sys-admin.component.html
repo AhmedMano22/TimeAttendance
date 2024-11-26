@@ -1,6 +1,6 @@
 <app-breadcrumb [title]="'ADMIN_DASHBOARD' | translate" [items]="['DASHBOARD' | translate]" [active_item]="'ADMIN_DASHBOARD' | translate"></app-breadcrumb>
 <div class="container-fluid list-products" >
-  <ng-container  >
+  <ng-container  *ngIf="Data" >
   <div class="row d-flex justify-content-center">
     <!-- owners -->
     <div class="card o-hidden col-md-2 col-10 mx-2 " style="cursor: pointer;">
@@ -282,4 +282,6 @@
       </div>
     </div>
   </div> -->
+
+
 </div>
